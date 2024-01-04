@@ -224,6 +224,7 @@ if display_type == "Single":
 
     st.subheader("Summary")
     st.write(wiki_summary(selection_wiki))
+    st.write(selection_page_url)
     st.caption("Information from Wikipedia")
 else:
     #No media
