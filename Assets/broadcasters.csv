@@ -1,11 +1,11 @@
 Name,Wiki,Country,City,Timezone,Type,Language,Format,Media URL,Page URL
-Arirang,Arirang_TV,South Korea 🇰🇷,Seoul,Asia/Seoul,Video,English,M3U8,https://amdlive-ch01-ctnd-com.akamaized.net/arirang_1ch/smil:arirang_1ch.smil/chunklist_b1256000_sleng.m3u8,https://www.arirang.com/
+Arirang,Arirang_TV,South Korea 🇰🇷,Seoul,Asia/Seoul,Video,English,M3U8,https://amdlive-ch01-ctnd-com.akamaized.net/arirang_1ch/smil:arirang_1ch.smil/chunklist_b2256000_sleng.m3u8,https://www.arirang.com/
 ABC,ABC_News_(Australia),Australia 🇦🇺,Sydney,Australia/Sydney,Audio,English,M3U8,https://mediaserviceslive.akamaized.net/hls/live/2038311/newsradio/masterhq.m3u8,https://www.abc.net.au/news
-Al Jazeera,Al_Jazeera_English,Qatar 🇶🇦,Doha,Asia/Qatar,Video,English,M3U8,https://live-hls-web-aje-fa.getaj.net/AJE/03.m3u8,https://www.aljazeera.com/
+Al Jazeera,Al_Jazeera_English,Qatar 🇶🇦,Doha,Asia/Qatar,Video,English,M3U8,https://live-hls-web-aje-fa.getaj.net/AJE/02.m3u8,https://www.aljazeera.com/
 BBC,BBC_World_Service,UK 🇬🇧,London,Europe/London,Audio,English,M3U8,https://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/nonuk/sbr_low/ak/bbc_world_service.m3u8,https://www.bbc.com/news/world
 CGTN,China_Global_Television_Network,China 🇨🇳,Beijing,Asia/Shanghai,Video,English,M3U8,https://live.cgtn.com/1000/prog_index.m3u8,https://www.cgtn.com/
 CGTN Doc.,CGTN_Documentary,China 🇨🇳,Beijing,Asia/Shanghai,Video,English,M3U8,https://livedoc.cgtn.com/1000d/prog_index.m3u8,https://www.cgtn.com/channel/documentary
-CNA,CNA_(TV_network),Singapore 🇸🇬,Singapore,Asia/Singapore,Video,English,M3U8,https://mediacorp-videosbclive.akamaized.net/f4abbc22204c49e2b337203b0ebbf14b/ap-southeast-1/6057994443001/profile_1/chunklist.m3u8,https://www.channelnewsasia.com/
+CNA,CNA_(TV_network),Singapore 🇸🇬,Singapore,Asia/Singapore,Video,English,M3U8,https://mediacorp-videosbclive.akamaized.net/f4abbc22204c49e2b337203b0ebbf14b/ap-southeast-1/6057994443001/profile_0/chunklist.m3u8,https://www.channelnewsasia.com/
 DD India,DD_India,India 🇮🇳,New Delhi,Asia/Kolkata,Video,English,YouTube,https://www.youtube.com/watch?v=c0HOSjlniKs,https://ddnews.gov.in/
 DW,Deutsche_Welle,Germany 🇩🇪,Berlin,Europe/Berlin,Video,English,M3U8,https://dwamdstream102.akamaized.net/hls/live/2015525/dwstream102/stream04/streamPlaylist.m3u8,https://www.dw.com/en/
 France 24,France_24,France 🇫🇷,Paris,Europe/Paris,Video,English,YouTube,https://www.youtube.com/embed/tkDUSYHoKxE?&autoplay=1&mute=1,https://www.france24.com/en/
@@ -17,6 +17,6 @@ RT,Russia_Today,Russia 🇷🇺,Moscow,Europe/Moscow,Video,English,M3U8,https://
 SABC,SABC_News,South Africa 🇿🇦,Johannesburg,Africa/Johannesburg,Video,English,M3U8,https://sabconeta.cdn.mangomolo.com/news/smil:news.stream.smil/chunklist_b1600000_t64NzIwcA==.m3u8,https://www.sabcnews.com/sabcnews/
 Sputnik,Sputnik_(news_agency),Russia 🇷🇺,Moscow,Europe/Moscow,Audio,English,MP3,https://nfw.ria.ru/flv/audio.aspx?ID=40881855&type=mp3,https://sputnikglobe.com/
 Telesur,Telesur,LatAm 🇻🇪,Caracas,America/Caracas,Video,English,M3U8,https://cdnenmain.telesur.ultrabase.net/mblivev3/hd/playlist.m3u8,https://www.telesurenglish.net/
-TRT World,TRT_World,Turkey 🇹🇷,Istanbul,Asia/Istanbul,Video,English,M3U8,https://tv-trtworld.live.trt.com.tr/master_480.m3u8,https://www.trtworld.com/
+TRT World,TRT_World,Turkey 🇹🇷,Istanbul,Asia/Istanbul,Video,English,M3U8,https://tv-trtworld.live.trt.com.tr/master_720.m3u8,https://www.trtworld.com/
 VOA,Voice_of_America,USA 🇺🇸,"Washington, DC",America/New_York,Audio,English,MPD,https://n09.radiojar.com/t2n88q0st5quv?rj-ttl=5&rj-tok=AAABjM0ngkoAA7UWhix_i9-yuQ,https://www.voanews.com/
-ABC,ABC_News_(Australia),Australia 🇦🇺,Sydney,Australia/Sydney,Video,English,MPD,https://abc-iview-mediapackagestreams-2.akamaized.net/out/v1/64baf190a85c4fdd9f67d5a3c856876d/index.mpd,https://www.abc.net.au/news
+ABC (TV),ABC_News_(Australia),Australia 🇦🇺,Sydney,Australia/Sydney,Video,English,MPD,https://abc-iview-mediapackagestreams-2.akamaized.net/out/v1/64baf190a85c4fdd9f67d5a3c856876d/index.mpd,https://www.abc.net.au/news
