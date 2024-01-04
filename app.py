@@ -98,6 +98,16 @@ def generate_player(format, type, url, muted=""):
         <head>
             <title>HLS Stream</title>
             <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+            <style>
+                html, body, div, span, applet, object, iframe,
+                video, audio {{
+                    margin: 0;
+                    padding: 0;
+                    border: 0;
+                    vertical-align: baseline;
+                    box-sizing: border-box; /* Include padding and border in the element's size */
+                }}
+            </style>
         </head>
         <body>
 
