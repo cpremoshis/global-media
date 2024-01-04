@@ -173,7 +173,6 @@ def generate_player(format, type, url, muted=""):
         """
         return mp3_audio_player_html, 40
 
-
     if format == "YouTube":
         player_html = st.video(url)
         return player_html, None
