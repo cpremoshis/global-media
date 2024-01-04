@@ -152,28 +152,27 @@ def generate_player(format, type, url, muted=""):
                 padding: 0;
                 border: 0;
                 background-color: #0E1117; /* Set the background color */
-                height: 100vh; /* Use vh for full viewport height */
-                width: 100vw; /* Use vw for full viewport width */
-                box-sizing: border-box;
+                height: 100%; /* Full height */
+                width: 100%; /* Full width */
                 display: flex; /* Use flex to center the audio player */
                 justify-content: center; /* Center horizontally */
                 align-items: center; /* Center vertically */
+                overflow: hidden; /* Hide scrollbars if the content is larger than the viewport */
             }}
             audio {{
-                width: auto; /* Set the width to auto to maintain the aspect ratio */
-                max-width: 95%; /* Max width to avoid overflow */
-                height: auto; /* Set the height to auto */
+                /* No need to set width or height here as the controls should automatically adjust to the content */
             }}
             </style>
         </head>
         <body>
-        <audio controls autoplay {muted}>
-            <source src="{url}" type="audio/mpeg">
-        </audio>
+            <audio id="audio" controls{muted} autoplay>
+                <source src="{url}" type="audio/mpeg">
+            </audio>
         </body>
         </html>
         """
         return mp3_audio_player_html, 40
+
 
     if format == "YouTube":
         player_html = st.video(url)
