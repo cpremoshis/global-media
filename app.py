@@ -154,6 +154,7 @@ def generate_player(format, type, url, muted=""):
                 height: 100vh; /* Use vh for full viewport height */
                 width: 100vw; /* Use vw for full viewport width */
                 box-sizing: border-box;
+                display: flex; /* Use flex to center the audio player */
                 justify-content: center; /* Center horizontally */
                 align-items: center; /* Center vertically */
             }}
