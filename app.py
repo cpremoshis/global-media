@@ -205,14 +205,12 @@ if display_type == "Single":
     selection_name, selection_country, selection_format, selection_type, selection_wiki, selection_media_url, selection_page_url = pull_data(selection)
 
     #Metrics/info display
-    left_column, middle_column, right_column = st.columns(3)
+    left_column, middle_column, right_column = st.columns([0.2, 0.2, 0.6])
 
     with left_column:
         st.metric("Name", selection_name)
     with middle_column:
         st.metric("Country", selection_country)
-    with right_column:
-        st.write("Blank for now")
 
     result = generate_player(selection_format, selection_type, selection_media_url)
 
