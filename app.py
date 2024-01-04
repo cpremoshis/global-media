@@ -142,11 +142,36 @@ def generate_player(format, type, url, muted=""):
     
     if format == "MP3":
         mp3_audio_player_html = f"""
-        <audio controls autoplay {muted} style="width:100vw; height:100vh;">
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <style>
+            html, body {{
+                margin: 0;
+                padding: 0;
+                border: 0;
+                background-color: #0E1117; /* Set the background color */
+                height: 100vh; /* Use vh for full viewport height */
+                width: 100vw; /* Use vw for full viewport width */
+                box-sizing: border-box;
+                display: flex; /* Use flex to center the audio player */
+                justify-content: center; /* Center horizontally */
+                align-items: center; /* Center vertically */
+            }}
+            audio {{
+                width: auto; /* Set the width to auto to maintain the aspect ratio */
+                max-width: 95%; /* Max width to avoid overflow */
+                height: auto; /* Set the height to auto */
+            }}
+            </style>
+        </head>
+        <body>
+        <audio controls autoplay {muted}>
             <source src="{url}" type="audio/mpeg">
         </audio>
+        </body>
+        </html>
         """
-
         return mp3_audio_player_html, 150
 
     if format == "YouTube":
