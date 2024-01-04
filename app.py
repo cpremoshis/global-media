@@ -105,6 +105,7 @@ def generate_player(format, type, url, muted=""):
                     margin: 0;
                     padding: 0;
                     border: 0;
+                    background-color: #0E1117;
                     vertical-align: baseline;
                     box-sizing: border-box; /* Include padding and border in the element's size */
                 }}
