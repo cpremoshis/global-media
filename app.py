@@ -56,7 +56,7 @@ def generate_player(format, type, url, muted=""):
             <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
         </head>
         <body>
-        <video id="video" controls autoplay {muted} style="width:100vw; height:auto;"></video>
+        <video id="video" controls autoplay {muted} style="width:auto; height:auto;"></video>
         <script>
             var video = document.getElementById('video');
             if (Hls.isSupported()) {{
