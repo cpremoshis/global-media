@@ -158,6 +158,11 @@ def generate_player(format, type, url, muted=""):
                 justify-content: center; /* Center horizontally */
                 align-items: center; /* Center vertically */
             }}
+            audio {{
+                width: auto; /* Set the width to auto to maintain the aspect ratio */
+                max-width: 95%; /* Max width to avoid overflow */
+                height: auto; /* Set the height to auto */
+            }}
             </style>
         </head>
         <body>
