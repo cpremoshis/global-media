@@ -3,7 +3,7 @@ import requests
 import ffmpeg
 import time
 
-url = "https://live-hls-web-aje-fa.getaj.net/AJE/03.m3u8"
+url = "https://live-hls-web-aje-fa.getaj.net/AJE/02.m3u8"
 root_url = "https://live-hls-web-aje-fa.getaj.net/AJE/"
 
 def fetch_urls():
