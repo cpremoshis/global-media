@@ -102,19 +102,3 @@ def record_m3u8(seconds, playlist_url, root_url, output_file):
     except Exception as error:
 
         return error
-
-#    record = record_m3u8(30, m3u8_url, root_url, output_file)
-
-#    print(record)
-
-
-#container = st.empty()
-
-#while True:
-
-#    fetch_urls()
-
-#    container.empty()
-#    container.write(files_list)
-
-#    time.sleep(5)
