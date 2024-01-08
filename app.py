@@ -2,7 +2,7 @@ import streamlit as st
 import streamlit.components.v1 as components
 import pandas as pd
 import requests
-from test2.py import record_m3u8
+from test2 import record_m3u8
 
 st.set_page_config(
     page_title="Global Media",
