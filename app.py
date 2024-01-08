@@ -196,7 +196,6 @@ with st.sidebar:
         if st.button("Record", type="primary"):
             st.warning("Record feature not yet complete")
         
-
     else:
         selections = st.multiselect("Select outlets:", broadcasters_df['Name'], max_selections=4)
 
