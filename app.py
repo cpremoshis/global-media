@@ -197,7 +197,6 @@ with st.sidebar:
         if st.button("Record", type="primary"):
             status, recording = record_m3u8(10, "https://live-hls-web-aje-fa.getaj.net/AJE/02.m3u8", "https://live-hls-web-aje-fa.getaj.net/AJE/")
             if status == True:
-                st.video(recording)
                 with open(recording, 'rb') as f:
                     dwnbtn = st.download_button("Download", data=f, mime="video/mp4")
 
