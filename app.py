@@ -195,10 +195,9 @@ with st.sidebar:
         selection = st.selectbox("Outlet:", broadcasters_df['Name'], index=st.session_state['index'])
         record_time = st.slider("Record length (minutes):", min_value=.5, max_value=5.0, step=.5)
         if st.button("Record", type="primary"):
-            record = record_m3u8(10, "https://live-hls-web-aje-fa.getaj.net/AJE/02.m3u8", "https://live-hls-web-aje-fa.getaj.net/AJE/")
-            st.write(record)
-            if record == "Success.":
-                st.video(record)
+            status, recording = record_m3u8(10, "https://live-hls-web-aje-fa.getaj.net/AJE/02.m3u8", "https://live-hls-web-aje-fa.getaj.net/AJE/")
+            if status == True:
+                st.video(recording)
 
     else:
         selections = st.multiselect("Select outlets:", broadcasters_df['Name'], max_selections=4)
