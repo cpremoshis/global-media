@@ -198,7 +198,8 @@ with st.sidebar:
             status, recording = record_m3u8(10, "https://live-hls-web-aje-fa.getaj.net/AJE/02.m3u8", "https://live-hls-web-aje-fa.getaj.net/AJE/")
             if status == True:
                 st.video(recording)
-                st.download_button("Download", recording)
+                with open(recording, 'rb') as f:
+                    st.download_button("Download", data=recording)
 
     else:
         selections = st.multiselect("Select outlets:", broadcasters_df['Name'], max_selections=4)
