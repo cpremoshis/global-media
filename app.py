@@ -2,6 +2,7 @@ import streamlit as st
 import streamlit.components.v1 as components
 import pandas as pd
 import requests
+import test2 import record_m3u8
 
 st.set_page_config(
     page_title="Global Media",
@@ -194,8 +195,11 @@ with st.sidebar:
         selection = st.selectbox("Outlet:", broadcasters_df['Name'], index=st.session_state['index'])
         record_time = st.slider("Record length (minutes):", min_value=.5, max_value=5.0, step=.5)
         if st.button("Record", type="primary"):
-            st.warning("Record feature not yet setup")
-        
+            record = record_m3u8(30, "https://live-hls-web-aje-fa.getaj.net/AJE/02.m3u8", "https://live-hls-web-aje-fa.getaj.net/AJE/", output_file = "./Recording/CONCAT TEST.mp4")
+            st.write(record)
+            if record == "Success.":
+                st.video("./Recording/CONCAT TEST.mp4")
+
     else:
         selections = st.multiselect("Select outlets:", broadcasters_df['Name'], max_selections=4)
 

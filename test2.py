@@ -3,109 +3,111 @@ import time
 import subprocess
 from tqdm import tqdm
 
-m3u8_url = "https://live-hls-web-aje-fa.getaj.net/AJE/02.m3u8"
-root_url = "https://live-hls-web-aje-fa.getaj.net/AJE/"
-#output_file = "/Users/casey/Downloads/CONCAT TEST.mp4"
-output_file = "./Recording/CONCAT TEST.mp4"
+if __name__ == "__main__":
+    
+#    m3u8_url = "https://live-hls-web-aje-fa.getaj.net/AJE/02.m3u8"
+#    root_url = "https://live-hls-web-aje-fa.getaj.net/AJE/"
+#    output_file = "/Users/casey/Downloads/CONCAT TEST.mp4"
+#    output_file = "./Recording/CONCAT TEST.mp4"
 
-#Enter seconds in intervals of FIVE
-def record_m3u8(seconds, playlist_url, root_url, output_file):
+    #Enter seconds in intervals of FIVE
+    def record_m3u8(seconds, playlist_url, root_url, output_file):
 
-    try:
-        files_list = []
-
-        text = requests.get(playlist_url)
-        lines = text.text.splitlines()
-
-        #List of .ts files in M3U8 file
-        ts_files = [line for line in lines if line.endswith(".ts")]
-
-        #Adds any .ts file to "files_list" if that .ts file is not already present
-        for item in ts_files:
-            if root_url + item not in files_list:
-                files_list.append(root_url + item)
-
-        #This is the .ts file that most closely corresponds to the time when user began recording
-        record_start = files_list[-1]
-
-        cycles = seconds / 5
-
-        #Reloads M3U8 playlist every 5 seconds, adding new .ts files to 'files_list'
-        for number in tqdm(range(int(cycles)), desc="Logging .ts files"):
+        try:
+            files_list = []
 
             text = requests.get(playlist_url)
-
             lines = text.text.splitlines()
 
+            #List of .ts files in M3U8 file
             ts_files = [line for line in lines if line.endswith(".ts")]
 
+            #Adds any .ts file to "files_list" if that .ts file is not already present
             for item in ts_files:
                 if root_url + item not in files_list:
                     files_list.append(root_url + item)
 
-            time.sleep(5)
+            #This is the .ts file that most closely corresponds to the time when user began recording
+            record_start = files_list[-1]
 
-        #Creates a new list only with the "record_start" .ts file and those AFTER it
-        record_start_index = files_list.index(record_start)
-        files_list_final = files_list[record_start_index:]
+            cycles = seconds / 5
 
-        #Starting string that will be added to and eventually fed to ffmpeg
-        concat_string = "concat:"
+            #Reloads M3U8 playlist every 5 seconds, adding new .ts files to 'files_list'
+            for number in tqdm(range(int(cycles)), desc="Logging .ts files"):
 
-        #The only difference between the "if" and "else" is that the "else" block does not add a "|" after the file name,
-        #as the last file in the list must end with ."ts" not ".ts|"
-        for number in tqdm(range(0, len(files_list_final)), "Saving .ts files"):
-            if number != len(files_list_final) - 1:
-        
-                item = files_list_final[number]
+                text = requests.get(playlist_url)
 
-#                file_path = f"/Users/casey/Downloads/ts_file_{number}.ts"
-                file_path = f"./Recording/ts_file_{number}.ts"
+                lines = text.text.splitlines()
 
-                response = requests.get(item)
-                if response.status_code == 200:
-                    with open(file_path, 'wb') as file:
-                        file.write(response.content)
+                ts_files = [line for line in lines if line.endswith(".ts")]
 
-                    concat_string = concat_string + file_path + "|"
-                else:
-                    pass
+                for item in ts_files:
+                    if root_url + item not in files_list:
+                        files_list.append(root_url + item)
+
+                time.sleep(5)
+
+            #Creates a new list only with the "record_start" .ts file and those AFTER it
+            record_start_index = files_list.index(record_start)
+            files_list_final = files_list[record_start_index:]
+
+            #Starting string that will be added to and eventually fed to ffmpeg
+            concat_string = "concat:"
+
+            #The only difference between the "if" and "else" is that the "else" block does not add a "|" after the file name,
+            #as the last file in the list must end with ."ts" not ".ts|"
+            for number in tqdm(range(0, len(files_list_final)), "Saving .ts files"):
+                if number != len(files_list_final) - 1:
             
-            else:
-                item = files_list_final[number]
+                    item = files_list_final[number]
 
-#                file_path = f"/Users/casey/Downloads/ts_file_{number}.ts"
-                file_path = f"./Recording/ts_file_{number}.ts"
+    #                file_path = f"/Users/casey/Downloads/ts_file_{number}.ts"
+                    file_path = f"./Recording/ts_file_{number}.ts"
 
-                response = requests.get(item)
-                if response.status_code == 200:
-                    with open(file_path, 'wb') as file:
-                        file.write(response.content)
+                    response = requests.get(item)
+                    if response.status_code == 200:
+                        with open(file_path, 'wb') as file:
+                            file.write(response.content)
 
-                    concat_string = concat_string + file_path
+                        concat_string = concat_string + file_path + "|"
+                    else:
+                        pass
+                
                 else:
-                    pass
+                    item = files_list_final[number]
 
-        #Combines .ts files using 'ffmpeg'
-        command = [
-            'ffmpeg',
-            '-i', concat_string,
-            '-c', 'copy',
-            '-bsf:a', 'aac_adtstoasc',
-            output_file
-        ]
+    #                file_path = f"/Users/casey/Downloads/ts_file_{number}.ts"
+                    file_path = f"./Recording/ts_file_{number}.ts"
 
-        subprocess.run(command)
+                    response = requests.get(item)
+                    if response.status_code == 200:
+                        with open(file_path, 'wb') as file:
+                            file.write(response.content)
 
-        return "Success."
+                        concat_string = concat_string + file_path
+                    else:
+                        pass
 
-    except Exception as error:
+            #Combines .ts files using 'ffmpeg'
+            command = [
+                'ffmpeg',
+                '-i', concat_string,
+                '-c', 'copy',
+                '-bsf:a', 'aac_adtstoasc',
+                output_file
+            ]
 
-        return error
+            subprocess.run(command)
 
-record = record_m3u8(30, m3u8_url, root_url, output_file)
+            return "Success."
 
-print(record)
+        except Exception as error:
+
+            return error
+
+#    record = record_m3u8(30, m3u8_url, root_url, output_file)
+
+#    print(record)
 
 
 #container = st.empty()
