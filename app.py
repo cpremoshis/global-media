@@ -199,7 +199,7 @@ with st.sidebar:
             if status == True:
                 st.video(recording)
                 with open(recording, 'rb') as f:
-                    dwnbtn = st.download_button("Download", data=recording)
+                    dwnbtn = st.download_button("Download", data=f, mime="video/mp4")
 
     else:
         selections = st.multiselect("Select outlets:", broadcasters_df['Name'], max_selections=4)
