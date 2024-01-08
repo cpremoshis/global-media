@@ -104,7 +104,7 @@ def record_m3u8(seconds, playlist_url, root_url):
 
         subprocess.run(command)
 
-        return "Success."
+        return output_file
 
     except Exception as error:
 

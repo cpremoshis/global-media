@@ -198,7 +198,7 @@ with st.sidebar:
             record = record_m3u8(10, "https://live-hls-web-aje-fa.getaj.net/AJE/02.m3u8", "https://live-hls-web-aje-fa.getaj.net/AJE/")
             st.write(record)
             if record == "Success.":
-                st.video("./Recording/CONCAT TEST.mp4")
+                st.video(record)
 
     else:
         selections = st.multiselect("Select outlets:", broadcasters_df['Name'], max_selections=4)
