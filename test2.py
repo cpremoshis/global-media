@@ -7,7 +7,7 @@ from tqdm import tqdm
 #    m3u8_url = "https://live-hls-web-aje-fa.getaj.net/AJE/02.m3u8"
 #    root_url = "https://live-hls-web-aje-fa.getaj.net/AJE/"
 #    output_file = "/Users/casey/Downloads/CONCAT TEST.mp4"
-#    output_file = "./Recording/CONCAT TEST.mp4"
+#    output_file = "./Recordings/CONCAT TEST.mp4"
 
 #Enter seconds in intervals of FIVE
 def record_m3u8(seconds, playlist_url, root_url):
@@ -65,7 +65,7 @@ def record_m3u8(seconds, playlist_url, root_url):
                 item = files_list_final[number]
 
 #                file_path = f"/Users/casey/Downloads/ts_file_{number}.ts"
-                file_path = f"./Recording/ts_file_{number}.ts"
+                file_path = f"./Recordings/ts_file_{number}.ts"
 
                 response = requests.get(item)
                 if response.status_code == 200:
@@ -80,7 +80,7 @@ def record_m3u8(seconds, playlist_url, root_url):
                 item = files_list_final[number]
 
 #                file_path = f"/Users/casey/Downloads/ts_file_{number}.ts"
-                file_path = f"./Recording/ts_file_{number}.ts"
+                file_path = f"./Recordings/ts_file_{number}.ts"
 
                 response = requests.get(item)
                 if response.status_code == 200:
