@@ -194,7 +194,7 @@ with st.sidebar:
         selection = st.selectbox("Outlet:", broadcasters_df['Name'], index=st.session_state['index'])
         record_time = st.slider("Record length (minutes):", min_value=.5, max_value=5.0, step=.5)
         if st.button("Record", type="primary"):
-            st.warning("Record feature not yet complete")
+            st.warning("Record feature not yet setup")
         
     else:
         selections = st.multiselect("Select outlets:", broadcasters_df['Name'], max_selections=4)
