@@ -91,7 +91,7 @@ def record_m3u8(seconds, playlist_url, root_url):
                 else:
                     pass
 
-        output_file = f"./Recordings/TEST_{savetime}.mp4"
+        output_file = str(f"./Recordings/TEST_{savetime}.mp4")
 
         #Combines .ts files using 'ffmpeg'
         command = [
