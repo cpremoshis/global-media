@@ -1,5 +1,6 @@
 import requests
 import time
+from datetime import datetime
 import subprocess
 from tqdm import tqdm
     
@@ -9,9 +10,13 @@ from tqdm import tqdm
 #    output_file = "./Recording/CONCAT TEST.mp4"
 
 #Enter seconds in intervals of FIVE
-def record_m3u8(seconds, playlist_url, root_url, output_file):
+def record_m3u8(seconds, playlist_url, root_url):
 
     try:
+
+        now = datetime.now()
+        savetime = now.strftime("%Y_%m_%d_%H%M%S")
+
         files_list = []
 
         text = requests.get(playlist_url)
@@ -85,6 +90,8 @@ def record_m3u8(seconds, playlist_url, root_url, output_file):
                     concat_string = concat_string + file_path
                 else:
                     pass
+
+        output_file = f"./Recordings/TEST_{savetime}.mp4"
 
         #Combines .ts files using 'ffmpeg'
         command = [
