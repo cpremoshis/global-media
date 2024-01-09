@@ -193,7 +193,9 @@ with st.sidebar:
             st.session_state['index'] = 0
 
         selection = st.selectbox("Outlet:", broadcasters_df['Name'], index=st.session_state['index'])
+
         record_time = st.slider("Record length (minutes):", min_value=.5, max_value=5.0, step=.5)
+        
         if st.button("Record", type="primary"):
             status, recording = record_m3u8(10, "https://live-hls-web-aje-fa.getaj.net/AJE/02.m3u8", "https://live-hls-web-aje-fa.getaj.net/AJE/")
             if status == True:
@@ -223,6 +225,7 @@ if display_type == "Single":
         player_html, player_size = result
         components.html(player_html, height=player_size)
     else:
+        #For YouTube streams
         player_html = result[0]
 
     st.subheader("Summary")
