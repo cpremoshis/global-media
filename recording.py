@@ -172,7 +172,7 @@ def record_youtube(outlet, seconds, stream_url):
         yt_dlp_command = [
             'yt-dlp',
             '-g',
-            stream_url
+            f'"{stream_url}"'
         ]
 
         result = subprocess.run(yt_dlp_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
