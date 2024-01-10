@@ -205,7 +205,7 @@ with st.sidebar:
                 if selection_format == "M3U8":
                     status, recording = record_m3u8(selection_name, record_time, selection_media_url, selection_root_url)
                 elif selection_format == "YouTube":
-                    status, recoording = record_youtube(selection_name, record_time, selection_media_url)
+                    status, recording = record_youtube(selection_name, record_time, selection_media_url)
 
             if status == True:
                 with open(recording, 'rb') as f:
