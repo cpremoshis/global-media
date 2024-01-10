@@ -22,33 +22,69 @@ def record_m3u8(outlet, seconds, playlist_url, root_url):
         text = requests.get(playlist_url)
         lines = text.text.splitlines()
 
-        #List of .ts files in M3U8 file
-        ts_files = [line for line in lines if line.endswith(".ts")]
-
-        #Adds any .ts file to "files_list" if that .ts file is not already present
-        for item in ts_files:
-            if root_url + item not in files_list:
-                files_list.append(root_url + item)
-
-        #This is the .ts file that most closely corresponds to the time when user began recording
-        record_start = files_list[-1]
-
-        cycles = seconds / 5
-
-        #Reloads M3U8 playlist every 5 seconds, adding new .ts files to 'files_list'
-        for number in tqdm(range(int(cycles)), desc="Logging .ts files"):
-
-            text = requests.get(playlist_url)
-
-            lines = text.text.splitlines()
-
+        #.ts files
+        try:
+            #List of .ts files in M3U8 file
             ts_files = [line for line in lines if line.endswith(".ts")]
 
+            #Adds any .ts file to "files_list" if that .ts file is not already present
             for item in ts_files:
                 if root_url + item not in files_list:
                     files_list.append(root_url + item)
 
-            time.sleep(5)
+            #This is the .ts file that most closely corresponds to the time when user began recording
+            record_start = files_list[-1]
+
+            cycles = seconds / 5
+
+            #Reloads M3U8 playlist every 5 seconds, adding new .ts files to 'files_list'
+            for number in tqdm(range(int(cycles)), desc="Logging .ts files"):
+
+                text = requests.get(playlist_url)
+
+                lines = text.text.splitlines()
+
+                ts_files = [line for line in lines if line.endswith(".ts")]
+
+                for item in ts_files:
+                    if root_url + item not in files_list:
+                        files_list.append(root_url + item)
+
+                time.sleep(5)
+
+            media_type = ".ts"
+            
+        #.aac files
+        except:
+            #List of .aac files in M3U8 file
+            aac_files = [line for line in lines if line.endswith(".aac")]
+
+            #Adds any .aac file to "files_list" if that .aac file is not already present
+            for item in aac_files:
+                if root_url + item not in files_list:
+                    files_list.append(root_url + item)
+
+            #This is the .aac file that most closely corresponds to the time when user began recording
+            record_start = files_list[-1]
+
+            cycles = seconds / 5
+
+            #Reloads M3U8 playlist every 5 seconds, adding new .aac files to 'files_list'
+            for number in tqdm(range(int(cycles)), desc="Logging .aac files"):
+
+                text = requests.get(playlist_url)
+
+                lines = text.text.splitlines()
+
+                aac_files = [line for line in lines if line.endswith(".aac")]
+
+                for item in aac_files:
+                    if root_url + item not in files_list:
+                        files_list.append(root_url + item)
+
+                time.sleep(5)
+
+            media_type = ".aac"
 
         #Creates a new list only with the "record_start" .ts file and those AFTER it
         record_start_index = files_list.index(record_start)
@@ -59,13 +95,13 @@ def record_m3u8(outlet, seconds, playlist_url, root_url):
 
         #The only difference between the "if" and "else" is that the "else" block does not add a "|" after the file name,
         #as the last file in the list must end with ."ts" not ".ts|"
-        for number in tqdm(range(0, len(files_list_final)), "Saving .ts files"):
+        for number in tqdm(range(0, len(files_list_final)), f"Saving {media_type} files"):
             if number != len(files_list_final) - 1:
         
                 item = files_list_final[number]
 
-#                file_path = f"/Users/casey/Downloads/ts_file_{number}.ts"
-                file_path = f"./Recordings/ts_file_{number}.ts"
+#                file_path = f"/Users/casey/Downloads/ts_file_{number}.{media_type}"
+                file_path = f"./Recordings/ts_file_{number}.{media_type}"
 
                 response = requests.get(item)
                 if response.status_code == 200:
@@ -79,8 +115,8 @@ def record_m3u8(outlet, seconds, playlist_url, root_url):
             else:
                 item = files_list_final[number]
 
-#                file_path = f"/Users/casey/Downloads/ts_file_{number}.ts"
-                file_path = f"./Recordings/ts_file_{number}.ts"
+#                file_path = f"/Users/casey/Downloads/ts_file_{number}.{media_type}"
+                file_path = f"./Recordings/ts_file_{number}.{media_type}"
 
                 response = requests.get(item)
                 if response.status_code == 200:
@@ -94,17 +130,31 @@ def record_m3u8(outlet, seconds, playlist_url, root_url):
         output_file = f"./Recordings/{outlet}_{savetime}.mp4"
 
         #Combines .ts files using 'ffmpeg'
-        command = [
-            'ffmpeg',
-            '-i', concat_string,
-            '-c:v', 'copy',
-            '-c:a', 'copy',
-            output_file
-        ]
+        if media_type == ".ts":
+            command = [
+                'ffmpeg',
+                '-i', concat_string,
+                '-c:v', 'copy',
+                '-c:a', 'copy',
+                output_file
+            ]
 
-        subprocess.run(command)
+            subprocess.run(command)
 
-        return True, output_file
+            return True, output_file
+
+        #Combines .aac files using 'ffmpeg'
+        elif media_type == ".aac":
+            command = [
+                'ffmpeg',
+                '-i', concat_string,
+                '-c:a', 'copy',
+                output_file
+            ]
+
+            subprocess.run(command)
+
+            return True, output_file
 
     except Exception as error:
 
