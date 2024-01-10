@@ -160,6 +160,10 @@ def record_m3u8(outlet, seconds, playlist_url, root_url):
 
         return error
     
+def record_mp3(outlet, seconds, stream_url):
+    tbd
+
+
 
 #Original ffmpeg command
 #    command = [
