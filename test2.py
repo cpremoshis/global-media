@@ -10,7 +10,7 @@ from tqdm import tqdm
 #    output_file = "./Recordings/CONCAT TEST.mp4"
 
 #Enter seconds in intervals of FIVE
-def record_m3u8(seconds, playlist_url, root_url):
+def record_m3u8(outlet, seconds, playlist_url, root_url):
 
     try:
 
@@ -91,7 +91,7 @@ def record_m3u8(seconds, playlist_url, root_url):
                 else:
                     pass
 
-        output_file = f"./Recordings/TEST_{savetime}.mp4"
+        output_file = f"./Recordings/{outlet}_{savetime}.mp4"
 
         #Combines .ts files using 'ffmpeg'
         command = [

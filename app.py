@@ -201,7 +201,7 @@ with st.sidebar:
         record_time = record_time * 60
 
         if st.button("Record", type="primary"):
-            status, recording = record_m3u8(record_time, selection_media_url, selection_root_url)
+            status, recording = record_m3u8(selection_name, record_time, selection_media_url, selection_root_url)
             if status == True:
                 with open(recording, 'rb') as f:
                     file_name = recording.split("/")[2]
