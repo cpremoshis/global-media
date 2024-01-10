@@ -198,7 +198,7 @@ with st.sidebar:
         record_time = st.slider("Record length (minutes):", min_value=.5, max_value=5.0, step=.5)
         
         if st.button("Record", type="primary"):
-            status, recording = record_m3u8(10, "https://live-hls-web-aje-fa.getaj.net/AJE/02.m3u8", "https://live-hls-web-aje-fa.getaj.net/AJE/")
+            status, recording = record_m3u8(10, selection_media_url, selection_root_url)
             if status == True:
                 with open(recording, 'rb') as f:
                     dwnbtn = st.download_button("Download", data=f, mime="video/mp4")
