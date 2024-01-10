@@ -198,7 +198,7 @@ with st.sidebar:
         record_time = st.slider("Record length (minutes):", min_value=.5, max_value=5.0, step=.5)
         
         if st.button("Record", type="primary"):
-            status, recording = record_m3u8(10, selection_media_url, selection_root_url)
+            status, recording = record_m3u8(10, st.session_state['recording_playlist_url'], st.session_state['recording_root_url'])
             if status == True:
                 with open(recording, 'rb') as f:
                     dwnbtn = st.download_button("Download", data=f, mime="video/mp4")
@@ -211,6 +211,8 @@ with st.sidebar:
 #Media display
 if display_type == "Single":
     selection_name, selection_country, selection_format, selection_type, selection_wiki, selection_media_url, selection_root_url, selection_page_url = pull_data(selection)
+    st.session_state['recording_playlist_url'] = selection_media_url
+    st.session_state['recording_root_url'] = selection_root_url
 
     #Metrics/info display
     left_column, middle_column, right_column = st.columns(3)
