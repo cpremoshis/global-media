@@ -204,10 +204,10 @@ with st.sidebar:
             with st.spinner("Recording in progress. Do not change any settings."):
                 status, recording = record_m3u8(selection_name, record_time, selection_media_url, selection_root_url)
 
-        if status == True:
-            with open(recording, 'rb') as f:
-                file_name = recording.split("/")[2]
-                dwnbtn = st.download_button("Download", data=f, file_name=file_name, mime="video/mp4")
+            if status == True:
+                with open(recording, 'rb') as f:
+                    file_name = recording.split("/")[2]
+                    dwnbtn = st.download_button("Download", data=f, file_name=file_name, mime="video/mp4")
 
     else:
         selections = st.multiselect("Select outlets:", broadcasters_df['Name'], max_selections=4)
