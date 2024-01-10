@@ -163,6 +163,116 @@ def record_m3u8(outlet, seconds, playlist_url, root_url):
 def record_mp3(outlet, seconds, stream_url):
     tbd
 
+def record_youtube(outlet, seconds, stream_url):
+    try:
+
+        now = datetime.now()
+        savetime = now.strftime("%Y_%m_%d_%H%M%S")
+
+        yt_dlp_command = [
+            'yt-dlp',
+            'g',
+            stream_url
+        ]
+
+        result = subprocess.run(yt_dlp_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+
+        if result.returncode == 0:
+            m3u8_url = result.stdout.strip()
+ 
+        files_list = []
+
+        text = requests.get(m3u8_url)
+        lines = text.text.splitlines()
+
+        #List of .ts files in M3U8 file
+        ts_files = [line for line in lines if line.endswith(".ts")]
+
+        #Adds any .ts file to "files_list" if that .ts file is not already present
+        for item in ts_files:
+            if item not in files_list:
+                files_list.append(item)
+
+        #This is the .ts file that most closely corresponds to the time when user began recording
+        record_start = files_list[-1]
+
+        cycles = seconds / 5
+
+        #Reloads M3U8 playlist every 5 seconds, adding new .ts files to 'files_list'
+        for number in tqdm(range(int(cycles)), desc="Logging .ts files"):
+
+            text = requests.get(m3u8_url)
+
+            lines = text.text.splitlines()
+
+            ts_files = [line for line in lines if line.endswith(".ts")]
+
+            for item in ts_files:
+                if item not in files_list:
+                    files_list.append(item)
+
+            time.sleep(5)
+
+        media_type = ".ts"
+
+        #Creates a new list only with the "record_start" .ts file and those AFTER it
+        record_start_index = files_list.index(record_start)
+        files_list_final = files_list[record_start_index:]
+
+        #Starting string that will be added to and eventually fed to ffmpeg
+        concat_string = "concat:"
+
+        #The only difference between the "if" and "else" is that the "else" block does not add a "|" after the file name,
+        #as the last file in the list must end with ."ts" not ".ts|"
+        for number in tqdm(range(0, len(files_list_final)), f"Saving {media_type} files"):
+            if number != len(files_list_final) - 1:
+        
+                item = files_list_final[number]
+
+#                file_path = f"/Users/casey/Downloads/ts_file_{number}.{media_type}"
+                file_path = f"./Recordings/ts_file_{number}.{media_type}"
+
+                response = requests.get(item)
+                if response.status_code == 200:
+                    with open(file_path, 'wb') as file:
+                        file.write(response.content)
+
+                    concat_string = concat_string + file_path + "|"
+                else:
+                    pass
+            
+            else:
+                item = files_list_final[number]
+
+#                file_path = f"/Users/casey/Downloads/ts_file_{number}.{media_type}"
+                file_path = f"./Recordings/ts_file_{number}.{media_type}"
+
+                response = requests.get(item)
+                if response.status_code == 200:
+                    with open(file_path, 'wb') as file:
+                        file.write(response.content)
+
+                    concat_string = concat_string + file_path
+                else:
+                    pass
+
+        output_file = f"./Recordings/{outlet}_{savetime}.mp4"
+
+        #Combines .ts files using 'ffmpeg'
+        command = [
+            'ffmpeg',
+            '-i', concat_string,
+            '-c:v', 'copy',
+            '-c:a', 'copy',
+            output_file
+        ]
+
+        subprocess.run(command)
+
+        return True, output_file
+
+    except Exception as e:
+        return e
 
 
 #Original ffmpeg command
