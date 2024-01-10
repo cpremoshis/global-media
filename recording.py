@@ -272,7 +272,7 @@ def record_youtube(outlet, seconds, stream_url):
         return True, output_file
 
     except Exception as e:
-        return e, e
+        return False, e
 
 
 #Original ffmpeg command
