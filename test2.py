@@ -97,8 +97,8 @@ def record_m3u8(outlet, seconds, playlist_url, root_url):
         command = [
             'ffmpeg',
             '-i', concat_string,
-            '-c', 'copy',
-            '-bsf:a', 'aac_adtstoasc',
+            '-c:v', 'copy',
+            '-c:a', 'copy',
             output_file
         ]
 
@@ -109,3 +109,13 @@ def record_m3u8(outlet, seconds, playlist_url, root_url):
     except Exception as error:
 
         return error
+    
+
+#Original ffmpeg command
+#    command = [
+#    'ffmpeg',
+#    '-i', concat_string,
+#    '-c', 'copy',
+#    '-bsf:a', 'aac_adtstoasc',
+#    output_file
+#]
