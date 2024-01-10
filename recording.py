@@ -171,7 +171,7 @@ def record_youtube(outlet, seconds, stream_url):
 
         yt_dlp_command = [
             'yt-dlp',
-            'g',
+            '-g',
             stream_url
         ]
 
