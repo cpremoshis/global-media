@@ -221,15 +221,17 @@ with st.sidebar:
 
             download_select = st.selectbox("Recorded files:", st.session_state['recordings'])
 
+
+
             if download_select.endswith(".mp3"):
                 with open(download_select, 'rb') as f:
                     file_name = download_select.split("/")[2]
-                dwnbtn = st.download_button("Download", type='primary', data=f, file_name=file_name, mime="audio/mpeg")
+                    dwnbtn = st.download_button("Download", type='primary', data=f, file_name=file_name, mime="audio/mpeg")
             
             else:                        
                 with open(download_select, 'rb') as f:
                     file_name = download_select.split("/")[2]
-                dwnbtn = st.download_button("Download", type='primary', data=f, file_name=file_name, mime="video/mp4")
+                    dwnbtn = st.download_button("Download", type='primary', data=f, file_name=file_name, mime="video/mp4")
 
     else:
         selections = st.multiselect("Select outlets:", broadcasters_df['Name'], max_selections=4)
