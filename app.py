@@ -219,9 +219,11 @@ with st.sidebar:
 
         if len(st.session_state['recordings']) != 0:
 
-            download_select = st.selectbox("Recordings:", st.session_state['recordings'], index=len(st.session_state['recordings'])-1)
+            def format_file_names(option):
+                option = download_select.split("/")[2]
+                return option
 
-
+            download_select = st.selectbox("Recordings:", st.session_state['recordings'], format_func=format_file_names ,index=len(st.session_state['recordings'])-1)
 
             if download_select.endswith(".mp3"):
                 with open(download_select, 'rb') as f:
