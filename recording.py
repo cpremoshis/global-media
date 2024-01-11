@@ -25,7 +25,7 @@ def record_m3u8(outlet, seconds, playlist_url, root_url):
         #.ts files
         try:
             #List of .ts files in M3U8 file
-            ts_files = [line for line in lines if ".ts" in line]
+            ts_files = [line for line in lines if line.endswith(".ts")]
 
             #Adds any .ts file to "files_list" if that .ts file is not already present
             for item in ts_files:
@@ -44,7 +44,7 @@ def record_m3u8(outlet, seconds, playlist_url, root_url):
 
                 lines = text.text.splitlines()
 
-                ts_files = [line for line in lines if ".ts" in line]
+                ts_files = [line for line in lines if line.endswith(".ts")]
 
                 for item in ts_files:
                     if root_url + item not in files_list:
