@@ -160,34 +160,6 @@ def record_m3u8(outlet, seconds, playlist_url, root_url):
 
         return False, e
     
-def record_mp3(outlet, seconds, stream_url):
-
-    try:
-        now = datetime.now()
-        savetime = now.strftime("%Y_%m_%d_%H%M%S")
-
-        response = requests.get(stream_url, stream=True)
-
-        start_time = time.time()
-
-        output_file = f"./Recordings/{outlet}_{savetime}.mp3"
-
-        with open(output_file, 'wb') as f:
-            for block in response.iter_content(1024):
-                elapsed_time = time.time() - start_time
-
-                if elapsed_time > seconds:
-                    break
-                f.write(block)
-        
-        response.close()
-
-        return True, output_file
-    
-    except Exception as e:
-        
-        return False, e
-
 def record_youtube(outlet, seconds, stream_url):
     try:
 
@@ -298,6 +270,35 @@ def record_youtube(outlet, seconds, stream_url):
 
     except Exception as e:
         return False, e
+
+def record_mp3(outlet, seconds, stream_url):
+
+    try:
+        now = datetime.now()
+        savetime = now.strftime("%Y_%m_%d_%H%M%S")
+
+        response = requests.get(stream_url, stream=True)
+
+        start_time = time.time()
+
+        output_file = f"./Recordings/{outlet}_{savetime}.mp3"
+
+        with open(output_file, 'wb') as f:
+            for block in response.iter_content(1024):
+                elapsed_time = time.time() - start_time
+
+                if elapsed_time > seconds:
+                    break
+                f.write(block)
+        
+        response.close()
+
+        return True, output_file
+    
+    except Exception as e:
+        
+        return False, e
+
 
 
 #Original ffmpeg command

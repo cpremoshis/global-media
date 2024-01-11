@@ -2,7 +2,7 @@ import streamlit as st
 import streamlit.components.v1 as components
 import pandas as pd
 import requests
-from recording import record_m3u8, record_youtube
+from recording import record_m3u8, record_youtube, record_mp3
 
 st.set_page_config(
     page_title="Global Media",
@@ -204,6 +204,8 @@ with st.sidebar:
             with st.spinner("Recording in progress. Do not change any settings."):
                 if selection_format == "M3U8":
                     status, recording = record_m3u8(selection_name, record_time, selection_media_url, selection_root_url)
+                elif selection_format == "MP3":
+                    status, recording = record_mp3(selection_name, record_time, selection_media_url)
                 elif selection_format == "YouTube":
                     status, recording = record_youtube(selection_name, record_time, selection_media_url)
 
