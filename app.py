@@ -182,6 +182,9 @@ def generate_player(format, type, url, muted=""):
 #Opens database to load media outlet data
 broadcasters_df = open_database()
 
+if 'recordings' not in st.session_state:
+    st.session_state['recordings'] = []
+
 #Sidebar with user input options
 with st.sidebar:
     st.title("Title TBD")
@@ -201,7 +204,9 @@ with st.sidebar:
         record_time = record_time * 60
 
         if st.button("Record", type="primary"):
+
             with st.spinner("Recording in progress. Do not change any settings."):
+
                 if selection_format == "M3U8":
                     status, recording = record_m3u8(selection_name, record_time, selection_media_url, selection_root_url)
                 elif selection_format == "MP3":
@@ -210,15 +215,21 @@ with st.sidebar:
                     status, recording = record_youtube(selection_name, record_time, selection_media_url)
 
             if status == True:
-                if selection_format == "MP3":
-                    with open(recording, 'rb') as f:
-                        file_name = recording.split("/")[2]
-                        dwnbtn = st.download_button("Download", type='primary', data=f, file_name=file_name, mime="audio/mpeg")
-                
-                else:                        
-                    with open(recording, 'rb') as f:
-                        file_name = recording.split("/")[2]
-                        dwnbtn = st.download_button("Download", type='primary', data=f, file_name=file_name, mime="video/mp4")
+                st.session_state['recordings'] = st.session_state['recordings'].append(recording)
+
+        if len(st.session_state['recordings']) != 0:
+
+            download_select = st.selectbox("Recorded files:", st.session_state['recordings'])
+
+            if download_select.endswith(".mp3"):
+                with open(download_select, 'rb') as f:
+                    file_name = download_select.split("/")[2]
+                    dwnbtn = st.download_button("Download", type='primary', data=f, file_name=file_name, mime="audio/mpeg")
+            
+            else:                        
+                with open(download_select, 'rb') as f:
+                    file_name = download_select.split("/")[2]
+                    dwnbtn = st.download_button("Download", type='primary', data=f, file_name=file_name, mime="video/mp4")
 
     else:
         selections = st.multiselect("Select outlets:", broadcasters_df['Name'], max_selections=4)
