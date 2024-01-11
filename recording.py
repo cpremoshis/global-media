@@ -130,7 +130,7 @@ def record_m3u8(outlet, seconds, playlist_url, root_url):
         output_file = f"./Recordings/{outlet}_{savetime}.mp4"
 
         #Combines .ts files using 'ffmpeg'
-        if media_type == ".ts":
+        if media_type == "ts":
             command = [
                 'ffmpeg',
                 '-i', concat_string,
@@ -144,7 +144,7 @@ def record_m3u8(outlet, seconds, playlist_url, root_url):
             return True, output_file
 
         #Combines .aac files using 'ffmpeg'
-        elif media_type == ".aac":
+        elif media_type == "aac":
             command = [
                 'ffmpeg',
                 '-i', concat_string,
