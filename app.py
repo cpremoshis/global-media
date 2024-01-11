@@ -210,9 +210,14 @@ with st.sidebar:
                     status, recording = record_youtube(selection_name, record_time, selection_media_url)
 
             if status == True:
-                with open(recording, 'rb') as f:
-                    file_name = recording.split("/")[2]
-                    dwnbtn = st.download_button("Download", type='primary', data=f, file_name=file_name, mime="video/mp4")
+                if selection_format == "MP3":
+                    with open(recording, 'rb') as f:
+                        file_name = recording.split("/")[2]
+                        dwnbtn = st.download_button("Download", type='primary', data=f, file_name=file_name, mime="audio/mpeg")
+                else:
+                    with open(recording, 'rb') as f:
+                        file_name = recording.split("/")[2]
+                        dwnbtn = st.download_button("Download", type='primary', data=f, file_name=file_name, mime="video/mp4")
 
     else:
         selections = st.multiselect("Select outlets:", broadcasters_df['Name'], max_selections=4)
