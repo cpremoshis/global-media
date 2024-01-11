@@ -219,7 +219,7 @@ with st.sidebar:
 
         if len(st.session_state['recordings']) != 0:
 
-            download_select = st.selectbox("Recorded files:", st.session_state['recordings'], index=len(st.session_state['recordings'])-1)
+            download_select = st.selectbox("Recordings:", st.session_state['recordings'], index=len(st.session_state['recordings'])-1)
 
 
 
