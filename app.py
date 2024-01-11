@@ -182,6 +182,7 @@ def generate_player(format, type, url, muted=""):
 #Opens database to load media outlet data
 broadcasters_df = open_database()
 
+#Sets a default index to keep track of recordings for the session
 if 'recordings' not in st.session_state:
     st.session_state['recordings'] = []
 
@@ -217,6 +218,7 @@ with st.sidebar:
             if status == True:
                 st.session_state['recordings'].append(recording)
 
+        #Displays selection box if the 'recordings' list contains items
         if len(st.session_state['recordings']) != 0:
 
             def format_file_names(option):
@@ -225,11 +227,13 @@ with st.sidebar:
 
             download_select = st.selectbox("Recordings:", st.session_state['recordings'], format_func=format_file_names ,index=len(st.session_state['recordings'])-1)
 
+            #Download option for MP3s
             if download_select.endswith(".mp3"):
                 with open(download_select, 'rb') as f:
                     file_name = download_select.split("/")[2]
                     dwnbtn = st.download_button("Download", type='primary', data=f, file_name=file_name, mime="audio/mpeg")
             
+            #Download option for non-MP3s
             else:                        
                 with open(download_select, 'rb') as f:
                     file_name = download_select.split("/")[2]
