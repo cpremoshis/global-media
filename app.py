@@ -215,7 +215,7 @@ with st.sidebar:
                     status, recording = record_youtube(selection_name, record_time, selection_media_url)
 
             if status == True:
-                st.session_state['recordings'] = st.session_state['recordings'].append(recording)
+                st.session_state['recordings'].append(recording)
 
         if len(st.session_state['recordings']) != 0:
 
