@@ -220,7 +220,7 @@ with st.sidebar:
         if len(st.session_state['recordings']) != 0:
 
             def format_file_names(option):
-                option = download_select.split("/")[2]
+                option = option.split("/")[2]
                 return option
 
             download_select = st.selectbox("Recordings:", st.session_state['recordings'], format_func=format_file_names ,index=len(st.session_state['recordings'])-1)
