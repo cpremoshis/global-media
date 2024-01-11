@@ -52,7 +52,7 @@ def record_m3u8(outlet, seconds, playlist_url, root_url):
 
                 time.sleep(5)
 
-            media_type = ".ts"
+            media_type = "ts"
             
         #.aac files
         except:
@@ -84,7 +84,7 @@ def record_m3u8(outlet, seconds, playlist_url, root_url):
 
                 time.sleep(5)
 
-            media_type = ".aac"
+            media_type = "aac"
 
         #Creates a new list only with the "record_start" .ts file and those AFTER it
         record_start_index = files_list.index(record_start)
@@ -210,7 +210,7 @@ def record_youtube(outlet, seconds, stream_url):
 
             time.sleep(5)
 
-        media_type = ".ts"
+        media_type = "ts"
 
         #Creates a new list only with the "record_start" .ts file and those AFTER it
         record_start_index = files_list.index(record_start)
