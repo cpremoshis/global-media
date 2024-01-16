@@ -210,7 +210,7 @@ with st.sidebar:
             st.session_state['index'] = 0
 
         st.session_state['selection'] = st.selectbox("Outlet:", broadcasters_filtered_by_lang, index=st.session_state['index'])
-        st.session_state['index'] = broadcasters_df[broadcasters_df['Name'] == st.session_state['selection']].index
+        st.session_state['index'] = broadcasters_df.index[broadcasters_df['Name'] == st.session_state['selection']]
 
         #selection_name, selection_country, selection_format, selection_type, selection_wiki, selection_media_url, selection_root_url, selection_page_url = pull_data(selection)
         outlet = Outlet(st.session_state['selection'], broadcasters_df)
