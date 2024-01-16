@@ -201,7 +201,7 @@ with st.sidebar:
             if row.Language in languages:
                 broadcasters_filtered_by_lang.append(row.Name)
     except:
-        broadcasters_filtered_by_lang = ['English']
+        languages = ['English']
 
     if display_type == 'Single':
 
