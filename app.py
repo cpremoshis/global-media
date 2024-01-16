@@ -202,7 +202,10 @@ with st.sidebar:
 
         if 'index' not in st.session_state:
             st.session_state['index'] = 0
-            
+        
+        if len(broadcasters_filtered_by_lang) == 0:
+            broadcasters_filtered_by_lang = ['English']
+
         selection = st.selectbox("Outlet:", broadcasters_filtered_by_lang, index=st.session_state['index'])
 
         #selection_name, selection_country, selection_format, selection_type, selection_wiki, selection_media_url, selection_root_url, selection_page_url = pull_data(selection)
