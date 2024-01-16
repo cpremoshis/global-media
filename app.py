@@ -48,7 +48,7 @@ def pull_data(outlet):
     return selection_name, selection_country, selection_format, selection_type, selection_wiki, selection_media_url, selection_root_url, selection_page_url
 
 #Pull data for selected outlet
-@st.cache_data
+@st.cache_resource
 class Outlet:
     def __init__(self, outlet, broadcasters_df):
         outlet_info = broadcasters_df[broadcasters_df['Name'] == outlet].iloc[0]
