@@ -33,21 +33,6 @@ def wiki_summary(outlet_wiki):
     return summary
 
 #Pull data for selected outlet
-@st.cache_data
-def pull_data(outlet):
-    selection_info = broadcasters_df[broadcasters_df['Name'] == outlet]
-    selection_name = selection_info['Name'].iloc[0]
-    selection_country = selection_info['Country'].iloc[0]
-    selection_format = selection_info['Format'].iloc[0]
-    selection_type = selection_info['Type'].iloc[0]
-    selection_wiki = selection_info['Wiki'].iloc[0]
-    selection_media_url = selection_info['Media URL'].iloc[0]
-    selection_root_url = selection_info['Root URL'].iloc[0]
-    selection_page_url = selection_info['Page URL'].iloc[0]
-
-    return selection_name, selection_country, selection_format, selection_type, selection_wiki, selection_media_url, selection_root_url, selection_page_url
-
-#Pull data for selected outlet
 @st.cache_resource
 class Outlet:
     def __init__(self, outlet, broadcasters_df):
