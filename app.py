@@ -192,12 +192,18 @@ with st.sidebar:
     display_type = st.radio("Display type:", ['Single', 'Multiview'], horizontal=True)
     languages = st.multiselect("Select languages:", broadcasters_df['Language'].unique(), default="English")
 
+    #Filters list of outlets based on selected languages
+    broadcasters_filtered_by_lang = []
+    for item in broadcasters_df:
+        if item['Language'] in languages:
+            broadcasters_filtered_by_lang.append(item['Name'])
+
     if display_type == 'Single':
 
         if 'index' not in st.session_state:
             st.session_state['index'] = 0
-
-        selection = st.selectbox("Outlet:", broadcasters_df['Name'], index=st.session_state['index'])
+            
+        selection = st.selectbox("Outlet:", broadcasters_filtered_by_lang, index=st.session_state['index'])
 
         #selection_name, selection_country, selection_format, selection_type, selection_wiki, selection_media_url, selection_root_url, selection_page_url = pull_data(selection)
         outlet = Outlet(selection, broadcasters_df)
