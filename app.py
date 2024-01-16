@@ -209,6 +209,9 @@ with st.sidebar:
         if 'index' not in st.session_state:
             st.session_state['index'] = 0
 
+        if st.session_state['index'] > len(broadcasters_filtered_by_lang):
+            st.session_state['index'] = 0
+
         st.session_state['selection'] = st.selectbox("Outlet:", broadcasters_filtered_by_lang, index=st.session_state['index'])
         st.session_state['index'] = broadcasters_df.index[broadcasters_df['Name'] == st.session_state['selection']].tolist()[0]
 
