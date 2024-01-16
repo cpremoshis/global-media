@@ -190,7 +190,7 @@ with st.sidebar:
     st.title("WorldWatch")
 
     display_type = st.radio("Display type:", ['Single', 'Multiview'], horizontal=True)
-    languages = st.multiselect("Select languages:", broadcasters_df['Language'].unique(), default="English")
+    languages = st.multiselect("Select languages:", broadcasters_df['Language'].unique())
 
     #Filters list of outlets based on selected languages
     #If no language is selected, defaults to 'English'
@@ -198,8 +198,7 @@ with st.sidebar:
 
     if len(languages) == 0:
         for row in broadcasters_df.itertuples():
-            if row.Language == 'English':
-                broadcasters_filtered_by_lang.append(row.Name)
+            broadcasters_filtered_by_lang.append(row.Name)
     else:
         for row in broadcasters_df.itertuples():
             if row.Language in languages:
