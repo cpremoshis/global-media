@@ -196,7 +196,7 @@ with st.sidebar:
     broadcasters_filtered_by_lang = []
     for row in broadcasters_df.itertuples():
         if row.Language in languages:
-            broadcasters_filtered_by_lang.append(row.Language)
+            broadcasters_filtered_by_lang.append(row.Name)
 
     if display_type == 'Single':
 
