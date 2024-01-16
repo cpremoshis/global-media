@@ -51,7 +51,7 @@ def pull_data(outlet):
 @st.cache_data
 class Outlet:
     def __init__(self, outlet, broadcasters_df):
-        outlet_info = df[df['Name'] == outlet].iloc[0]
+        outlet_info = broadcasters_df[broadcasters_df['Name'] == outlet].iloc[0]
         self.name = outlet_info['Name']
         self.country = outlet_info['Country']
         self.format = outlet_info['Format']
