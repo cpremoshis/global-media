@@ -292,10 +292,10 @@ else:
     if selections_len == 1:
         #First (and only) selection
         first_selection = selections[0]
-        first_selection_name, first_selection_country, first_selection_format, first_selection_type, first_selection_wiki, first_selection_media_url, first_selection_root_url, first_selection_page_url = pull_data(first_selection)
+        first_outlet = Outlet(first_selection)
 
         #First (and only) media player
-        result = generate_player(first_selection_format, first_selection_type, first_selection_media_url)
+        result = generate_player(first_outlet.format, first_outlet.type, first_outlet.media_url)
         if result[1] is not None:
             player_html, player_size = result
             components.html(player_html, height=player_size)
@@ -308,15 +308,15 @@ else:
 
         #First selection
         first_selection = selections[0]
-        first_selection_name, first_selection_country, first_selection_format, first_selection_type, first_selection_wiki, first_selection_media_url, first_selection_root_url, first_selection_page_url = pull_data(first_selection)
+        first_outlet = Outlet(first_selection)
 
         #Second selection
         second_selection = selections[1]
-        second_selection_name, second_selection_country, second_selection_format, second_selection_type, second_selection_wiki, second_selection_media_url, second_selection_root_url, second_selection_page_url = pull_data(second_selection)
+        second_outlet = Outlet(second_selection)
 
         #First media player
         with column_left:
-            first_result = generate_player(first_selection_format, first_selection_type, first_selection_media_url)
+            first_result = generate_player(first_outlet.format, first_outlet.type, first_outlet.media_url)
             if first_result[1] is not None:
                 player_html, player_size = first_result
                 components.html(player_html, height=400)
@@ -325,7 +325,7 @@ else:
 
         #Second media player
         with column_right:
-            second_result = generate_player(second_selection_format, second_selection_type, second_selection_media_url, muted="muted")
+            second_result = generate_player(second_outlet.format, second_outlet.type, second_outlet.media_url, muted="muted")
             if second_result[1] is not None:
                 player_html, player_size = second_result
                 components.html(player_html, height=400)
@@ -339,19 +339,19 @@ else:
 
         #First selection
         first_selection = selections[0]
-        first_selection_name, first_selection_country, first_selection_format, first_selection_type, first_selection_wiki, first_selection_media_url, first_selection_root_url, first_selection_page_url = pull_data(first_selection)
+        first_outlet = Outlet(first_selection)
 
         #Second selection
         second_selection = selections[1]
-        second_selection_name, second_selection_country, second_selection_format, second_selection_type, second_selection_wiki, second_selection_media_url, second_selection_root_url, second_selection_page_url = pull_data(second_selection)
+        second_outlet = Outlet(second_selection)
 
         #Third selection
         third_selection = selections[2]
-        third_selection_name, third_selection_country, third_selection_format, third_selection_type, third_selection_wiki, third_selection_media_url, third_selection_root_url, third_selection_page_url = pull_data(third_selection)
+        third_outlet = Outlet(third_selection)
 
         with column_left:
             #First media player
-            first_result = generate_player(first_selection_format, first_selection_type, first_selection_media_url)
+            first_result = generate_player(first_outlet.format, first_outlet.type, first_outlet.media_url)
             if first_result[1] is not None:
                 player_html, player_size = first_result
                 components.html(player_html, height=365)
@@ -360,7 +360,7 @@ else:
 
         with column_right:
             #Second media player
-            second_result = generate_player(second_selection_format, second_selection_type, second_selection_media_url, muted="muted")
+            second_result = generate_player(second_outlet.format, second_outlet.type, second_outlet.media_url, muted="muted")
             if second_result[1] is not None:
                 player_html, player_size = second_result
                 components.html(player_html, height=365)
@@ -369,7 +369,7 @@ else:
 
         with column_middle:
             #Third media player
-            third_result = generate_player(third_selection_format, third_selection_type, third_selection_media_url, muted="muted")
+            third_result = generate_player(third_outlet.format, third_outlet.type, third_outlet.media_url, muted="muted")
             if third_result[1] is not None:
                 player_html, player_size = third_result
                 components.html(player_html, height=365)
@@ -382,23 +382,23 @@ else:
 
         #First selection
         first_selection = selections[0]
-        first_selection_name, first_selection_country, first_selection_format, first_selection_type, first_selection_wiki, first_selection_media_url, first_selection_root_url, first_selection_page_url = pull_data(first_selection)
+        first_outlet = Outlet(first_selection)
 
         #Second selection
         second_selection = selections[1]
-        second_selection_name, second_selection_country, second_selection_format, second_selection_type, second_selection_wiki, second_selection_media_url, second_selection_root_url, second_selection_page_url = pull_data(second_selection)
+        second_outlet = Outlet(second_selection)
 
         #Third selection
         third_selection = selections[2]
-        third_selection_name, third_selection_country, third_selection_format, third_selection_type, third_selection_wiki, third_selection_media_url, third_selection_root_url, third_selection_page_url = pull_data(third_selection)
+        third_outlet = Outlet(third_selection)
 
         #Fourth selection
         fourth_selection = selections[3]
-        fourth_selection_name, fourth_selection_country, fourth_selection_format, fourth_selection_type, fourth_selection_wiki, fourth_selection_media_url, fourth_selection_root_url, fourth_selection_page_url = pull_data(fourth_selection)
+        fourth_outlet = Outlet(fourth_selection)
 
         with column_left:
             #First media player
-            first_result = generate_player(first_selection_format, first_selection_type, first_selection_media_url)
+            first_result = generate_player(first_outlet.format, first_outlet.type, first_outlet.media_url)
             if first_result[1] is not None:
                 player_html, player_size = first_result
                 components.html(player_html, height=365)
@@ -406,7 +406,7 @@ else:
                 player_html = first_result[0]
 
             #Third media player
-            third_result = generate_player(third_selection_format, third_selection_type, third_selection_media_url, muted="muted")
+            third_result = generate_player(third_outlet.format, third_outlet.type, third_outlet.media_url, muted="muted")
             if third_result[1] is not None:
                 player_html, player_size = third_result
                 components.html(player_html, height=365)
@@ -415,7 +415,7 @@ else:
 
         with column_right:
             #Second media player
-            second_result = generate_player(second_selection_format, second_selection_type, second_selection_media_url, muted="muted")
+            second_result = generate_player(second_outlet.format, second_outlet.type, second_outlet.media_url, muted="muted")
             if second_result[1] is not None:
                 player_html, player_size = second_result
                 components.html(player_html, height=365)
@@ -423,7 +423,7 @@ else:
                 player_html = second_result[0]
 
             #Fourth media player
-            fourth_result = generate_player(fourth_selection_format, fourth_selection_type, fourth_selection_media_url, muted="muted")
+            fourth_result = generate_player(fourth_outlet.format, fourth_outlet.type, fourth_outlet.media_url, muted="muted")
             if fourth_result[1] is not None:
                 player_html, player_size = fourth_result
                 components.html(player_html, height=365)
