@@ -212,7 +212,7 @@ with st.sidebar:
         if st.session_state['index'] > len(broadcasters_filtered_by_lang):
             st.session_state['index'] = 0
 
-        st.session_state['selection'] = st.selectbox("Outlet:", broadcasters_filtered_by_lang, index=st.session_state['index'])
+        st.session_state['selection'] = st.selectbox("Outlet:", broadcasters_filtered_by_lang, placeholder="All languages",index=st.session_state['index'])
         st.session_state['index'] = broadcasters_df.index[broadcasters_df['Name'] == st.session_state['selection']].tolist()[0]
 
         #selection_name, selection_country, selection_format, selection_type, selection_wiki, selection_media_url, selection_root_url, selection_page_url = pull_data(selection)
@@ -258,7 +258,7 @@ with st.sidebar:
                     dwnbtn = st.download_button("Download", data=f, file_name=file_name, mime="video/mp4")
 
     else:
-        selections = st.multiselect("Select outlets:", broadcasters_filtered_by_lang, max_selections=4)
+        selections = st.multiselect("Select outlets:", broadcasters_filtered_by_lang, placeholder="All languages", max_selections=4)
 
         selections_len = len(selections)
 
