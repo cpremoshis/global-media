@@ -5,7 +5,7 @@ import requests
 from recording import record_m3u8, record_youtube, record_mp3
 
 st.set_page_config(
-    page_title="Global Media",
+    page_title="WorldWatch",
     page_icon="🌐",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -187,7 +187,7 @@ if 'recordings' not in st.session_state:
 
 #Sidebar with user input options
 with st.sidebar:
-    st.title("Title TBD")
+    st.title("WorldWatch")
 
     display_type = st.radio("Display type:", ['Single', 'Multiview'], horizontal=True)
     languages = st.multiselect("Select languages:", broadcasters_df['Language'].unique(), default="English")
