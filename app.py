@@ -190,7 +190,7 @@ with st.sidebar:
     st.title("Title TBD")
 
     display_type = st.radio("Display type:", ['Single', 'Multiview'], horizontal=True)
-    languages = st.multiselect("Select languages:", broadcasters_df['Language'].unique())
+    languages = st.multiselect("Select languages:", broadcasters_df['Language'].unique()
 
     if display_type == 'Single':
 
