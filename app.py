@@ -206,10 +206,11 @@ with st.sidebar:
 
     if display_type == 'Single':
 
-        #if 'index' not in st.session_state:
-        #    st.session_state['index'] = 0
+        if 'index' not in st.session_state:
+            st.session_state['index'] = 0
 
-        st.session_state['selection'] = st.selectbox("Outlet:", broadcasters_filtered_by_lang)
+        st.session_state['selection'] = st.selectbox("Outlet:", broadcasters_filtered_by_lang, index=st.session_state['index'])
+        st.session_state['index'] = broadcasters_df[broadcasters_df['Name'] == st.session_state['selection']].index
 
         #selection_name, selection_country, selection_format, selection_type, selection_wiki, selection_media_url, selection_root_url, selection_page_url = pull_data(selection)
         outlet = Outlet(st.session_state['selection'], broadcasters_df)
