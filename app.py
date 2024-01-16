@@ -194,9 +194,9 @@ with st.sidebar:
 
     #Filters list of outlets based on selected languages
     broadcasters_filtered_by_lang = []
-    for item in broadcasters_df.iterrows():
-        if item['Language'][0] in languages:
-            broadcasters_filtered_by_lang.append(item['Name'])
+    for row in broadcasters_df.itertuples():
+        if row['Language'] in languages:
+            broadcasters_filtered_by_lang.append(row['Name'])
 
     if display_type == 'Single':
 
