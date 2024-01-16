@@ -47,6 +47,20 @@ def pull_data(outlet):
 
     return selection_name, selection_country, selection_format, selection_type, selection_wiki, selection_media_url, selection_root_url, selection_page_url
 
+#Pull data for selected outlet
+@st.cache_data
+class Outlet:
+    def __init__(self, outlet, df="broadcasters_df"):
+        outlet_info = df[df['Name'] == outlet].iloc[0]
+        self.name = outlet_info['Name']
+        self.country = outlet_info['Country']
+        self.format = outlet_info['Format']
+        self.type = outlet_info['Type']
+        self.wiki = outlet_info['Wiki']
+        self.media_url = outlet_info['Media URL']
+        self.root_url = outlet_info['Root URL']
+        self.page_url = outlet_info['Page URL']
+
 #Generate media player.
 #Fourth argument is optional and blank by default; if media player needs auto-muted on load, enter 'muted="muted"' when calling function. 
 def generate_player(format, type, url, muted=""):
@@ -199,7 +213,8 @@ with st.sidebar:
 
         selection = st.selectbox("Outlet:", broadcasters_df['Name'], index=st.session_state['index'])
 
-        selection_name, selection_country, selection_format, selection_type, selection_wiki, selection_media_url, selection_root_url, selection_page_url = pull_data(selection)
+        #selection_name, selection_country, selection_format, selection_type, selection_wiki, selection_media_url, selection_root_url, selection_page_url = pull_data(selection)
+        outlet = Outlet(selection)
 
         record_time = st.slider("Record length (minutes):", min_value=.5, max_value=5.0, step=.5)
         record_time = record_time * 60
@@ -208,12 +223,12 @@ with st.sidebar:
 
             with st.spinner("Recording in progress. Do not change any settings."):
 
-                if selection_format == "M3U8":
-                    status, recording = record_m3u8(selection_name, record_time, selection_media_url, selection_root_url)
-                elif selection_format == "MP3":
-                    status, recording = record_mp3(selection_name, record_time, selection_media_url)
-                elif selection_format == "YouTube":
-                    status, recording = record_youtube(selection_name, record_time, selection_media_url)
+                if outlet.format == "M3U8":
+                    status, recording = record_m3u8(outlet.name, record_time, outlet.media_url, outlet.root_url)
+                elif outlet.format == "MP3":
+                    status, recording = record_mp3(outlet.name, record_time, outlet.media_url)
+                elif outlet.format == "YouTube":
+                    status, recording = record_youtube(outlet.name, record_time, outlet.media_url)
 
             if status == True:
                 st.session_state['recordings'].append(recording)
@@ -251,11 +266,11 @@ if display_type == "Single":
     left_column, middle_column, right_column = st.columns(3)
 
     with left_column:
-        st.metric("Name", selection_name)
+        st.metric("Name", outlet.name)
     with middle_column:
-        st.metric("Country", selection_country)
+        st.metric("Country", outlet.country)
 
-    result = generate_player(selection_format, selection_type, selection_media_url)
+    result = generate_player(outlet.format, outlet.type, outlet.media_url)
 
     if result[1] is not None:
         player_html, player_size = result
@@ -265,8 +280,8 @@ if display_type == "Single":
         player_html = result[0]
 
     st.subheader("Summary")
-    st.write(wiki_summary(selection_wiki))
-    st.write(selection_page_url)
+    st.write(wiki_summary(outlet.wiki))
+    st.write(outlet.page_url)
     st.caption("Information from Wikipedia")
 else:
     #No media
