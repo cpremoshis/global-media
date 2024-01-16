@@ -193,18 +193,20 @@ with st.sidebar:
     languages = st.multiselect("Select languages:", broadcasters_df['Language'].unique(), default="English")
 
     #Filters list of outlets based on selected languages
+    #If no language is selected, defaults to 'English'
     broadcasters_filtered_by_lang = []
-    for row in broadcasters_df.itertuples():
-        if row.Language in languages:
-            broadcasters_filtered_by_lang.append(row.Name)
+
+    try:
+        for row in broadcasters_df.itertuples():
+            if row.Language in languages:
+                broadcasters_filtered_by_lang.append(row.Name)
+    except:
+        broadcasters_filtered_by_lang = ['English']
 
     if display_type == 'Single':
 
         if 'index' not in st.session_state:
             st.session_state['index'] = 0
-        
-        if len(broadcasters_filtered_by_lang) == 0:
-            broadcasters_filtered_by_lang = ['English']
 
         selection = st.selectbox("Outlet:", broadcasters_filtered_by_lang, index=st.session_state['index'])
 
