@@ -210,10 +210,10 @@ with st.sidebar:
         if 'index' not in st.session_state:
             st.session_state['index'] = 0
 
-        st.seession_state['selection'] = st.selectbox("Outlet:", broadcasters_filtered_by_lang, index=st.session_state['index'])
+        st.session_state['selection'] = st.selectbox("Outlet:", broadcasters_filtered_by_lang, index=st.session_state['index'])
 
         #selection_name, selection_country, selection_format, selection_type, selection_wiki, selection_media_url, selection_root_url, selection_page_url = pull_data(selection)
-        outlet = Outlet(st.seession_state['selection'], broadcasters_df)
+        outlet = Outlet(st.session_state['selection'], broadcasters_df)
 
         record_time = st.slider("Record length (minutes):", min_value=.5, max_value=5.0, step=.5)
         record_time = record_time * 60
