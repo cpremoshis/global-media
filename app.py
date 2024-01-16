@@ -50,7 +50,7 @@ def pull_data(outlet):
 #Pull data for selected outlet
 @st.cache_data
 class Outlet:
-    def __init__(self, outlet, df="broadcasters_df"):
+    def __init__(self, outlet, broadcasters_df):
         outlet_info = df[df['Name'] == outlet].iloc[0]
         self.name = outlet_info['Name']
         self.country = outlet_info['Country']
@@ -214,7 +214,7 @@ with st.sidebar:
         selection = st.selectbox("Outlet:", broadcasters_df['Name'], index=st.session_state['index'])
 
         #selection_name, selection_country, selection_format, selection_type, selection_wiki, selection_media_url, selection_root_url, selection_page_url = pull_data(selection)
-        outlet = Outlet(selection)
+        outlet = Outlet(selection, broadcasters_df)
 
         record_time = st.slider("Record length (minutes):", min_value=.5, max_value=5.0, step=.5)
         record_time = record_time * 60
@@ -236,6 +236,7 @@ with st.sidebar:
         #Displays selection box if the 'recordings' list contains items
         if len(st.session_state['recordings']) != 0:
 
+            #Reformats the full file name into just the ending (ex: "Outlet_time.mp4")
             def format_file_names(option):
                 option = option.split("/")[2]
                 return option
@@ -292,7 +293,7 @@ else:
     if selections_len == 1:
         #First (and only) selection
         first_selection = selections[0]
-        first_outlet = Outlet(first_selection)
+        first_outlet = Outlet(first_selection, broadcasters_df)
 
         #First (and only) media player
         result = generate_player(first_outlet.format, first_outlet.type, first_outlet.media_url)
@@ -308,11 +309,11 @@ else:
 
         #First selection
         first_selection = selections[0]
-        first_outlet = Outlet(first_selection)
+        first_outlet = Outlet(first_selection, broadcasters_df)
 
         #Second selection
         second_selection = selections[1]
-        second_outlet = Outlet(second_selection)
+        second_outlet = Outlet(second_selection, broadcasters_df)
 
         #First media player
         with column_left:
@@ -339,15 +340,15 @@ else:
 
         #First selection
         first_selection = selections[0]
-        first_outlet = Outlet(first_selection)
+        first_outlet = Outlet(first_selection, broadcasters_df)
 
         #Second selection
         second_selection = selections[1]
-        second_outlet = Outlet(second_selection)
+        second_outlet = Outlet(second_selection, broadcasters_df)
 
         #Third selection
         third_selection = selections[2]
-        third_outlet = Outlet(third_selection)
+        third_outlet = Outlet(third_selection, broadcasters_df)
 
         with column_left:
             #First media player
@@ -382,19 +383,19 @@ else:
 
         #First selection
         first_selection = selections[0]
-        first_outlet = Outlet(first_selection)
+        first_outlet = Outlet(first_selection, broadcasters_df)
 
         #Second selection
         second_selection = selections[1]
-        second_outlet = Outlet(second_selection)
+        second_outlet = Outlet(second_selection, broadcasters_df)
 
         #Third selection
         third_selection = selections[2]
-        third_outlet = Outlet(third_selection)
+        third_outlet = Outlet(third_selection, broadcasters_df)
 
         #Fourth selection
         fourth_selection = selections[3]
-        fourth_outlet = Outlet(fourth_selection)
+        fourth_outlet = Outlet(fourth_selection, broadcasters_df)
 
         with column_left:
             #First media player
