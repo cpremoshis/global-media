@@ -178,7 +178,7 @@ def generate_player(format, type, url, muted=""):
         player_html = st.video(url)
         return player_html, None
 
-#Opens database to load media outlet data
+#Opens .csv database to load media outlet data
 broadcasters_df = open_database()
 
 #Sets a default index to keep track of recordings for the session
