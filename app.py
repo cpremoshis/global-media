@@ -258,7 +258,7 @@ with st.sidebar:
                     dwnbtn = st.download_button("Download", data=f, file_name=file_name, mime="video/mp4")
 
     else:
-        selections = st.multiselect("Select outlets:", broadcasters_df['Name'], max_selections=4)
+        selections = st.multiselect("Select outlets:", broadcasters_filtered_by_lang, max_selections=4)
 
         selections_len = len(selections)
 
