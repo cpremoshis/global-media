@@ -101,7 +101,7 @@ def record_m3u8(outlet, seconds, playlist_url, root_url):
                 item = files_list_final[number]
 
 #                file_path = f"/Users/casey/Downloads/ts_file_{number}.{media_type}"
-                file_path = f"./Recordings/ts_file_{number}.{media_type}"
+                file_path = f"./Recordings/{outlet}_{savetime}_ts_file_{number}.{media_type}"
 
                 response = requests.get(item)
                 if response.status_code == 200:
@@ -116,7 +116,7 @@ def record_m3u8(outlet, seconds, playlist_url, root_url):
                 item = files_list_final[number]
 
 #                file_path = f"/Users/casey/Downloads/ts_file_{number}.{media_type}"
-                file_path = f"./Recordings/ts_file_{number}.{media_type}"
+                file_path = f"./Recordings/{outlet}_{savetime}_ts_file_{number}.{media_type}"
 
                 response = requests.get(item)
                 if response.status_code == 200:
@@ -227,7 +227,7 @@ def record_youtube(outlet, seconds, stream_url):
                 item = files_list_final[number]
 
 #                file_path = f"/Users/casey/Downloads/ts_file_{number}.{media_type}"
-                file_path = f"./Recordings/ts_file_{number}.{media_type}"
+                file_path = f"./Recordings/{outlet}_{savetime}_ts_file_{number}.{media_type}"
 
                 response = requests.get(item)
                 if response.status_code == 200:
@@ -242,7 +242,7 @@ def record_youtube(outlet, seconds, stream_url):
                 item = files_list_final[number]
 
 #                file_path = f"/Users/casey/Downloads/ts_file_{number}.{media_type}"
-                file_path = f"./Recordings/ts_file_{number}.{media_type}"
+                file_path = f"./Recordings/{outlet}_{savetime}_ts_file_{number}.{media_type}"
 
                 response = requests.get(item)
                 if response.status_code == 200:
