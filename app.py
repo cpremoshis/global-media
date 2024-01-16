@@ -206,8 +206,8 @@ with st.sidebar:
 
     if display_type == 'Single':
 
-        if 'index' not in st.session_state:
-            st.session_state['index'] = 0
+        #if 'index' not in st.session_state:
+        #    st.session_state['index'] = 0
 
         st.session_state['selection'] = st.selectbox("Outlet:", broadcasters_filtered_by_lang)
 
