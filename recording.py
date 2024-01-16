@@ -25,7 +25,7 @@ def record_m3u8(outlet, seconds, playlist_url, root_url):
         #.ts files
         try:
             #List of .ts files in M3U8 file
-            #.strip('..') is for CGTN
+            #.strip('../') is for CGTN
             ts_files = [line.strip('../') for line in lines if ".ts" in line]
 
             #Adds any .ts file to "files_list" if that .ts file is not already present
