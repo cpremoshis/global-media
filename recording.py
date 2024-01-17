@@ -41,8 +41,6 @@ def record_m3u8(outlet, seconds, playlist_url, root_url):
             #This is the .ts file that most closely corresponds to the time when user began recording
             record_start = files_list[-1]
 
-            print(files_list)
-
             cycles = seconds / 5
 
             #Reloads M3U8 playlist every 5 seconds, adding new .ts files to 'files_list'
