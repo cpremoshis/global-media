@@ -66,6 +66,10 @@ def record_m3u8(outlet, seconds, playlist_url, root_url):
 
             media_type = "ts"
             
+        #TESTING PURPOSES ONLY
+        with open("./Recordings/files_list.txt", 'w') as f:
+            f.write(files_list)
+
         #.aac files
         except:
             #List of .aac files in M3U8 file
