@@ -218,7 +218,7 @@ with st.sidebar:
         #selection_name, selection_country, selection_format, selection_type, selection_wiki, selection_media_url, selection_root_url, selection_page_url = pull_data(selection)
         outlet = Outlet(st.session_state['selection'], broadcasters_df)
 
-        st.write(outlet.root_url)
+        st.write(outlet.root_url, outlet.name)
 
         record_time = st.slider("Record length (minutes):", min_value=.5, max_value=5.0, step=.5)
         record_time = record_time * 60
