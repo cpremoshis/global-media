@@ -7,5 +7,5 @@ st.set_page_config(
     initial_sidebar_state="expanded"
     )
 
-current_path = os.path.dirname(os.path.abspath(__file__))
-st.write(current_path)
+recordings_path = "/mount/src/global-media/Recordings"
+st.write(os.listdir(recordings_path))
