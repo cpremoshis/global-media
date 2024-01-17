@@ -28,9 +28,13 @@ def record_m3u8(outlet, seconds, playlist_url, root_url):
             ts_files = [line for line in lines if ".ts" in line]
 
             #Adds any .ts file to "files_list" if that .ts file is not already present
-            for item in ts_files:
-                if root_url + item not in files_list:
-                    files_list.append(root_url + item)
+            if root_url != "Null":
+                for item in ts_files:
+                    if root_url + item not in files_list:
+                        files_list.append(root_url + item)
+            else:
+                for item in ts_files:
+                    files_list.append(item)
 
             #This is the .ts file that most closely corresponds to the time when user began recording
             record_start = files_list[-1]
