@@ -35,7 +35,8 @@ def record_m3u8(outlet, seconds, playlist_url, root_url):
             #This block is for RTVE
             else:
                 for item in ts_files:
-                    files_list.append(item)
+                    if item not in files_list:
+                        files_list.append(item)
 
             #This is the .ts file that most closely corresponds to the time when user began recording
             record_start = files_list[-1]
@@ -58,7 +59,8 @@ def record_m3u8(outlet, seconds, playlist_url, root_url):
                 #This block is for RTVE
                 else:
                     for item in ts_files:
-                        files_list.append(item)
+                        if item not in files_list:
+                            files_list.append(item)
 
                 time.sleep(5)
 
