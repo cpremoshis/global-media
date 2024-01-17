@@ -62,6 +62,8 @@ def record_m3u8(outlet, seconds, playlist_url, root_url):
                         if item not in files_list:
                             files_list.append(item)
 
+                print(files_list)
+
                 time.sleep(5)
 
             media_type = "ts"
