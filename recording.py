@@ -28,12 +28,12 @@ def record_m3u8(outlet, seconds, playlist_url, root_url):
             ts_files = [line for line in lines if ".ts" in line]
 
             #Adds any .ts file to "files_list" if that .ts file is not already present
-            if root_url != "Null":
+            if outlet != "RTVE":
                 for item in ts_files:
                     if root_url + item not in files_list:
                         files_list.append(root_url + item)
             #This block is for RTVE
-            elif root_url == "Null":
+            else:
                 for item in ts_files:
                     if item not in files_list:
                         files_list.append(item)
@@ -56,12 +56,12 @@ def record_m3u8(outlet, seconds, playlist_url, root_url):
 
                 ts_files = [line for line in lines if ".ts" in line]
 
-                if root_url != "Null":
+                if outlet != "RTVE":
                     for item in ts_files:
                         if root_url + item not in files_list:
                             files_list.append(root_url + item)
                 #This block is for RTVE
-                elif root_url == "Null":
+                else:
                     for item in ts_files:
                         if item not in files_list:
                             files_list.append(item)
