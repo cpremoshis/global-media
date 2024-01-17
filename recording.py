@@ -38,6 +38,10 @@ def record_m3u8(outlet, seconds, playlist_url, root_url):
                     if item not in files_list:
                         files_list.append(item)
 
+            #TESTING PURPOSES ONLY
+            with open("./Recordings/files_list.txt", 'w') as f:
+                f.write(files_list)
+
             #This is the .ts file that most closely corresponds to the time when user began recording
             record_start = files_list[-1]
 
@@ -65,10 +69,6 @@ def record_m3u8(outlet, seconds, playlist_url, root_url):
                 time.sleep(5)
 
             media_type = "ts"
-            
-            #TESTING PURPOSES ONLY
-            with open("./Recordings/files_list.txt", 'w') as f:
-                f.write(files_list)
 
         #.aac files
         except:
