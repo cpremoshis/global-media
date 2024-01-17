@@ -32,6 +32,7 @@ def record_m3u8(outlet, seconds, playlist_url, root_url):
                 for item in ts_files:
                     if root_url + item not in files_list:
                         files_list.append(root_url + item)
+            #This block is for RTVE
             else:
                 for item in ts_files:
                     files_list.append(item)
