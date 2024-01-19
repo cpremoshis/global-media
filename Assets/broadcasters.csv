@@ -22,7 +22,7 @@ France 24 English,France_24,France 🇫🇷,Paris,Europe/Paris,Video,English,You
 France 24 Español,France_24,France 🇫🇷,Paris,Europe/Paris,Video,Spanish,YouTube,https://www.youtube.com/watch?v=Y-IlMeCCtIg,Null,https://www.france24.com/es/
 France 24 French,France_24,France 🇫🇷,Paris,Europe/Paris,Video,French,YouTube,https://www.youtube.com/watch?v=l8PMl7tUDIE,Null,https://www.france24.com/fr/
 NHK World,NHK_World-Japan,Japan 🇯🇵,Tokyo,Asia/Tokyo,Video,English,M3U8,https://nhkwlive-xjp.akamaized.net/hls/live/2003458/nhkwlive-xjp-en/index_1M.m3u8,https://nhkwlive-xjp.akamaized.net/hls/live/2003458/nhkwlive-xjp-en/,https://www3.nhk.or.jp/nhkworld/en/news/
-PTS,Public_Television_Service,Taiwan 🇹🇼,Taipei,Asia/Taipei,Video,Mandarin,M3U8,https://www.youtube.com/watch?v=quwqlazU-c8,Null,https://news.pts.org.tw/
+PTS,Public_Television_Service,Taiwan 🇹🇼,Taipei,Asia/Taipei,Video,Mandarin,YouTube,https://www.youtube.com/watch?v=quwqlazU-c8,Null,https://news.pts.org.tw/
 Radio Vaticana,Vatican_Radio,Vatican 🇻🇦,Vatican City,Europe/Vatican,Audio,English,MP3,https://radio.vaticannews.va/stream-en,Null,https://www.vaticannews.va/en.html
 RNZ Pacific,RNZ_Pacific,New Zealand 🇳🇿,Wellington,Pacific/Auckland,Audio,English,M3U8,https://radionz.streamguys1.com/pacific/pacific/pacific/pacific-mainstream/chunks.m3u8,https://radionz.streamguys1.com/pacific/pacific/pacific/pacific-mainstream/,https://www.rnz.co.nz/
 RT,Russia_Today,Russia 🇷🇺,Moscow,Europe/Moscow,Video,English,M3U8,https://rt-glb.rttv.com/dvr/rtnews/playlist_2500Kb.m3u8,https://rt-glb.rttv.com/dvr/rtnews/,https://www.rt.com/
