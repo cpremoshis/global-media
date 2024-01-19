@@ -212,10 +212,7 @@ with st.sidebar:
         if st.session_state['index'] > len(broadcasters_filtered_by_lang):
             st.session_state['index'] = 0
 
-        def update_index():
-            st.session_state['index'] = broadcasters_df.index[broadcasters_df['Name'] == st.session_state['selection']].tolist()[0]
-
-        st.session_state['selection'] = st.selectbox("Outlet:", broadcasters_filtered_by_lang, index=st.session_state['index'], on_change=update_index)
+        st.session_state['selection'] = st.selectbox("Outlet:", broadcasters_filtered_by_lang, index=st.session_state['index'])
         #st.session_state['index'] = broadcasters_df.index[broadcasters_df['Name'] == st.session_state['selection']].tolist()[0]
 
         outlet = Outlet(st.session_state['selection'], broadcasters_df)
