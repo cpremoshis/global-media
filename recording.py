@@ -9,6 +9,10 @@ from tqdm import tqdm
 #    output_file = "/Users/casey/Downloads/CONCAT TEST.mp4"
 #    output_file = "./Recordings/CONCAT TEST.mp4"
 
+#Removes potential duplicates in the 'files_list'
+def remove_duplciates(files_list):
+    return list(dict.fromkeys(files_list))
+
 #Enter seconds in intervals of FIVE
 def record_m3u8(outlet, seconds, playlist_url, root_url):
 
@@ -40,6 +44,9 @@ def record_m3u8(outlet, seconds, playlist_url, root_url):
 
             #This is the .ts file that most closely corresponds to the time when user began recording
             record_start = files_list[-1]
+
+            #Removes potential duplicates in the 'files_list'
+            files_list = remove_duplciates(files_list)
 
             cycles = seconds / 5
 
@@ -78,6 +85,9 @@ def record_m3u8(outlet, seconds, playlist_url, root_url):
 
             #This is the .aac file that most closely corresponds to the time when user began recording
             record_start = files_list[-1]
+
+            #Removes potential duplicates in the 'files_list'
+            files_list = remove_duplciates(files_list)
 
             cycles = seconds / 5
 
@@ -204,6 +214,9 @@ def record_youtube(outlet, seconds, stream_url):
 
         #This is the .ts file that most closely corresponds to the time when user began recording
         record_start = files_list[-1]
+
+        #Removes potential duplicates in the 'files_list'
+        files_list = remove_duplciates(files_list)
 
         cycles = seconds / 5
 
