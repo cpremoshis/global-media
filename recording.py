@@ -39,7 +39,7 @@ def translate_audio(video_file, outlet, savetime):
         translation_file = f"./Recordings/{outlet}_{savetime}.txt"
 
         with open(translation_file, 'w') as file:
-            file.write(translation.text)
+            file.write(translation['text'])
 
         return translation_file, audio_file
     except Exception as e:
