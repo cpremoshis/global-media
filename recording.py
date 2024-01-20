@@ -21,8 +21,10 @@ def translate_audio(video_file):
     try:
         openai.api_key = st.secrets['openai_key']
 
+        input_file = ffmpeg.input(video_file)
+
         audio_file = BytesIO()
-        video_file.output(audio_file, acodec="mp3").run()
+        input_file.output(audio_file, acodec="mp3").run()
         audio_file.seek(0)
         audio_file.name = "audio.mp3"
 
