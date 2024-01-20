@@ -17,16 +17,18 @@ import openai
 def remove_duplciates(files_list):
     return list(dict.fromkeys(files_list))
 
-def translate_audio(video_file):
+def translate_audio(video_file, outlet, savetime):
     try:
         openai.api_key = st.secrets['openai_key']
+        
+        audio_file = f"./Recordings/{outlet}_{savetime}.mp3"
 
         input_file = ffmpeg.input(video_file)
 
-        audio_file = BytesIO()
+        #audio_file = BytesIO()
         input_file.output(audio_file, acodec="mp3").run()
-        audio_file.seek(0)
-        audio_file.name = "audio.mp3"
+        #audio_file.seek(0)
+        #audio_file.name = "audio.mp3"
 
         translation = openai.audio.translations.create(
             file = audio_file,
