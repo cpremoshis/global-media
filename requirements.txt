@@ -1,4 +1,4 @@
 tqdm
 yt-dlp
 ffmpeg
-openai
+openai==1.8.0
