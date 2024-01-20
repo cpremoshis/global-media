@@ -3,6 +3,7 @@ import streamlit.components.v1 as components
 import pandas as pd
 import requests
 from recording import record_m3u8, record_youtube, record_mp3
+import zipfile
 
 st.set_page_config(
     page_title="BroadcastHub",
@@ -45,6 +46,20 @@ class Outlet:
         self.media_url = outlet_info['Media URL']
         self.root_url = outlet_info['Root URL']
         self.page_url = outlet_info['Page URL']
+
+#Zip files for download
+def zip_media(recording, translation, audio):
+    
+    files_to_zip = [recording, translation, audio]
+
+    zip_folder_name = recording.split(".mp4")[0] + ".zip"
+
+    with zipfile.ZipFile(zip_folder_name, 'w') as zipf:
+        for file in files_to_zip:
+            file_name = file.split("/")[2]
+            zfip.write(files_to_zip, arcname=file_name)
+
+    return zip_folder_name
 
 #Generate media player.
 #Fourth argument is optional and blank by default; if media player needs auto-muted on load, enter 'muted="muted"' when calling function. 
@@ -231,22 +246,28 @@ with st.sidebar:
 
         translate = st.checkbox("Translate?")
 
+        #Recording and download functions start here
         if st.button("Record", type="primary"):
 
             with st.spinner("Recording in progress. Do not change any settings."):
 
                 if outlet.format == "M3U8" and translate == True:
                     status, recording, translation, audio = record_m3u8(outlet.name, record_time, outlet.media_url, outlet.root_url, translate)
+                    zipped_files = zip_media(recording, translation, audio)
                 elif outlet.format == "M3U8":
                     status, recording = record_m3u8(outlet.name, record_time, outlet.media_url, outlet.root_url, translate)
-                    
+
                 elif outlet.format == "MP3":
                     status, recording = record_mp3(outlet.name, record_time, outlet.media_url)
                 elif outlet.format == "YouTube":
                     status, recording = record_youtube(outlet.name, record_time, outlet.media_url)
 
-            if status == True:
+            if status == True and 'zipped_files' in locals():
+                st.session_state['recordings'].append(zipped_files)
+            elif status == True:
                 st.session_state['recordings'].append(recording)
+            else:
+                st.error("Error.")
 
             st.write(translation)
 
