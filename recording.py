@@ -18,19 +18,22 @@ def remove_duplciates(files_list):
     return list(dict.fromkeys(files_list))
 
 def translate_audio(video_file):
-    openai.api_key = st.secrets['openai_key']
+    try:
+        openai.api_key = st.secrets['openai_key']
 
-    audio_file = BytesIO()
-    video_file.output(audio_file, acodec="mp3").run()
-    audio_file.seek(0)
-    audio_file.name = "audio.mp3"
+        audio_file = BytesIO()
+        video_file.output(audio_file, acodec="mp3").run()
+        audio_file.seek(0)
+        audio_file.name = "audio.mp3"
 
-    translation = openai.audio.translations.create(
-        file = audio_file,
-        model='whisper-1'
-    )
+        translation = openai.audio.translations.create(
+            file = audio_file,
+            model='whisper-1'
+        )
 
-    return translation
+        return translation
+    except Exception as e:
+        return e
 
 #Enter seconds in intervals of FIVE
 def record_m3u8(outlet, seconds, playlist_url, root_url):
