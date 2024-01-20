@@ -245,7 +245,7 @@ with st.sidebar:
             if status == True:
                 st.session_state['recordings'].append(recording)
 
-        st.write(translation)
+            st.write(translation)
 
         #Displays selection box if the 'recordings' list contains items
         if len(st.session_state['recordings']) != 0:
