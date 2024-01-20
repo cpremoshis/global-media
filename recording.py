@@ -36,6 +36,8 @@ def translate_audio(video_file, outlet, savetime):
             model='whisper-1'
         )
 
+        print(translation.text)
+
         translation_file = f"./Recordings/{outlet}_{savetime}.txt"
 
         with open(translation_file, 'w') as file:
