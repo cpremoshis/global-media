@@ -57,7 +57,7 @@ def zip_media(recording, translation, audio):
     with zipfile.ZipFile(zip_folder_name, 'w') as zipf:
         for file in files_to_zip:
             file_name = file.split("/")[2]
-            zipf.write(files_to_zip, arcname=file_name)
+            zipf.write(file, arcname=file_name)
 
     return zip_folder_name
 
