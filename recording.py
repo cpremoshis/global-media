@@ -24,14 +24,15 @@ def translate_audio(video_file, outlet, savetime):
         audio_file = f"./Recordings/{outlet}_{savetime}.mp3"
 
         input_file = ffmpeg.input(video_file)
-
-        #audio_file = BytesIO()
         input_file.output(audio_file, acodec="mp3").run()
-        #audio_file.seek(0)
-        #audio_file.name = "audio.mp3"
+
+        # Read the audio file into a BytesIO object
+        with open(audio_file, 'rb') as f:
+            audio_bytes = BytesIO(f.read())
+            audio_bytes.name = "audio.mp3"
 
         translation = openai.audio.translations.create(
-            file = audio_file,
+            file = audio_bytes,
             model='whisper-1'
         )
 
