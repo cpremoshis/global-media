@@ -1,3 +1,4 @@
 tqdm
 yt-dlp
 ffmpeg
+openai
