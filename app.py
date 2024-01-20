@@ -269,8 +269,6 @@ with st.sidebar:
             else:
                 st.error("Error.")
 
-            st.write(translation)
-
         #Displays selection box if the 'recordings' list contains items
         if len(st.session_state['recordings']) != 0:
 
