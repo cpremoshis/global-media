@@ -36,12 +36,17 @@ def translate_audio(video_file, outlet, savetime):
             model='whisper-1'
         )
 
-        return translation
+        translation_file = f"./Recordings/{outlet}_{savetime}.txt"
+
+        with open(translation_file, 'w') as file:
+            file.write(translation)
+
+        return translation_file, audio_file
     except Exception as e:
         return e
 
 #Enter seconds in intervals of FIVE
-def record_m3u8(outlet, seconds, playlist_url, root_url):
+def record_m3u8(outlet, seconds, playlist_url, root_url, translate):
 
     try:
 
@@ -190,9 +195,14 @@ def record_m3u8(outlet, seconds, playlist_url, root_url):
 
             subprocess.run(command)
 
-            translation = translate_audio(output_file, outlet, savetime)
+            if translate == True:
+                #TRANSLATION command
+                translation_file, audio_file = translate_audio(output_file, outlet, savetime)
 
-            return True, output_file, translation
+                return True, output_file, translation_file, audio_file
+            
+            else:
+                return True, output_file
 
         #Combines .aac files using 'ffmpeg'
         elif media_type == "aac":

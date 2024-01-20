@@ -235,8 +235,11 @@ with st.sidebar:
 
             with st.spinner("Recording in progress. Do not change any settings."):
 
-                if outlet.format == "M3U8":
-                    status, recording, translation = record_m3u8(outlet.name, record_time, outlet.media_url, outlet.root_url)
+                if outlet.format == "M3U8" and translate == True:
+                    status, recording, translation, audio = record_m3u8(outlet.name, record_time, outlet.media_url, outlet.root_url, translate)
+                elif outlet.format == "M3U8":
+                    status, recording = record_m3u8(outlet.name, record_time, outlet.media_url, outlet.root_url, translate)
+                    
                 elif outlet.format == "MP3":
                     status, recording = record_mp3(outlet.name, record_time, outlet.media_url)
                 elif outlet.format == "YouTube":
