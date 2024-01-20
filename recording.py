@@ -19,7 +19,6 @@ def remove_duplciates(files_list):
 
 def translate_audio(video_file):
     openai.api_key = st.secrets['openai_key']
-    client = openai.OpenAI(api_key=openai.api_key)
 
     audio_file = BytesIO()
     video_file.output(audio_file, acodec="mp3").run()
