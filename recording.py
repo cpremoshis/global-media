@@ -1,8 +1,12 @@
+import streamlit as st
 import requests
 import time
 from datetime import datetime
 import subprocess
 from tqdm import tqdm
+import ffmpeg
+from io import BytesIO
+import openai
     
 #    m3u8_url = "https://live-hls-web-aje-fa.getaj.net/AJE/02.m3u8"
 #    root_url = "https://live-hls-web-aje-fa.getaj.net/AJE/"
@@ -12,6 +16,21 @@ from tqdm import tqdm
 #Removes potential duplicates in the 'files_list'
 def remove_duplciates(files_list):
     return list(dict.fromkeys(files_list))
+
+def translate_audio(video_file):
+    openai.api_key = st.secrets['openai_key']
+    client = openai.OpenAI(api_key=openai.api_key)
+
+    audio_file = BytesIO()
+    video_file.output(audio_file, acodec="mp3").run()
+    audio_file.name = "audio.mp3"
+
+    translation = openai.audio.translations.create(
+        file = audio_file,
+        model='whisper-1'
+    )
+
+    return translation
 
 #Enter seconds in intervals of FIVE
 def record_m3u8(outlet, seconds, playlist_url, root_url):
@@ -163,7 +182,9 @@ def record_m3u8(outlet, seconds, playlist_url, root_url):
 
             subprocess.run(command)
 
-            return True, output_file
+            translation = translate_audio(output_file)
+
+            return True, output_file, translation
 
         #Combines .aac files using 'ffmpeg'
         elif media_type == "aac":
