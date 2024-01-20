@@ -41,6 +41,8 @@ def translate_audio(video_file, outlet, savetime):
         with open(translation_file, 'w') as file:
             file.write(translation)
 
+        print(f"Translation: {translation}, {translation_file}, {audio_file}")
+
         return translation_file, audio_file
     except Exception as e:
         return e
