@@ -36,12 +36,13 @@ def translate_audio(video_file, outlet, savetime):
             model='whisper-1'
         )
 
+        print(f"Translation: {translation}")
+
+
         translation_file = f"./Recordings/{outlet}_{savetime}.txt"
 
         with open(translation_file, 'w') as file:
             file.write(translation)
-
-        print(f"Translation: {translation}, {translation_file}, {audio_file}")
 
         return translation_file, audio_file
     except Exception as e:
