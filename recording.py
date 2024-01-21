@@ -33,15 +33,14 @@ def translate_audio(video_file, outlet, savetime):
 
         translation = openai.audio.translations.create(
             file = audio_bytes,
-            model='whisper-1'
+            model='whisper-1',
+            response_format="srt"
         )
 
-        print(translation.text)
-
-        translation_file = f"./Recordings/{outlet}_{savetime}.txt"
+        translation_file = f"./Recordings/{outlet}_{savetime}.srt"
 
         with open(translation_file, 'w') as file:
-            file.write(translation.text)
+            file.write(translation)
 
         return translation_file, audio_file
     except Exception as e:
