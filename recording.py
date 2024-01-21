@@ -219,7 +219,14 @@ def record_m3u8(outlet, seconds, playlist_url, root_url, translate):
 
             subprocess.run(command)
 
-            return True, output_file
+            if translate == True:
+                #TRANSLATION command
+                translation_file, audio_file = translate_audio(output_file, outlet, savetime)
+
+                return True, output_file, translation_file, audio_file
+            
+            else:
+                return True, output_file
 
     except Exception as e:
 
