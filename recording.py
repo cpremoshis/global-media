@@ -46,6 +46,9 @@ def translate_audio(video_file, outlet, savetime):
     except Exception as e:
         return e
 
+def generate_ffmpeg_command():
+    tbd
+
 #Enter seconds in intervals of FIVE
 def record_m3u8(outlet, seconds, playlist_url, root_url, translate):
 
