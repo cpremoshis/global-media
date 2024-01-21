@@ -227,15 +227,7 @@ with st.sidebar:
         #if st.session_state['index'] > len(broadcasters_filtered_by_lang):
         #    st.session_state['index'] = 0
 
-        #888     888  .d8888b.  8888888888 8888888b.        8888888 888b    888 8888888b.  888     888 88888888888 
-        #888     888 d88P  Y88b 888        888   Y88b         888   8888b   888 888   Y88b 888     888     888     
-        #888     888 Y88b.      888        888    888         888   88888b  888 888    888 888     888     888     
-        #888     888  "Y888b.   8888888    888   d88P         888   888Y88b 888 888   d88P 888     888     888     
-        #888     888     "Y88b. 888        8888888P"          888   888 Y88b888 8888888P"  888     888     888     
-        #888     888       "888 888        888 T88b           888   888  Y88888 888        888     888     888     
-        #Y88b. .d88P Y88b  d88P 888        888  T88b          888   888   Y8888 888        Y88b. .d88P     888     
-        # "Y88888P"   "Y8888P"  8888888888 888   T88b       8888888 888    Y888 888         "Y88888P"      888     
-                                                      
+        #----->User input<-----
         st.session_state['selection'] = st.selectbox("Outlet:", broadcasters_filtered_by_lang)
         #st.session_state['index'] = broadcasters_df.index[broadcasters_df['Name'] == st.session_state['selection']].tolist()[0]
 
@@ -244,9 +236,9 @@ with st.sidebar:
         record_time = st.slider("Record length (minutes):", min_value=.5, max_value=5.0, step=.5)
         record_time = record_time * 60
 
-        translate = st.checkbox("Translate?")
+        translate = st.checkbox("Translate/transcribe")
 
-        #Recording and download functions start here
+        #----->Recording and download functions<-----
         if st.button("Record", type="primary"):
 
             with st.spinner("Recording in progress. Do not change any settings."):
