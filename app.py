@@ -261,7 +261,7 @@ with st.sidebar:
                     status, recording = record_mp3(outlet.name, record_time, outlet.media_url)
 
                 elif outlet.format == "YouTube" and translate == True:
-                    status, recording = record_youtube(outlet.name, record_time, outlet.media_url, translate)
+                    status, recording, translation, audio = record_youtube(outlet.name, record_time, outlet.media_url, translate)
                 elif outlet.format == "YouTube":
                     status, recording = record_youtube(outlet.name, record_time, outlet.media_url)
 
