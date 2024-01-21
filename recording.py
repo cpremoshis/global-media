@@ -343,7 +343,7 @@ def record_youtube(outlet, seconds, stream_url, translate):
     except Exception as e:
         return False, e
 
-def record_mp3(outlet, seconds, stream_url):
+def record_mp3(outlet, seconds, stream_url, translate):
 
     try:
         now = datetime.now()
@@ -365,7 +365,14 @@ def record_mp3(outlet, seconds, stream_url):
         
         response.close()
 
-        return True, output_file
+        if translate == True:
+            #TRANSLATION command
+            translation_file, audio_file = translate_audio(output_file, outlet, savetime)
+
+            return True, output_file, translation_file, audio_file
+        
+        else:
+            return True, output_file
     
     except Exception as e:
         

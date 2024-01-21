@@ -257,6 +257,8 @@ with st.sidebar:
                 elif outlet.format == "M3U8":
                     status, recording = record_m3u8(outlet.name, record_time, outlet.media_url, outlet.root_url, translate)
 
+                elif outlet.format == "MP3" and translate == True:
+                    status, recording, translation, audio = record_mp3(outlet.name, record_time, outlet.media_url, translate)
                 elif outlet.format == "MP3":
                     status, recording = record_mp3(outlet.name, record_time, outlet.media_url)
 
