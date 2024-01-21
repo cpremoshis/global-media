@@ -222,7 +222,7 @@ def record_m3u8(outlet, seconds, playlist_url, root_url, translate):
 
         return False, e
     
-def record_youtube(outlet, seconds, stream_url):
+def record_youtube(outlet, seconds, stream_url, translate):
     try:
 
         now = datetime.now()
