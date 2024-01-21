@@ -262,6 +262,7 @@ with st.sidebar:
 
                 elif outlet.format == "YouTube" and translate == True:
                     status, recording, translation, audio = record_youtube(outlet.name, record_time, outlet.media_url, translate)
+                    zipped_files = zip_media(recording, translation, audio)
                 elif outlet.format == "YouTube":
                     status, recording = record_youtube(outlet.name, record_time, outlet.media_url)
 
