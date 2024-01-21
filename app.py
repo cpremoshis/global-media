@@ -259,6 +259,7 @@ with st.sidebar:
 
                 elif outlet.format == "MP3" and translate == True:
                     status, recording, translation, audio = record_mp3(outlet.name, record_time, outlet.media_url, translate)
+                    zipped_files = zip_media(recording, translation, audio)
                 elif outlet.format == "MP3":
                     status, recording = record_mp3(outlet.name, record_time, outlet.media_url, translate)
 
