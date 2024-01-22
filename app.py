@@ -313,8 +313,8 @@ with st.sidebar:
 
             record_multiple = st.button("Record Multiple", type="primary")
             if record_multiple:
-                multi_record(first_selection, second_selection, seconds=30, translate=False)
-                st.spinner("Running...")
+                status = multi_record(first_selection, second_selection, seconds=30, translate=False)
+                st.write(status)
 
 #Media display
 if display_type == "Single":
