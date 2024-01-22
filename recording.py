@@ -416,7 +416,7 @@ def multi_record(*outlets, seconds, translate=False):
                 except Exception as exc:
                     print(f"{future_to_outlet[future].name} generated an exception: {exc}")
             
-            return results
+        return results
 
     except Exception as e:
         return e
