@@ -1,4 +1,5 @@
 import streamlit as st
+import streamlit.components.v1 as components
 
 def generate_player(format, type, url):
     m3u8_video_player_html = f"""
@@ -48,5 +49,7 @@ def generate_player(format, type, url):
 input = st.text_input("Paste M3U8 url:")
 
 if st.button("Load"):
+
     player = generate_player("M3U8", "Video", input)
-    st.video(player)
+    
+    components.html(player[0], height=player[1])
