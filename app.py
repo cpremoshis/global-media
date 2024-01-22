@@ -2,7 +2,7 @@ import streamlit as st
 import streamlit.components.v1 as components
 import pandas as pd
 import requests
-from recording import record_m3u8, record_youtube, record_mp3, multi_record
+from recording import record_m3u8, record_youtube, record_mp3
 import zipfile
 
 st.set_page_config(
@@ -300,30 +300,6 @@ with st.sidebar:
         selections = st.multiselect("Select outlets:", broadcasters_filtered_by_lang, max_selections=4)
 
         selections_len = len(selections)
-
-        if len(selections) > 0:
-            # Create Outlet objects for each selection
-            outlets = [Outlet(selection, broadcasters_df) for selection in selections]
-
-            # Set recording time and translation option outside of the button condition
-            record_time = st.slider("Record length (minutes):", min_value=0.5, max_value=5.0, step=0.5) * 60
-            translate = st.checkbox("Translate/transcribe")
-
-            # Record button
-            if st.button("Record Multiple Outlets"):
-                with st.spinner("Recording in progress. Do not change any settings."):
-                    results = multi_record(*outlets, record_time=record_time, translate=translate)
-
-                    # Handle the results
-                    for outlet_name, result in results.items():
-                        if result is not None and result[0]:  # Check if result is not None and then check the first item
-                            st.success(f"Recording completed for {outlet_name}")
-                            # Handle the recording results here
-                        else:
-                            st.error(f"Error or no data returned for {outlet_name}")
-
-
-
 
 #Media display
 if display_type == "Single":
