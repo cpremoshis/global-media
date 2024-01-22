@@ -313,7 +313,7 @@ with st.sidebar:
 
             record_multiple = st.button("Record Multiple", type="primary")
             if record_multiple:
-                status = multi_record(first_selection, second_selection, seconds=30, translate=False)
+                status = multi_record(first_outlet, second_outlet, seconds=30, translate=False)
                 st.write(status)
 
 #Media display
