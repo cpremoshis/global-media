@@ -231,8 +231,8 @@ def record_m3u8(outlet, seconds, playlist_url, root_url, translate):
                 return True, output_file
 
     except Exception as e:
-
-        return False, e
+        print(f"Error in record_m3u8 for {outlet.name}: {e}")
+        return False, str(e)
 
 #Enter seconds in intervals of FIVE
 def record_youtube(outlet, seconds, stream_url, translate):
