@@ -43,7 +43,8 @@ class Outlet:
         self.format = outlet_info['Format']
         self.type = outlet_info['Type']
         self.wiki = outlet_info['Wiki']
-        self.media_url = outlet_info['Media URL']
+        self.playback_url = outlet_info['Playback M3U8']
+        self.recording_url = outlet_info['Recording M3U8']
         self.root_url = outlet_info['Root URL']
         self.page_url = outlet_info['Page URL']
 
@@ -244,22 +245,22 @@ with st.sidebar:
             with st.spinner("Recording in progress. Do not change any settings."):
 
                 if outlet.format == "M3U8" and translate == True:
-                    status, recording, translation, audio = record_m3u8(outlet.name, record_time, outlet.media_url, outlet.root_url, translate)
+                    status, recording, translation, audio = record_m3u8(outlet.name, record_time, outlet.recording_url, outlet.root_url, translate)
                     zipped_files = zip_media(recording, translation, audio)
                 elif outlet.format == "M3U8":
-                    status, recording = record_m3u8(outlet.name, record_time, outlet.media_url, outlet.root_url, translate)
+                    status, recording = record_m3u8(outlet.name, record_time, outlet.recording_url, outlet.root_url, translate)
 
                 elif outlet.format == "MP3" and translate == True:
-                    status, recording, translation, audio = record_mp3(outlet.name, record_time, outlet.media_url, translate)
+                    status, recording, translation, audio = record_mp3(outlet.name, record_time, outlet.recording_url, translate)
                     zipped_files = zip_media(recording, translation, audio)
                 elif outlet.format == "MP3":
-                    status, recording = record_mp3(outlet.name, record_time, outlet.media_url, translate)
+                    status, recording = record_mp3(outlet.name, record_time, outlet.recording_url, translate)
 
                 elif outlet.format == "YouTube" and translate == True:
-                    status, recording, translation, audio = record_youtube(outlet.name, record_time, outlet.media_url, translate)
+                    status, recording, translation, audio = record_youtube(outlet.name, record_time, outlet.recording_url, translate)
                     zipped_files = zip_media(recording, translation, audio)
                 elif outlet.format == "YouTube":
-                    status, recording = record_youtube(outlet.name, record_time, outlet.media_url)
+                    status, recording = record_youtube(outlet.name, record_time, outlet.recording_url)
 
             if status == True and 'zipped_files' in locals():
                 st.session_state['recordings'].append(zipped_files)
@@ -311,7 +312,7 @@ if display_type == "Single":
     with middle_column:
         st.metric("Country", outlet.country)
 
-    result = generate_player(outlet.format, outlet.type, outlet.media_url)
+    result = generate_player(outlet.format, outlet.type, outlet.playback_url)
 
     if result[1] is not None:
         player_html, player_size = result
@@ -336,7 +337,7 @@ else:
         first_outlet = Outlet(first_selection, broadcasters_df)
 
         #First (and only) media player
-        result = generate_player(first_outlet.format, first_outlet.type, first_outlet.media_url)
+        result = generate_player(first_outlet.format, first_outlet.type, first_outlet.playback_url)
         if result[1] is not None:
             player_html, player_size = result
             components.html(player_html, height=player_size)
@@ -357,7 +358,7 @@ else:
 
         #First media player
         with column_left:
-            first_result = generate_player(first_outlet.format, first_outlet.type, first_outlet.media_url)
+            first_result = generate_player(first_outlet.format, first_outlet.type, first_outlet.playback_url)
             if first_result[1] is not None:
                 player_html, player_size = first_result
                 components.html(player_html, height=400)
@@ -366,7 +367,7 @@ else:
 
         #Second media player
         with column_right:
-            second_result = generate_player(second_outlet.format, second_outlet.type, second_outlet.media_url, muted="muted")
+            second_result = generate_player(second_outlet.format, second_outlet.type, second_outlet.playback_url, muted="muted")
             if second_result[1] is not None:
                 player_html, player_size = second_result
                 components.html(player_html, height=400)
@@ -392,7 +393,7 @@ else:
 
         with column_left:
             #First media player
-            first_result = generate_player(first_outlet.format, first_outlet.type, first_outlet.media_url)
+            first_result = generate_player(first_outlet.format, first_outlet.type, first_outlet.playback_url)
             if first_result[1] is not None:
                 player_html, player_size = first_result
                 components.html(player_html, height=365)
@@ -401,7 +402,7 @@ else:
 
         with column_right:
             #Second media player
-            second_result = generate_player(second_outlet.format, second_outlet.type, second_outlet.media_url, muted="muted")
+            second_result = generate_player(second_outlet.format, second_outlet.type, second_outlet.playback_url, muted="muted")
             if second_result[1] is not None:
                 player_html, player_size = second_result
                 components.html(player_html, height=365)
@@ -410,7 +411,7 @@ else:
 
         with column_middle:
             #Third media player
-            third_result = generate_player(third_outlet.format, third_outlet.type, third_outlet.media_url, muted="muted")
+            third_result = generate_player(third_outlet.format, third_outlet.type, third_outlet.playback_url, muted="muted")
             if third_result[1] is not None:
                 player_html, player_size = third_result
                 components.html(player_html, height=365)
@@ -439,7 +440,7 @@ else:
 
         with column_left:
             #First media player
-            first_result = generate_player(first_outlet.format, first_outlet.type, first_outlet.media_url)
+            first_result = generate_player(first_outlet.format, first_outlet.type, first_outlet.playback_url)
             if first_result[1] is not None:
                 player_html, player_size = first_result
                 components.html(player_html, height=365)
@@ -447,7 +448,7 @@ else:
                 player_html = first_result[0]
 
             #Third media player
-            third_result = generate_player(third_outlet.format, third_outlet.type, third_outlet.media_url, muted="muted")
+            third_result = generate_player(third_outlet.format, third_outlet.type, third_outlet.playback_url, muted="muted")
             if third_result[1] is not None:
                 player_html, player_size = third_result
                 components.html(player_html, height=365)
@@ -456,7 +457,7 @@ else:
 
         with column_right:
             #Second media player
-            second_result = generate_player(second_outlet.format, second_outlet.type, second_outlet.media_url, muted="muted")
+            second_result = generate_player(second_outlet.format, second_outlet.type, second_outlet.playback_url, muted="muted")
             if second_result[1] is not None:
                 player_html, player_size = second_result
                 components.html(player_html, height=365)
@@ -464,7 +465,7 @@ else:
                 player_html = second_result[0]
 
             #Fourth media player
-            fourth_result = generate_player(fourth_outlet.format, fourth_outlet.type, fourth_outlet.media_url, muted="muted")
+            fourth_result = generate_player(fourth_outlet.format, fourth_outlet.type, fourth_outlet.playback_url, muted="muted")
             if fourth_result[1] is not None:
                 player_html, player_size = fourth_result
                 components.html(player_html, height=365)
