@@ -414,12 +414,10 @@ def multi_record(*outlets, record_time, translate=False):
         for future in concurrent.futures.as_completed(future_to_outlet):
             outlet = future_to_outlet[future]
             try:
-                result = future.result()
+                results[outlet.name] = future.result()
             except Exception as exc:
-                print(f'{outlet.name} generated an exception: {exc}')
-                results[outlet.name] = None
-            else:
-                results[outlet.name] = result
+                print(f"Exception in recording for {outlet.name}: {exc}")
+                results[outlet.name] = False, str(exc)
     return results
 
 #Original ffmpeg command
