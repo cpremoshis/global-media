@@ -1,6 +1,6 @@
 import streamlit as st
 
-def generate_player(format, type, url, muted=""):
+def generate_player(format, type, url):
     if format == "M3U8" and type == "Video":
         m3u8_video_player_html = f"""
         <!DOCTYPE html>
@@ -21,7 +21,7 @@ def generate_player(format, type, url, muted=""):
             </style>
         </head>
         <body>
-        <video id="video" controls autoplay {muted} style="width:100vw; height:100vh; object-fit: contain; margin:auto"></video>
+        <video id="video" controls autoplay style="width:100vw; height:100vh; object-fit: contain; margin:auto"></video>
         <script>
             var video = document.getElementById('video');
             if (Hls.isSupported()) {{
