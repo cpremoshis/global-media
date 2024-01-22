@@ -305,11 +305,11 @@ with st.sidebar:
             # Create Outlet objects for each selection
             outlets = [Outlet(selection, broadcasters_df) for selection in selections]
 
-            # Set recording time and translation option
+            # Set recording time and translation option outside of the button condition
             record_time = st.slider("Record length (minutes):", min_value=0.5, max_value=5.0, step=0.5) * 60
             translate = st.checkbox("Translate/transcribe")
 
-            # Call multi_record when the record button is pressed
+            # Record button
             if st.button("Record Multiple Outlets"):
                 with st.spinner("Recording in progress. Do not change any settings."):
                     results = multi_record(*outlets, record_time=record_time, translate=translate)
@@ -318,9 +318,10 @@ with st.sidebar:
                     for outlet_name, result in results.items():
                         if result[0]:  # Assuming the first item in result tuple is a success flag
                             st.success(f"Recording completed for {outlet_name}")
-                            # You can add more code here to handle the recording results
+                            # Handle the recording results here
                         else:
                             st.error(f"Error recording {outlet_name}: {result[1]}")
+
 
 
 #Media display
