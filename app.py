@@ -2,7 +2,7 @@ import streamlit as st
 import streamlit.components.v1 as components
 import pandas as pd
 import requests
-from recording import record_m3u8, record_youtube, record_mp3
+from recording import record_m3u8, record_youtube, record_mp3, multi_record
 import zipfile
 
 st.set_page_config(
@@ -300,6 +300,12 @@ with st.sidebar:
         selections = st.multiselect("Select outlets:", broadcasters_filtered_by_lang, max_selections=4)
 
         selections_len = len(selections)
+
+        if selections_len == 2:
+            record_multiple = st.button("Record Multiple", type="primary")
+            if record_multiple:
+                multi_record(first_selection, second_selection, seconds=30, translate=False)
+                st.spinner("Running...")
 
 #Media display
 if display_type == "Single":

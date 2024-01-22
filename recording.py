@@ -7,6 +7,7 @@ from tqdm import tqdm
 import ffmpeg
 from io import BytesIO
 import openai
+import threading
     
 #    m3u8_url = "https://live-hls-web-aje-fa.getaj.net/AJE/02.m3u8"
 #    root_url = "https://live-hls-web-aje-fa.getaj.net/AJE/"
@@ -390,6 +391,41 @@ def record_mp3(outlet, seconds, stream_url, translate):
         
         return False, e
 
+def multi_record(*outlets, seconds, translate=False):
+
+    try:
+        #Unpacks outlets tuple
+        #if len(outlets) == 1:
+        #    outlet1 = outlets
+        #if len(outlets) == 2:
+        #    outlet1, outlet2 = outlets
+        #if len(outlets) == 3:
+        #    outlet1, outlet2, outlet3 = outlets
+        #if len(outlets) == 4:
+        #    outlet1, outlet2, outlet3, outlet4 = outlets
+
+        now = datetime.now()
+        savetime = now.strftime("%Y_%m_%d_%H%M%S")
+
+        threads = []
+        arguments = []
+
+        for outlet in outlets:
+            tuple = (outlet.name, seconds, outlet.recording_url, outlet.root_url, translate)
+            arguments.append(tuple)
+
+        for argument in arguments:
+            t = threading.Thread(target=record_m3u8, args=argument)
+            t.start()
+            threads.append(t)
+
+        for thread in threads:
+            thread.join()
+
+        return "Success."
+    
+    except Exception as e:
+        return e
 
 
 #Original ffmpeg command
