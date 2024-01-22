@@ -8,6 +8,7 @@ import ffmpeg
 from io import BytesIO
 import openai
 import threading
+from concurrent.futures import ThreadPoolExecutor, as_completed
     
 #    m3u8_url = "https://live-hls-web-aje-fa.getaj.net/AJE/02.m3u8"
 #    root_url = "https://live-hls-web-aje-fa.getaj.net/AJE/"
@@ -394,36 +395,29 @@ def record_mp3(outlet, seconds, stream_url, translate):
 def multi_record(*outlets, seconds, translate=False):
 
     try:
-        #Unpacks outlets tuple
-        #if len(outlets) == 1:
-        #    outlet1 = outlets
-        #if len(outlets) == 2:
-        #    outlet1, outlet2 = outlets
-        #if len(outlets) == 3:
-        #    outlet1, outlet2, outlet3 = outlets
-        #if len(outlets) == 4:
-        #    outlet1, outlet2, outlet3, outlet4 = outlets
 
         now = datetime.now()
         savetime = now.strftime("%Y_%m_%d_%H%M%S")
 
-        threads = []
-        arguments = []
+        # Create a ThreadPoolExecutor
+        with ThreadPoolExecutor() as executor:
+            # Dictionary to hold future to outlet mapping
+            future_to_outlet = {
+                executor.submit(record_m3u8, outlet.name, seconds, outlet.recording_url, outlet.root_url, translate): outlet
+                for outlet in outlets
+            }
 
-        for outlet in outlets:
-            tuple = (outlet.name, seconds, outlet.recording_url, outlet.root_url, translate)
-            arguments.append(tuple)
+            results = []
+            for future in as_completed(future_to_outlet):
+                try:
+                    # Get the result from the future
+                    result = future.result()
+                    results.append(result)
+                except Exception as exc:
+                    print(f"{future_to_outlet[future].name} generated an exception: {exc}")
+            
+            return results
 
-        for argument in arguments:
-            t = threading.Thread(target=record_m3u8, args=argument)
-            t.start()
-            threads.append(t)
-
-        for thread in threads:
-            thread.join()
-
-        return "Success."
-    
     except Exception as e:
         return e
 
