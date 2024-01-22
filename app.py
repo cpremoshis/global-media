@@ -302,6 +302,15 @@ with st.sidebar:
         selections_len = len(selections)
 
         if selections_len == 2:
+
+            #First selection
+            first_selection = selections[0]
+            first_outlet = Outlet(first_selection, broadcasters_df)
+
+            #Second selection
+            second_selection = selections[1]
+            second_outlet = Outlet(second_selection, broadcasters_df)
+
             record_multiple = st.button("Record Multiple", type="primary")
             if record_multiple:
                 multi_record(first_selection, second_selection, seconds=30, translate=False)
