@@ -78,8 +78,8 @@ def record_m3u8(outlet, seconds, playlist_url, root_url, translate):
                     if item not in files_list:
                         files_list.append(item)
 
-            #This is the .ts file that most closely corresponds to the time when user began recording
-            record_start = files_list[-1]
+            #This is the .ts file that SHOULD most closely corresponds to the time when user began recording
+            record_start = files_list[-2]
 
             #Removes potential duplicates in the 'files_list'
             files_list = remove_duplciates(files_list)
@@ -120,7 +120,7 @@ def record_m3u8(outlet, seconds, playlist_url, root_url, translate):
                     files_list.append(root_url + item)
 
             #This is the .aac file that most closely corresponds to the time when user began recording
-            record_start = files_list[-1]
+            record_start = files_list[-2]
 
             #Removes potential duplicates in the 'files_list'
             files_list = remove_duplciates(files_list)
@@ -231,7 +231,8 @@ def record_m3u8(outlet, seconds, playlist_url, root_url, translate):
     except Exception as e:
 
         return False, e
-    
+
+#Enter seconds in intervals of FIVE
 def record_youtube(outlet, seconds, stream_url, translate):
     try:
 
@@ -263,7 +264,7 @@ def record_youtube(outlet, seconds, stream_url, translate):
                 files_list.append(item)
 
         #This is the .ts file that most closely corresponds to the time when user began recording
-        record_start = files_list[-1]
+        record_start = files_list[-2]
 
         #Removes potential duplicates in the 'files_list'
         files_list = remove_duplciates(files_list)
@@ -353,6 +354,7 @@ def record_youtube(outlet, seconds, stream_url, translate):
     except Exception as e:
         return False, e
 
+#Enter seconds in intervals of FIVE
 def record_mp3(outlet, seconds, stream_url, translate):
 
     try:
