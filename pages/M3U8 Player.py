@@ -44,7 +44,7 @@ def generate_player(format, type, url):
     </html>
     """
 
-    return m3u8_video_player_html
+    return m3u8_video_player_html, 525
 
 input = st.text_input("Paste M3U8 url:")
 
@@ -52,4 +52,4 @@ if st.button("Load"):
 
     player = generate_player("M3U8", "Video", input)
     
-    components.html(player)
+    components.html(player[0], height=player[1])
