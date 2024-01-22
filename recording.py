@@ -8,6 +8,7 @@ import ffmpeg
 from io import BytesIO
 import openai
 from concurrent.futures import ThreadPoolExecutor
+import concurrent.futures
     
 #    m3u8_url = "https://live-hls-web-aje-fa.getaj.net/AJE/02.m3u8"
 #    root_url = "https://live-hls-web-aje-fa.getaj.net/AJE/"
