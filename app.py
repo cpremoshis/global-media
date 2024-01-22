@@ -316,11 +316,12 @@ with st.sidebar:
 
                     # Handle the results
                     for outlet_name, result in results.items():
-                        if result[0]:  # Assuming the first item in result tuple is a success flag
+                        if result is not None and result[0]:  # Check if result is not None and then check the first item
                             st.success(f"Recording completed for {outlet_name}")
                             # Handle the recording results here
                         else:
-                            st.error(f"Error recording {outlet_name}: {result[1]}")
+                            st.error(f"Error or no data returned for {outlet_name}")
+
 
 
 
