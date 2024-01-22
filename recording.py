@@ -7,6 +7,7 @@ from tqdm import tqdm
 import ffmpeg
 from io import BytesIO
 import openai
+from concurrent.futures import ThreadPoolExecutor
     
 #    m3u8_url = "https://live-hls-web-aje-fa.getaj.net/AJE/02.m3u8"
 #    root_url = "https://live-hls-web-aje-fa.getaj.net/AJE/"
@@ -390,7 +391,35 @@ def record_mp3(outlet, seconds, stream_url, translate):
         
         return False, e
 
+#MUTLI-RECORDING
+#MUTLI-RECORDING
+#MUTLI-RECORDING
+#MUTLI-RECORDING
+def record_function_wrapper(outlet, record_time, translate):
 
+    if outlet.type == 'm3u8':
+        return record_m3u8(outlet, record_time, outlet.playlist_url, outlet.root_url, translate)
+    elif outlet.type == 'youtube':
+        return record_youtube(outlet, record_time, outlet.stream_url, translate)
+    elif outlet.type == 'mp3':
+        return record_mp3(outlet, record_time, outlet.stream_url, translate)
+    else:
+        raise ValueError("Unknown outlet type")
+    
+def multi_record(*outlets, record_time, translate=False):
+    with ThreadPoolExecutor() as executor:
+        future_to_outlet = {executor.submit(record_function_wrapper, outlet, record_time, translate): outlet for outlet in outlets}
+        results = {}
+        for future in concurrent.futures.as_completed(future_to_outlet):
+            outlet = future_to_outlet[future]
+            try:
+                result = future.result()
+            except Exception as exc:
+                print(f'{outlet.name} generated an exception: {exc}')
+                results[outlet.name] = None
+            else:
+                results[outlet.name] = result
+    return results
 
 #Original ffmpeg command
 #    command = [
