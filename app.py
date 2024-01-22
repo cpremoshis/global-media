@@ -298,8 +298,12 @@ with st.sidebar:
 
     else:
         selections = st.multiselect("Select outlets:", broadcasters_filtered_by_lang, max_selections=4)
-
         selections_len = len(selections)
+
+        record_time = st.slider("Record length (minutes):", min_value=.5, max_value=5.0, step=.5)
+        record_time = record_time * 60
+
+        translate = st.checkbox("Translate/transcribe")
 
         if selections_len == 2:
 
