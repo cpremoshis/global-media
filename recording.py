@@ -476,13 +476,9 @@ def multi_record(*outlets, seconds, translate=False):
                 try:
                     # Get the result from the future
                     result = future.result()
-
-                    if result[0] == 'true':  # Assuming result[0] is the boolean value
-                        result[0] = True
-                    elif result[0] == 'false':
-                        result[0] = False
-
+                    print(result)
                     results.append(result)
+                    print(result)
                 except Exception as exc:
                     print(f"{future_to_outlet[future].name} generated an exception: {exc}")
             
