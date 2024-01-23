@@ -116,7 +116,13 @@ def combine_videos_ffmpeg(video_dict, output_path):
 
         command.extend(['-c:v', 'libx264', '-c:a', 'aac', '-c:s', 'mov_text', output_path])
 
-        subprocess.run(command)
+        #subprocess.run(command)
+
+        command_str = ' '.join(command)
+        process = subprocess.Popen(command_str, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        stdout, stderr = process.communicate()
+        print("STDOUT:", stdout)
+        print("STDERR:", stderr)
 
         return True
     
