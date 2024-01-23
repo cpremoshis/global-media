@@ -480,12 +480,17 @@ def multi_record(*outlets, seconds, translate=False):
                 except Exception as exc:
                     print(f"{future_to_outlet[future].name} generated an exception: {exc}")
             
-        return results
+        #return results
         
-        #video_dict = {}
+        video_dict = {}
 
-        #for item in results:
-        #    if item[0]
+        if len(results[0]) == 3:
+
+            for item in results:
+                if item[0] == True:
+                    video_dict[item[1]] = {"Video":item[2], "Subtitles":None}
+
+        return video_dict
 
     except Exception as e:
         return e
