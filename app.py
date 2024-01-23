@@ -5,6 +5,8 @@ import requests
 from recording import record_m3u8, record_youtube, record_mp3, multi_record
 import zipfile
 import subprocess
+import shlex
+
 
 st.set_page_config(
     page_title="BroadcastHub",
@@ -118,7 +120,9 @@ def combine_videos_ffmpeg(video_dict, output_path):
 
         #subprocess.run(command)
 
-        command_str = ' '.join(command)
+        escaped_command = [shlex.quote(part) if not part.startswith('-') else part for part in command]
+
+        command_str = ' '.join(escaped_command)
         process = subprocess.Popen(command_str, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         stdout, stderr = process.communicate()
 
