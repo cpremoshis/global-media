@@ -480,12 +480,12 @@ def multi_record(*outlets, seconds, translate=False):
                 except Exception as exc:
                     print(f"{future_to_outlet[future].name} generated an exception: {exc}")
             
-        #return results
+        return results
         
-        video_dict = {}
+        #video_dict = {}
 
-        for item in results:
-            if item[0]
+        #for item in results:
+        #    if item[0]
 
     except Exception as e:
         return e
@@ -493,7 +493,7 @@ def multi_record(*outlets, seconds, translate=False):
 
 #create_ffmpeg_command_gpt(video_dict, output_path)
 
-video_dict = {name1:{'Video':video1, 'Subtitles':sub1}}
+#video_dict = {name1:{'Video':video1, 'Subtitles':sub1}}
 
 
 
