@@ -407,7 +407,7 @@ def combine_videos_ffmpeg(video_dict, output_path):
             video_indices.append(str(index_counter))
             index_counter += 1
 
-            if 'Subtitles' in paths and paths['Subtitles'] is not "None":                
+            if 'Subtitles' in paths and paths['Subtitles'] != "None":                
                 command.extend(['-i', paths['Subtitles']])
                 subtitle_indices.append(str(index_counter))
                 index_counter += 1
