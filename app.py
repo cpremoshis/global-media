@@ -305,7 +305,7 @@ with st.sidebar:
                     file_name = download_select.split("/")[2]
                     dwnbtn = st.download_button("Download", data=f, file_name=file_name, mime="video/mp4")
 
-    else:
+    if display_type == "Multiview":
         selections = st.multiselect("Select outlets:", broadcasters_filtered_by_lang, max_selections=4)
         selections_len = len(selections)
 
@@ -439,7 +439,7 @@ if display_type == "Single":
     st.write(wiki_summary(outlet.wiki))
     st.write(outlet.page_url)
     st.caption("Information from Wikipedia")
-else:
+elif display_type == "Multiview":
     #No media
     if selections_len == 0:
         st.warning("No outlets selected")
