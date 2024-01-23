@@ -205,10 +205,10 @@ def record_m3u8(outlet, seconds, playlist_url, root_url, translate):
                 #TRANSLATION command
                 translation_file, audio_file = translate_audio(output_file, outlet, savetime)
 
-                return True, output_file, translation_file, audio_file
+                return True, outlet, output_file, translation_file, audio_file
             
             else:
-                return True, output_file
+                return True, outlet, output_file
 
         #Combines .aac files using 'ffmpeg'
         elif media_type == "aac":
@@ -225,10 +225,10 @@ def record_m3u8(outlet, seconds, playlist_url, root_url, translate):
                 #TRANSLATION command
                 translation_file, audio_file = translate_audio(output_file, outlet, savetime)
 
-                return True, output_file, translation_file, audio_file
+                return True, outlet, output_file, translation_file, audio_file
             
             else:
-                return True, output_file
+                return True, outlet, output_file
 
     except Exception as e:
 
@@ -476,21 +476,24 @@ def multi_record(*outlets, seconds, translate=False):
                 try:
                     # Get the result from the future
                     result = future.result()
-                    print(result)
                     results.append(result)
-                    print(result)
                 except Exception as exc:
                     print(f"{future_to_outlet[future].name} generated an exception: {exc}")
             
-        return results
-                    
+        #return results
         
+        video_dict = {}
+
+        for item in results:
+            if item[0]
 
     except Exception as e:
         return e
 
 
 #create_ffmpeg_command_gpt(video_dict, output_path)
+
+video_dict = {name1:{'Video':video1, 'Subtitles':sub1}}
 
 
 
