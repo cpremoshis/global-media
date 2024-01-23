@@ -121,10 +121,8 @@ def combine_videos_ffmpeg(video_dict, output_path):
         command_str = ' '.join(command)
         process = subprocess.Popen(command_str, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         stdout, stderr = process.communicate()
-        print("STDOUT:", stdout)
-        print("STDERR:", stderr)
 
-        return True
+        return stdout, stderr
     
     except Exception as e:
         print(f"Error occurred: {e}")
