@@ -501,7 +501,7 @@ def multi_record(*outlets, seconds, translate=False):
 
         ffmpeg_status = combine_videos_ffmpeg(video_dict, combined_video)
 
-        return video_dict
+        return video_dict, ffmpeg_status
 
     except Exception as e:
         return e

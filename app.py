@@ -328,8 +328,9 @@ with st.sidebar:
             #Recording and processing
             record_multiple = st.button("Record Multiple", type="primary")
             if record_multiple:
-                video_dict = multi_record(first_outlet, second_outlet, seconds=record_time, translate=translate)
+                video_dict, ffmpeg_status = multi_record(first_outlet, second_outlet, seconds=record_time, translate=translate)
                 st.write(video_dict)
+                st.write(ffmpeg_status)
 
                 #if len(status[0]) == 2:
                 #    tbd
