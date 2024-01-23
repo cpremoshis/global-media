@@ -221,7 +221,7 @@ if 'recordings' not in st.session_state:
 with st.sidebar:
     st.title("GlobalBroadcastHub")
 
-    display_type = st.radio("Display type:", ['Single', 'Multiview'], horizontal=True)
+    display_type = st.radio("Display type:", ['Single', 'Multiview', 'Live Translation'], horizontal=True)
     languages = st.multiselect("Select languages:", broadcasters_df['Language'].unique(), placeholder="All languages")
 
     #Filters list of outlets based on selected languages
