@@ -5,6 +5,7 @@ import requests
 from recording import record_m3u8, record_youtube, record_mp3, multi_record
 import zipfile
 import subprocess
+import os
 
 st.set_page_config(
     page_title="BroadcastHub",
@@ -116,6 +117,11 @@ def combine_videos_ffmpeg(video_dict, output_path):
 
         command.extend(['-c:v', 'libx264', '-c:a', 'aac', '-c:s', 'mov_text', output_path])
 
+        for part in command:
+            if part.startswith('./'):  # Assuming all file paths start with './'
+                if not os.path.exists(part):
+                    print(f"File not found: {part}")
+                    
         result = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
         return result
