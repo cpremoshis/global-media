@@ -121,6 +121,7 @@ def combine_videos_ffmpeg(video_dict, output_path):
         return True
     
     except Exception as e:
+        print(f"Error occurred: {e}")
         return e
 
 ####CONSIDER ADDING FILE ZIPPING TO RECORDING.PY. GETTING TOO MESSY####
