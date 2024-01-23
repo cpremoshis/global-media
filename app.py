@@ -398,7 +398,9 @@ with st.sidebar:
 
                 if status == True:
                     combined_file_path = f"./Recordings/combined_{savetime}.mp4"
-                    combined_videos = combine_videos_ffmpeg(video_dict, combined_file_path)
+                    combined_videos_status = combine_videos_ffmpeg(video_dict, combined_file_path)
+                else:
+                    st.write(combined_videos_status)
 
                 #if len(status[0]) == 2:
                 #    tbd
