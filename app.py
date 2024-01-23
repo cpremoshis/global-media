@@ -116,9 +116,9 @@ def combine_videos_ffmpeg(video_dict, output_path):
 
         command.extend(['-c:v', 'libx264', '-c:a', 'aac', '-c:s', 'mov_text', output_path])
 
-        subprocess.run(command)
+        result = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
-        return True
+        return result
     
     except Exception as e:
         print(f"Error occurred: {e}")
@@ -400,7 +400,8 @@ with st.sidebar:
                 if status == True:
                     combined_file_path = f"/mount/src/global-media/Recordings/combined_{savetime}.mp4"
                     combined_videos_status = combine_videos_ffmpeg(video_dict, combined_file_path)
-                    st.write(combined_videos_status)
+                    st.write(combined_videos_status.stdout)
+                    st.write(combined_videos_status.stderr)
 
                 else:
                     st.error("Unspecified error.")
