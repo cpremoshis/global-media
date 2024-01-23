@@ -72,7 +72,7 @@ def zip_multiple_recordings(video_dict, savetime):
 
     files_to_zip = [item for item in values if item != "None"]
 
-    zip_folder_name = f"./Recordings/multi_record_{savetime}.zip"
+    zip_folder_name = f"./Recordings/Multi_record_{savetime}.zip"
 
     with zipfile.ZipFile(zip_folder_name, 'w') as zipf:
         for file in files_to_zip:
@@ -332,7 +332,6 @@ with st.sidebar:
 
             if record_multiple:
                 status, video_dict, savetime = multi_record(first_outlet, second_outlet, seconds=record_time, translate=translate)
-                st.write(video_dict)
 
                 if status == True:
                     zipped_files = zip_multiple_recordings(video_dict, savetime)
