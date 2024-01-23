@@ -408,8 +408,7 @@ with st.sidebar:
                 if status == True:
                     combined_file_path = f"/mount/src/global-media/Recordings/combined_{savetime}.mp4"
                     combined_videos_status = combine_videos_ffmpeg(video_dict, combined_file_path)
-                    st.write(combined_videos_status.stdout)
-                    st.write(combined_videos_status.stderr)
+                    st.write(combined_videos_status)
 
                 else:
                     st.error("Unspecified error.")
