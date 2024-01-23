@@ -4,12 +4,9 @@ import pandas as pd
 import requests
 from recording import record_m3u8, record_youtube, record_mp3, multi_record
 import zipfile
-import subprocess
-import shlex
-
 
 st.set_page_config(
-    page_title="BroadcastHub",
+    page_title="GlobalBroadcastHub",
     page_icon="🌐",
     layout="wide",
     initial_sidebar_state="expanded"
