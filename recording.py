@@ -402,15 +402,22 @@ def combine_videos_ffmpeg(video_dict, output_path):
         index_counter = 0
 
         # Iterate over each item in the dictionary
+        #for outlet, paths in video_dict.items():
+        #    command.extend(['-i', paths['Video']])
+        #    video_indices.append(str(index_counter))
+        #    index_counter += 1
+
+        #    if 'Subtitles' in paths and paths['Subtitles'] != "None":                
+        #        command.extend(['-i', paths['Subtitles']])
+        #        subtitle_indices.append(str(index_counter))
+        #        index_counter += 1
+
+        # Iterate over each video and subtitle in the dictionary
         for outlet, paths in video_dict.items():
-            command.extend(['-i', paths['Video']])
-            video_indices.append(str(index_counter))
-            index_counter += 1
+            command += f' -i "{paths["Video"]}"'  # Add the video input with quotes around the path
 
             if 'Subtitles' in paths and paths['Subtitles'] != "None":                
-                command.extend(['-i', paths['Subtitles']])
-                subtitle_indices.append(str(index_counter))
-                index_counter += 1
+                command += f' -i "{paths["Subtitles"]}"'  # Add the subtitle input with quotes around the path
 
         # Number of videos
         num_videos = len(video_indices)
