@@ -318,8 +318,8 @@ with st.sidebar:
 
         if len(languages) == 0:
             for row in broadcasters_df.itertuples():
-                if row.Type == "Video"
-                broadcasters_filtered_by_lang.append(row.Name)
+                if row.Type == "Video":
+                    broadcasters_filtered_by_lang.append(row.Name)
         else:
             for row in broadcasters_df.itertuples():
                 if row.Language in languages and row.Type == "Video":
