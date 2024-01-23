@@ -429,9 +429,7 @@ def multi_record(*outlets, seconds, translate=False):
                     results.append(result)
                 except Exception as exc:
                     print(f"{future_to_outlet[future].name} generated an exception: {exc}")
-            
-        #return results
-        
+                    
         video_dict = {}
 
         if len(results[0]) == 3:
