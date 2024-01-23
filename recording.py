@@ -205,6 +205,20 @@ def record_m3u8(outlet, seconds, playlist_url, root_url, translate):
                 #TRANSLATION command
                 translation_file, audio_file = translate_audio(output_file, outlet, savetime)
 
+                # Add subtitle file to the mp4
+                subtitle_command = [
+                    'ffmpeg',
+                    '-y',
+                    '-i', output_file,
+                    '-i', translation_file,  # This is the SRT file
+                    '-c', 'copy',
+                    '-c:s', 'mov_text',  # This ensures the subtitle codec is compatible with MP4
+                    '-metadata:s:s:0', 'language=eng',  # Change 'eng' to the appropriate language code
+                    output_file  # This is the output file with subtitles
+                ]
+
+                subprocess.run(subtitle_command)
+
                 return True, outlet, output_file, translation_file, audio_file
             
             else:
