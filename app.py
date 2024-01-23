@@ -383,7 +383,7 @@ with st.sidebar:
                     third_outlet = Outlet(third_selection, broadcasters_df)
 
                     #Fourth selection
-                    fourth_selection = selections[2]
+                    fourth_selection = selections[3]
                     fourth_outlet = Outlet(fourth_selection, broadcasters_df)
 
                     status, video_dict, savetime = multi_record(first_outlet, second_outlet, third_outlet, fourth_outlet, seconds=record_time, translate=translate)
