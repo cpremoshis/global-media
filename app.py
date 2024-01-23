@@ -120,9 +120,11 @@ def combine_videos_ffmpeg(video_dict, output_path):
         for part in command:
             if part.startswith('./'):  # Assuming all file paths start with './'
                 if not os.path.exists(part):
-                    print(f"File not found: {part}")
+                    result = part
                     
-        result = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                    print(f"File not found: {part}")
+
+        #result = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
         return result
     
