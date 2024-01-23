@@ -392,71 +392,6 @@ def record_mp3(outlet, seconds, stream_url, translate):
         
         return False, e
 
-import subprocess
-
-def combine_videos_ffmpeg(video_dict, output_path):
-    try:
-        # Initialize the command string with ffmpeg
-        command = "ffmpeg"
-
-        video_indices = []
-        subtitle_indices = []
-        index_counter = 0
-
-        # Iterate over each item in the dictionary
-        for outlet, paths in video_dict.items():
-            command += f' -i "{paths["Video"]}"'
-            video_indices.append(str(index_counter))
-            index_counter += 1
-
-            if 'Subtitles' in paths and paths['Subtitles'] != "None":
-                command += f' -i "{paths["Subtitles"]}"'
-                subtitle_indices.append(str(index_counter))
-                index_counter += 1
-
-        # Number of videos
-        num_videos = len(video_indices)
-
-        # Constructing filter_complex
-        filter_complex = ''
-        if num_videos == 1:
-            filter_complex += f'[0:v]fps=fps=30,scale=1920:1080[v];'
-        elif num_videos == 2:
-            for i, idx in enumerate(video_indices):
-                filter_complex += f'[{idx}:v]fps=fps=30,scale=960:ih:force_original_aspect_ratio=decrease[padded{i}]; '
-                filter_complex += f'[padded{i}]pad=960:1080:(ow-iw)/2:(oh-ih)/2:black[v{i}]; '
-            filter_complex += '[v0][v1]hstack=inputs=2[v];'
-        elif num_videos == 3:
-            # Add your construction logic for 3 videos
-            pass
-        elif num_videos == 4:
-            # Add your construction logic for 4 videos
-            pass
-
-        # Append the filter_complex to the command
-        command += f' -filter_complex "{filter_complex}"'
-
-        # Mapping video and audio streams
-        command += ' -map "[v]"'
-        for idx in video_indices:
-            command += f' -map "{idx}:a"'
-
-        # Mapping subtitle streams and adding metadata
-        for i, idx in enumerate(subtitle_indices):
-            command += f' -map "{idx}"'
-            command += f' -metadata:s:s:{i} "title={list(video_dict.keys())[i]}"'
-
-        # Append output options
-        command += f' -c:v libx264 -c:a aac -c:s mov_text "{output_path}"'
-
-        # Execute the command
-        subprocess.run(command, shell=True)
-
-        return True
-    
-    except Exception as e:
-        return e
-
 def multi_record(*outlets, seconds, translate=False):
 
     try:
@@ -491,11 +426,7 @@ def multi_record(*outlets, seconds, translate=False):
                 if item[0] == True:
                     video_dict[item[1]] = {"Video":item[2], "Subtitles":"None"}
 
-        combined_video = f"./Recordings/Combined_video_{savetime}.mp4"
-
-        ffmpeg_status = combine_videos_ffmpeg(video_dict, combined_video)
-
-        return video_dict, ffmpeg_status
+        return video_dict
 
     except Exception as e:
         return e
