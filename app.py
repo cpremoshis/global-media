@@ -447,6 +447,8 @@ if display_type == "Single":
         st.metric("Name", outlet.name)
     with middle_column:
         st.metric("Country", outlet.country)
+    with right_column:
+        st.metric("Language", outlet.language)
 
     result = generate_player(outlet.format, outlet.type, outlet.playback_url)
 
