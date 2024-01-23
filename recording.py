@@ -362,10 +362,10 @@ def record_youtube(outlet, seconds, stream_url, translate):
             #TRANSLATION command
             translation_file, audio_file = translate_audio(output_file, outlet, savetime)
 
-            return True, output_file, translation_file, audio_file
+            return True, outlet, output_file, translation_file, audio_file
         
         else:
-            return True, output_file
+            return True, outlet, output_file
 
     except Exception as e:
         return False, e
