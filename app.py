@@ -49,7 +49,7 @@ class Outlet:
         self.page_url = outlet_info['Page URL']
 
 #Zip files for download
-def zip_media(recording, translation, audio):
+def zip_single_recording(recording, translation, audio):
     
     files_to_zip = [recording, translation, audio]
 
@@ -246,19 +246,19 @@ with st.sidebar:
 
                 if outlet.format == "M3U8" and translate == True:
                     status, recording, translation, audio = record_m3u8(outlet.name, record_time, outlet.recording_url, outlet.root_url, translate)
-                    zipped_files = zip_media(recording, translation, audio)
+                    zipped_files = zip_single_recording(recording, translation, audio)
                 elif outlet.format == "M3U8":
                     status, recording = record_m3u8(outlet.name, record_time, outlet.recording_url, outlet.root_url, translate)
 
                 elif outlet.format == "MP3" and translate == True:
                     status, recording, translation, audio = record_mp3(outlet.name, record_time, outlet.recording_url, translate)
-                    zipped_files = zip_media(recording, translation, audio)
+                    zipped_files = zip_single_recording(recording, translation, audio)
                 elif outlet.format == "MP3":
                     status, recording = record_mp3(outlet.name, record_time, outlet.recording_url, translate)
 
                 elif outlet.format == "YouTube" and translate == True:
                     status, recording, translation, audio = record_youtube(outlet.name, record_time, outlet.recording_url, translate)
-                    zipped_files = zip_media(recording, translation, audio)
+                    zipped_files = zip_single_recording(recording, translation, audio)
                 elif outlet.format == "YouTube":
                     status, recording = record_youtube(outlet.name, record_time, outlet.recording_url)
 
@@ -315,10 +315,15 @@ with st.sidebar:
             second_selection = selections[1]
             second_outlet = Outlet(second_selection, broadcasters_df)
 
+            #Recording and processing
             record_multiple = st.button("Record Multiple", type="primary")
             if record_multiple:
                 status = multi_record(first_outlet, second_outlet, seconds=record_time, translate=translate)
                 st.write(status)
+
+                if len(status[0]) == 2:
+                    tbd
+
 
 #Media display
 if display_type == "Single":
