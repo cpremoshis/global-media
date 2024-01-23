@@ -603,3 +603,5 @@ elif display_type == "Multiview":
                 components.html(player_html, height=365)
             else:
                 player_html = fourth_result[0]
+elif display_type == "Live Translation":
+    st.warning("Under construction.")
