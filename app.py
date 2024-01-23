@@ -219,7 +219,7 @@ if 'recordings' not in st.session_state:
 
 #Sidebar with user input options
 with st.sidebar:
-    st.title("BroadcastHub")
+    st.title("GlobalBroadcastHub")
 
     display_type = st.radio("Display type:", ['Single', 'Multiview'], horizontal=True)
     languages = st.multiselect("Select languages:", broadcasters_df['Language'].unique(), placeholder="All languages")
