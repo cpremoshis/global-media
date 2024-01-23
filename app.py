@@ -48,6 +48,7 @@ class Outlet:
         self.root_url = outlet_info['Root URL']
         self.page_url = outlet_info['Page URL']
 
+####CONSIDER ADDING FILE ZIPPING TO RECORDING.PY. GETTING TOO MESSY####
 #Zip files for download
 def zip_single_recording(recording, translation, audio):
     
@@ -61,6 +62,15 @@ def zip_single_recording(recording, translation, audio):
             zipf.write(file, arcname=file_name)
 
     return zip_folder_name
+
+def zip_multiple_recordings(combined_video, video_dict):
+    
+    files_to_zip = [combined_video]
+
+    #video_dict = {name1:{'Video':video1, 'Subtitles':sub1}}
+
+
+
 
 #Generate media player.
 #Fourth argument is optional and blank by default; if media player needs auto-muted on load, enter 'muted="muted"' when calling function. 
@@ -318,8 +328,8 @@ with st.sidebar:
             #Recording and processing
             record_multiple = st.button("Record Multiple", type="primary")
             if record_multiple:
-                status = multi_record(first_outlet, second_outlet, seconds=record_time, translate=translate)
-                st.write(status)
+                combined_video, video_dict = multi_record(first_outlet, second_outlet, seconds=record_time, translate=translate)
+                st.write(combined_video, video_dict)
 
                 if len(status[0]) == 2:
                     tbd

@@ -392,69 +392,76 @@ def record_mp3(outlet, seconds, stream_url, translate):
         
         return False, e
 
-def create_ffmpeg_command_gpt(video_dict, output_path):
-    command = ['ffmpeg']
+def combine_videos_ffmpeg(video_dict, output_path):
+    
+    try:
+        command = ['ffmpeg']
 
-    video_indices = []
-    subtitle_indices = []
-    index_counter = 0
+        video_indices = []
+        subtitle_indices = []
+        index_counter = 0
 
-    # Iterate over each item in the dictionary
-    for outlet, paths in video_dict.items():
-        command.extend(['-i', paths['Video']])
-        video_indices.append(str(index_counter))
-        index_counter += 1
-
-        if 'Subtitles' in paths:
-            command.extend(['-i', paths['Subtitles']])
-            subtitle_indices.append(str(index_counter))
+        # Iterate over each item in the dictionary
+        for outlet, paths in video_dict.items():
+            command.extend(['-i', paths['Video']])
+            video_indices.append(str(index_counter))
             index_counter += 1
 
-    # Number of videos
-    num_videos = len(video_indices)
+            if 'Subtitles' in paths:
+                command.extend(['-i', paths['Subtitles']])
+                subtitle_indices.append(str(index_counter))
+                index_counter += 1
 
-    # Constructing filter_complex
-    filter_complex = ''
-    if num_videos == 1:
-        filter_complex += '[0:v]scale=1920:1080[v];'
-    elif num_videos == 2:
-        for i, idx in enumerate(video_indices):
-            # Scale to fit within 960x1080, maintaining aspect ratio
-            filter_complex += f'[{idx}:v]scale=960:ih:force_original_aspect_ratio=decrease[padded{i}]; '
-            # Pad to 960x1080 if necessary
-            filter_complex += f'[padded{i}]pad=960:1080:(ow-iw)/2:(oh-ih)/2:black[v{i}]; '
-        filter_complex += '[v0][v1]hstack=inputs=2[v];'
-    elif num_videos == 3:
-        for i in range(2):
-            idx = video_indices[i]
-            filter_complex += f'[{idx}:v]scale=960:540[v{i}]; '
-        filter_complex += '[v0][v1]hstack=inputs=2[top]; '
-        idx = video_indices[2]
-        # Scale third video and pad to center it
-        filter_complex += f'[{idx}:v]scale=-1:540, pad=1920:ih:(ow-iw)/2:(oh-ih)/2:black[bottom]; '
-        filter_complex += '[top][bottom]vstack[v];'
-    elif num_videos == 4:
-        for i, idx in enumerate(video_indices):
-            filter_complex += f'[{idx}:v]scale=960:540[v{i}]; '
-        filter_complex += '[v0][v1]hstack=inputs=2[top]; '
-        filter_complex += '[v2][v3]hstack=inputs=2[bottom]; '
-        filter_complex += '[top][bottom]vstack[v];'
+        # Number of videos
+        num_videos = len(video_indices)
 
-    command.extend(['-filter_complex', filter_complex])
+        # Constructing filter_complex
+        filter_complex = ''
+        if num_videos == 1:
+            filter_complex += '[0:v]scale=1920:1080[v];'
+        elif num_videos == 2:
+            for i, idx in enumerate(video_indices):
+                # Scale to fit within 960x1080, maintaining aspect ratio
+                filter_complex += f'[{idx}:v]scale=960:ih:force_original_aspect_ratio=decrease[padded{i}]; '
+                # Pad to 960x1080 if necessary
+                filter_complex += f'[padded{i}]pad=960:1080:(ow-iw)/2:(oh-ih)/2:black[v{i}]; '
+            filter_complex += '[v0][v1]hstack=inputs=2[v];'
+        elif num_videos == 3:
+            for i in range(2):
+                idx = video_indices[i]
+                filter_complex += f'[{idx}:v]scale=960:540[v{i}]; '
+            filter_complex += '[v0][v1]hstack=inputs=2[top]; '
+            idx = video_indices[2]
+            # Scale third video and pad to center it
+            filter_complex += f'[{idx}:v]scale=-1:540, pad=1920:ih:(ow-iw)/2:(oh-ih)/2:black[bottom]; '
+            filter_complex += '[top][bottom]vstack[v];'
+        elif num_videos == 4:
+            for i, idx in enumerate(video_indices):
+                filter_complex += f'[{idx}:v]scale=960:540[v{i}]; '
+            filter_complex += '[v0][v1]hstack=inputs=2[top]; '
+            filter_complex += '[v2][v3]hstack=inputs=2[bottom]; '
+            filter_complex += '[top][bottom]vstack[v];'
 
-    # Mapping video and audio streams
-    command.extend(['-map', '[v]'])
-    for idx in video_indices:
-        command.extend(['-map', f'{idx}:a'])
+        command.extend(['-filter_complex', filter_complex])
 
-    # Mapping subtitle streams and adding metadata
-    for i, idx in enumerate(subtitle_indices):
-        command.extend(['-map', idx])
-        command.extend(['-metadata:s:s:' + str(i), f'title={list(video_dict.keys())[i]}'])
+        # Mapping video and audio streams
+        command.extend(['-map', '[v]'])
+        for idx in video_indices:
+            command.extend(['-map', f'{idx}:a'])
 
-    command.extend(['-c:v', 'libx264', '-c:a', 'aac', '-c:s', 'mov_text', output_path])
+        # Mapping subtitle streams and adding metadata
+        for i, idx in enumerate(subtitle_indices):
+            command.extend(['-map', idx])
+            command.extend(['-metadata:s:s:' + str(i), f'title={list(video_dict.keys())[i]}'])
 
-    subprocess.run(command)
+        command.extend(['-c:v', 'libx264', '-c:a', 'aac', '-c:s', 'mov_text', output_path])
+
+        subprocess.run(command)
+
+        return True
+    
+    except Exception as e:
+        return e
 
 def multi_record(*outlets, seconds, translate=False):
 
@@ -490,7 +497,14 @@ def multi_record(*outlets, seconds, translate=False):
                 if item[0] == True:
                     video_dict[item[1]] = {"Video":item[2], "Subtitles":None}
 
-        return video_dict
+        combined_video = f"./Recordings/Combined_video_{savetime}.mp4"
+
+        ffmpeg_status = combine_videos_ffmpeg(video_dict, combined_video)
+
+        if ffmpeg_status == True:
+            return combined_video, video_dict
+        else:
+            return "Unknown error."
 
     except Exception as e:
         return e
@@ -499,6 +513,8 @@ def multi_record(*outlets, seconds, translate=False):
 #create_ffmpeg_command_gpt(video_dict, output_path)
 
 #video_dict = {name1:{'Video':video1, 'Subtitles':sub1}}
+    
+#recording, translation, audio
 
 
 
