@@ -317,30 +317,56 @@ with st.sidebar:
 
         translate = st.checkbox("Translate/transcribe")
 
-        if selections_len == 2:
+        #Recording and processing
+        record_multiple = st.button("Record Multiple", type="primary")
 
-            #Recording and processing
-            record_multiple = st.button("Record Multiple", type="primary")
+        if record_multiple:
 
-            if record_multiple:
+            with st.spinner("Recording in progress. Do not change any settings."):
 
-                #First selection
-                first_selection = selections[0]
-                first_outlet = Outlet(first_selection, broadcasters_df)
+                if selections_len == 2:
 
-                #Second selection
-                second_selection = selections[1]
-                second_outlet = Outlet(second_selection, broadcasters_df)
+                    #First selection
+                    first_selection = selections[0]
+                    first_outlet = Outlet(first_selection, broadcasters_df)
 
-                status, video_dict, savetime = multi_record(first_outlet, second_outlet, seconds=record_time, translate=translate)
+                    #Second selection
+                    second_selection = selections[1]
+                    second_outlet = Outlet(second_selection, broadcasters_df)
 
-                if status == True:
-                    zipped_files = zip_multiple_recordings(video_dict, savetime)
-                else:
-                    st.error("Unspecified error.")
-                
-                if 'zipped_files' in locals():
-                    st.session_state['recordings'].append(zipped_files)
+                    status, video_dict, savetime = multi_record(first_outlet, second_outlet, seconds=record_time, translate=translate)
+
+                    if status == True:
+                        zipped_files = zip_multiple_recordings(video_dict, savetime)
+                    else:
+                        st.error("Unspecified error.")
+                    
+                    if 'zipped_files' in locals():
+                        st.session_state['recordings'].append(zipped_files)
+
+                if selections_len == 3:
+
+                    #First selection
+                    first_selection = selections[0]
+                    first_outlet = Outlet(first_selection, broadcasters_df)
+
+                    #Second selection
+                    second_selection = selections[1]
+                    second_outlet = Outlet(second_selection, broadcasters_df)
+
+                    #Third selection
+                    third_selection = selections[2]
+                    third_outlet = Outlet(third_selection, broadcasters_df)
+
+                    status, video_dict, savetime = multi_record(first_outlet, second_outlet, third_outlet, seconds=record_time, translate=translate)
+
+                    if status == True:
+                        zipped_files = zip_multiple_recordings(video_dict, savetime)
+                    else:
+                        st.error("Unspecified error.")
+                    
+                    if 'zipped_files' in locals():
+                        st.session_state['recordings'].append(zipped_files)                
 
         #Displays selection box if the 'recordings' list contains items
         if len(st.session_state['recordings']) != 0:
