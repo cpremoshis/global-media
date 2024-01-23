@@ -459,6 +459,8 @@ def combine_videos_ffmpeg(video_dict, output_path):
 
         command.extend(['-c:v', 'libx264', '-c:a', 'aac', '-c:s', 'mov_text', output_path])
 
+        print(filter_complex)
+
         subprocess.run(command)
 
         return True
