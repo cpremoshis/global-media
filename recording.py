@@ -415,14 +415,17 @@ def combine_videos_ffmpeg(video_dict, output_path):
         # Number of videos
         num_videos = len(video_indices)
 
+        #Framerate
+        target_fps = 30
+
         # Constructing filter_complex
         filter_complex = ''
         if num_videos == 1:
-            filter_complex += '[0:v]scale=1920:1080[v];'
+            filter_complex += f'[0:v]fps=fps={target_fps},scale=1920:1080[v];'
         elif num_videos == 2:
             for i, idx in enumerate(video_indices):
                 # Scale to fit within 960x1080, maintaining aspect ratio
-                filter_complex += f'[{idx}:v]scale=960:ih:force_original_aspect_ratio=decrease[padded{i}]; '
+                filter_complex += f'[{idx}:v]fps=fps={target_fps},scale=960:ih:force_original_aspect_ratio=decrease[padded{i}]; '
                 # Pad to 960x1080 if necessary
                 filter_complex += f'[padded{i}]pad=960:1080:(ow-iw)/2:(oh-ih)/2:black[v{i}]; '
             filter_complex += '[v0][v1]hstack=inputs=2[v];'
