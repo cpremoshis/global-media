@@ -426,7 +426,7 @@ def multi_record(*outlets, seconds, translate=False):
                 if item[0] == True:
                     video_dict[item[1]] = {"Video":item[2], "Subtitles":"None"}
 
-        return video_dict
+        return True, video_dict, savetime
 
     except Exception as e:
         return e

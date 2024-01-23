@@ -4,6 +4,7 @@ import pandas as pd
 import requests
 from recording import record_m3u8, record_youtube, record_mp3, multi_record
 import zipfile
+import subprocess
 
 st.set_page_config(
     page_title="BroadcastHub",
@@ -48,6 +49,80 @@ class Outlet:
         self.root_url = outlet_info['Root URL']
         self.page_url = outlet_info['Page URL']
 
+def combine_videos_ffmpeg(video_dict, output_path):
+    
+    try:
+        command = ['ffmpeg']
+
+        video_indices = []
+        subtitle_indices = []
+        index_counter = 0
+
+        # Iterate over each item in the dictionary
+        for outlet, paths in video_dict.items():
+            command.extend(['-i', paths['Video']])
+            video_indices.append(str(index_counter))
+            index_counter += 1
+
+            if 'Subtitles' in paths and paths['Subtitles'] is not None:                
+                command.extend(['-i', paths['Subtitles']])
+                subtitle_indices.append(str(index_counter))
+                index_counter += 1
+
+        # Number of videos
+        num_videos = len(video_indices)
+
+        #Framerate
+        target_fps = 30
+
+        # Constructing filter_complex
+        filter_complex = ''
+        if num_videos == 1:
+            filter_complex += f'[0:v]fps=fps={target_fps},scale=1920:1080[v];'
+        elif num_videos == 2:
+            for i, idx in enumerate(video_indices):
+                # Scale to fit within 960x1080, maintaining aspect ratio
+                filter_complex += f'[{idx}:v]fps=fps={target_fps},scale=960:ih:force_original_aspect_ratio=decrease[padded{i}]; '
+                # Pad to 960x1080 if necessary
+                filter_complex += f'[padded{i}]pad=960:1080:(ow-iw)/2:(oh-ih)/2:black[v{i}]; '
+            filter_complex += '[v0][v1]hstack=inputs=2[v];'
+        elif num_videos == 3:
+            for i in range(2):
+                idx = video_indices[i]
+                filter_complex += f'[{idx}:v]scale=960:540[v{i}]; '
+            filter_complex += '[v0][v1]hstack=inputs=2[top]; '
+            idx = video_indices[2]
+            # Scale third video and pad to center it
+            filter_complex += f'[{idx}:v]scale=-1:540, pad=1920:ih:(ow-iw)/2:(oh-ih)/2:black[bottom]; '
+            filter_complex += '[top][bottom]vstack[v];'
+        elif num_videos == 4:
+            for i, idx in enumerate(video_indices):
+                filter_complex += f'[{idx}:v]scale=960:540[v{i}]; '
+            filter_complex += '[v0][v1]hstack=inputs=2[top]; '
+            filter_complex += '[v2][v3]hstack=inputs=2[bottom]; '
+            filter_complex += '[top][bottom]vstack[v];'
+
+        command.extend(['-filter_complex', filter_complex])
+
+        # Mapping video and audio streams
+        command.extend(['-map', '[v]'])
+        for idx in video_indices:
+            command.extend(['-map', f'{idx}:a'])
+
+        # Mapping subtitle streams and adding metadata
+        for i, idx in enumerate(subtitle_indices):
+            command.extend(['-map', idx])
+            command.extend(['-metadata:s:s:' + str(i), f'title={list(video_dict.keys())[i]}'])
+
+        command.extend(['-c:v', 'libx264', '-c:a', 'aac', '-c:s', 'mov_text', output_path])
+
+        subprocess.run(command)
+
+        return True
+    
+    except Exception as e:
+        return e
+
 ####CONSIDER ADDING FILE ZIPPING TO RECORDING.PY. GETTING TOO MESSY####
 #Zip files for download
 def zip_single_recording(recording, translation, audio):
@@ -68,9 +143,6 @@ def zip_multiple_recordings(combined_video, video_dict):
     files_to_zip = [combined_video]
 
     #video_dict = {name1:{'Video':video1, 'Subtitles':sub1}}
-
-
-
 
 #Generate media player.
 #Fourth argument is optional and blank by default; if media player needs auto-muted on load, enter 'muted="muted"' when calling function. 
@@ -232,15 +304,8 @@ with st.sidebar:
 
     if display_type == 'Single':
 
-        #if 'index' not in st.session_state:
-        #    st.session_state['index'] = 0
-
-        #if st.session_state['index'] > len(broadcasters_filtered_by_lang):
-        #    st.session_state['index'] = 0
-
         #----->User input<-----
         st.session_state['selection'] = st.selectbox("Outlet:", broadcasters_filtered_by_lang)
-        #st.session_state['index'] = broadcasters_df.index[broadcasters_df['Name'] == st.session_state['selection']].tolist()[0]
 
         outlet = Outlet(st.session_state['selection'], broadcasters_df)
 
@@ -328,8 +393,12 @@ with st.sidebar:
             #Recording and processing
             record_multiple = st.button("Record Multiple", type="primary")
             if record_multiple:
-                video_dict = multi_record(first_outlet, second_outlet, seconds=record_time, translate=translate)
+                status, video_dict, savetime = multi_record(first_outlet, second_outlet, seconds=record_time, translate=translate)
                 st.write(video_dict)
+
+                if status == True:
+                    combined_file_path = f"./Recordsings/combined_{savetime}.mp4"
+                    combined_videos = combine_videos_ffmpeg(video_dict, combined_file_path)
 
                 #if len(status[0]) == 2:
                 #    tbd
