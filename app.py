@@ -222,19 +222,6 @@ with st.sidebar:
     st.title("GlobalBroadcastHub")
 
     display_type = st.radio("Display type:", ['Single', 'Multiview', 'Live Translation'], horizontal=True)
-    languages = st.multiselect("Select languages:", broadcasters_df['Language'].unique(), placeholder="All languages")
-
-    #Filters list of outlets based on selected languages
-    #If no language is selected, defaults to all languages
-    broadcasters_filtered_by_lang = []
-
-    if len(languages) == 0:
-        for row in broadcasters_df.itertuples():
-            broadcasters_filtered_by_lang.append(row.Name)
-    else:
-        for row in broadcasters_df.itertuples():
-            if row.Language in languages:
-                broadcasters_filtered_by_lang.append(row.Name)
 
     #Reformats the full file name into just the ending (ex: "Outlet_time.mp4")
     def format_file_names(option):
@@ -244,6 +231,21 @@ with st.sidebar:
     if display_type == 'Single':
 
         #----->User input<-----
+        #Filters list of outlets based on selected languages
+        #If no language is selected, defaults to all languages
+
+        languages = st.multiselect("Select languages:", broadcasters_df['Language'].unique(), placeholder="All languages")
+
+        broadcasters_filtered_by_lang = []
+
+        if len(languages) == 0:
+            for row in broadcasters_df.itertuples():
+                broadcasters_filtered_by_lang.append(row.Name)
+        else:
+            for row in broadcasters_df.itertuples():
+                if row.Language in languages:
+                    broadcasters_filtered_by_lang.append(row.Name)
+
         st.session_state['selection'] = st.selectbox("Outlet:", broadcasters_filtered_by_lang)
 
         outlet = Outlet(st.session_state['selection'], broadcasters_df)
@@ -306,6 +308,22 @@ with st.sidebar:
                     dwnbtn = st.download_button("Download", data=f, file_name=file_name, mime="video/mp4")
 
     if display_type == "Multiview":
+
+        #Filters list of outlets based on selected languages
+        #If no language is selected, defaults to all languages
+
+        languages = st.multiselect("Select languages:", broadcasters_df['Language'].unique(), placeholder="All languages")
+
+        broadcasters_filtered_by_lang = []
+
+        if len(languages) == 0:
+            for row in broadcasters_df.itertuples():
+                broadcasters_filtered_by_lang.append(row.Name)
+        else:
+            for row in broadcasters_df.itertuples():
+                if row.Language in languages:
+                    broadcasters_filtered_by_lang.append(row.Name)
+
         selections = st.multiselect("Select outlets:", broadcasters_filtered_by_lang, max_selections=4)
         selections_len = len(selections)
 
