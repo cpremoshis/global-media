@@ -459,9 +459,11 @@ def combine_videos_ffmpeg(video_dict, output_path):
 
         command.extend(['-c:v', 'libx264', '-c:a', 'aac', '-c:s', 'mov_text', output_path])
 
-        subprocess.run(command)
+        return command
 
-        return True
+        #subprocess.run(command)
+
+        #return True
     
     except Exception as e:
         return e
