@@ -415,11 +415,22 @@ def multi_record(*outlets, seconds, translate=False):
 
         # Create a ThreadPoolExecutor
         with ThreadPoolExecutor() as executor:
+
             # Dictionary to hold future to outlet mapping
-            future_to_outlet = {
-                executor.submit(record_m3u8, outlet.name, seconds, outlet.recording_url, outlet.root_url, translate): outlet
-                for outlet in outlets
-            }
+            future_to_outlet = {}
+            
+            for outlet in outlets:
+                if outlet.format == "M3U8":
+                    future = executor.submit(record_m3u8, outlet.name, seconds, outlet.recording_url, outlet.root_url, translate)
+                if outlet.format == "YouTube":
+                    future = executor.submit(record_youtube, outlet.name, seconds, outlet.recording_url, translate)
+                future_to_outlet[future] = outlet
+
+            # Dictionary to hold future to outlet mapping
+            #future_to_outlet = {
+            #    executor.submit(record_m3u8, outlet.name, seconds, outlet.recording_url, outlet.root_url, translate): outlet
+            #    for outlet in outlets
+            #}
 
             results = []
             for future in as_completed(future_to_outlet):
