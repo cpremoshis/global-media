@@ -407,7 +407,7 @@ def combine_videos_ffmpeg(video_dict, output_path):
             video_indices.append(str(index_counter))
             index_counter += 1
 
-            if 'Subtitles' in paths and paths['Subtitles'] is not None:                
+            if 'Subtitles' in paths and paths['Subtitles'] is not "None":                
                 command.extend(['-i', paths['Subtitles']])
                 subtitle_indices.append(str(index_counter))
                 index_counter += 1
@@ -459,8 +459,6 @@ def combine_videos_ffmpeg(video_dict, output_path):
 
         command.extend(['-c:v', 'libx264', '-c:a', 'aac', '-c:s', 'mov_text', output_path])
 
-        print(filter_complex)
-
         subprocess.run(command)
 
         return True
@@ -500,7 +498,7 @@ def multi_record(*outlets, seconds, translate=False):
 
             for item in results:
                 if item[0] == True:
-                    video_dict[item[1]] = {"Video":item[2], "Subtitles":None}
+                    video_dict[item[1]] = {"Video":item[2], "Subtitles":"None"}
 
         combined_video = f"./Recordings/Combined_video_{savetime}.mp4"
 
