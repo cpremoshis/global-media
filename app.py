@@ -40,6 +40,7 @@ class Outlet:
         outlet_info = broadcasters_df[broadcasters_df['Name'] == outlet].iloc[0]
         self.name = outlet_info['Name']
         self.country = outlet_info['Country']
+        self.language = outlet_info['Language']
         self.format = outlet_info['Format']
         self.type = outlet_info['Type']
         self.wiki = outlet_info['Wiki']
