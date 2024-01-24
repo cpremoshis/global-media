@@ -612,3 +612,9 @@ elif display_type == "Multiview":
                 player_html = fourth_result[0]
 elif display_type == "Live Translation":
     st.warning("Under construction.")
+
+    result = generate_player("M3U8", "Video", "./Recordings/live_translate/M3U8/playlist.m3u8")
+    player_html, player_size = result
+    
+    components.html(player_html, height=player_size)
+    
