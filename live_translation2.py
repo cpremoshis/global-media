@@ -10,12 +10,12 @@ import threading
 m3u8_url = "https://live-play.cctvnews.cctv.com/cctv/merge_cctv13.m3u8"
 root_url = "https://live-play.cctvnews.cctv.com/cctv/"
 
-ts_save_path = "/Users/casey/Downloads/live_translate/segments/"
-ts_path_to_check = "/Users/casey/Downloads/live_translate/segments/merge_cctv13/"
-raw_chunks_path = "/Users/casey/Downloads/live_translate/segments/raw_chunks/"
-m3u8_video_path = "/Users/casey/Downloads/live_translate/M3U8/"
-m3u8_playlist_path = "/Users/casey/Downloads/live_translate/M3U8/playlist.m3u8"
-translation_path = "/Users/casey/Downloads/live_translate/segments/translation/"
+ts_save_path = "./Recordings/live_translate/segments/"
+ts_path_to_check = "./Recordings/live_translate/segments/merge_cctv13/"
+raw_chunks_path = "./Recordings/live_translate/segments/raw_chunks/"
+m3u8_video_path = "./Recordings/live_translate/M3U8/"
+m3u8_playlist_path = "./Recordings/live_translate/M3U8/playlist.m3u8"
+translation_path = "./Recordings/live_translate/segments/translation/"
 
 translate = True
 
@@ -108,8 +108,8 @@ def ffmpeg_concat(ts_files_to_concat, segment_tracker):
 def translate_audio(video_file, segment_tracker):
     try:
         openai.api_key = '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'
-        translation_srt = f"/Users/casey/Downloads/live_translate/segments/translation/translation_{segment_tracker}.srt"
-        mp3_for_openai = f"/Users/casey/Downloads/live_translate/segments/translation/translate_{segment_tracker}.mp3"
+        translation_srt = f"./Recordings/live_translate/segments/translation/translation_{segment_tracker}.srt"
+        mp3_for_openai = f"./Recordings/live_translate/segments/translation/translate_{segment_tracker}.mp3"
 
         input_file = ffmpeg.input(video_file)
         input_file.output(mp3_for_openai, acodec="mp3").run()
@@ -262,7 +262,6 @@ thread1 = threading.Thread(target=download_ts_segments, args=(ts_save_path,))
 
 thread1.start()
 #----> END OF THREADING <----
-
 
 #----> RESETS M3U8 PLAYLIST <----
 m3u8_template = ['#EXTM3U\n', '#EXT-X-VERSION:3\n', '#EXT-X-TARGETDURATION:30\n', '#EXT-X-MEDIA-SEQUENCE:0\n\n']
