@@ -618,6 +618,7 @@ elif display_type == "Live Translation":
     live_translate_video_player_html = f"""
         <!DOCTYPE html>
         <html>
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' http://35.222.235.96;">
         <head>
             <title>HLS Stream</title>
             <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
