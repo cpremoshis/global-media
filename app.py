@@ -657,4 +657,4 @@ elif display_type == "Live Translation":
         </html>
         """
     
-    components.html(live_translate_video_player_html, unsafe_allow_html=True, height=525)
+    components.html(live_translate_video_player_html, height=525)
