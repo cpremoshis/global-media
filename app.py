@@ -613,6 +613,8 @@ elif display_type == "Multiview":
 elif display_type == "Live Translation":
     st.warning("Under construction.")
 
+    live_url = "http://35.222.235.96/M3U8/playlist.m3u8"
+    
     live_translate_video_player_html = f"""
         <!DOCTYPE html>
         <html>
@@ -637,7 +639,7 @@ elif display_type == "Live Translation":
             var video = document.getElementById('video');
             if (Hls.isSupported()) {{
                 var hls = new Hls();
-                hls.loadSource('http://35.222.235.96/M3U8/playlist.m3u8');
+                hls.loadSource('{live_url}');
                 hls.attachMedia(video);
                 hls.on(Hls.Events.MANIFEST_PARSED, function() {{
                     video.play();
@@ -645,7 +647,7 @@ elif display_type == "Live Translation":
             }}
             // For browsers like Safari that support HLS natively
             else if (video.canPlayType('application/vnd.apple.mpegurl')) {{
-                video.src = 'http://35.222.235.96/M3U8/playlist.m3u8';
+                video.src = '{live_url}';
                 video.addEventListener('loadedmetadata', function() {{
                     video.play();
                 }});
