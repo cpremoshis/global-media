@@ -612,3 +612,47 @@ elif display_type == "Multiview":
                 player_html = fourth_result[0]
 elif display_type == "Live Translation":
     st.warning("Under construction.")
+
+    live_translate_video_player_html = f"""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>HLS Stream</title>
+            <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+            <style>
+                html, body, div, span, applet, object, iframe,
+                video, audio {{
+                    margin: 0;
+                    padding: 0;
+                    border: 0;
+                    background-color: #0E1117;
+                    vertical-align: baseline;
+                    box-sizing: border-box; /* Include padding and border in the element's size */
+                }}
+            </style>
+        </head>
+        <body>
+        <video id="video" controls autoplay style="width:100vw; height:100vh; object-fit: contain; margin:auto"></video>
+        <script>
+            var video = document.getElementById('video');
+            if (Hls.isSupported()) {{
+                var hls = new Hls();
+                hls.loadSource('http://35.222.235.96/M3U8/playlist.m3u8');
+                hls.attachMedia(video);
+                hls.on(Hls.Events.MANIFEST_PARSED, function() {{
+                    video.play();
+                }});
+            }}
+            // For browsers like Safari that support HLS natively
+            else if (video.canPlayType('application/vnd.apple.mpegurl')) {{
+                video.src = 'http://35.222.235.96/M3U8/playlist.m3u8';
+                video.addEventListener('loadedmetadata', function() {{
+                    video.play();
+                }});
+            }}
+        </script>
+        </body>
+        </html>
+        """
+
+    http://35.222.235.96/M3U8/playlist.m3u8
