@@ -12,6 +12,9 @@ st.set_page_config(
     initial_sidebar_state="expanded"
     )
 
+custom_html = open('extra_html.html', 'r').read()
+st.markdown(custom_html, unsafe_allow_html=True)
+
 #Opens CSV of broadcasters with links and other info
 @st.cache_data
 def open_database():
