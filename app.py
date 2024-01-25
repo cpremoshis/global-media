@@ -616,7 +616,8 @@ elif display_type == "Multiview":
 elif display_type == "Live Translation":
     st.warning("Under construction.")
 
-    live_url = "https://35.222.235.96/playlist.m3u8"
+    #live_url = "https://35.222.235.96/playlist.m3u8"
+    live_url = "https://globalbroadcasthub.net/playlist.m3u8"
 
     live_translate_video_player_html = f"""
         <!DOCTYPE html>
