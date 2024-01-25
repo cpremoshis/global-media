@@ -614,7 +614,7 @@ elif display_type == "Live Translation":
     st.warning("Under construction.")
 
     live_url = "http://35.222.235.96/M3U8/playlist.m3u8"
-    
+
     live_translate_video_player_html = f"""
         <!DOCTYPE html>
         <html>
@@ -656,5 +656,5 @@ elif display_type == "Live Translation":
         </body>
         </html>
         """
-
-    http://35.222.235.96/M3U8/playlist.m3u8
+    
+    components.html(live_translate_video_player_html, height=525)
