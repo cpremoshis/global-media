@@ -665,7 +665,6 @@ elif display_type == "Live Translation":
     #components.html(live_translate_video_player_html, height=525)
 
     alt_video_player_html = """<link href="https://vjs.zencdn.net/7.15.4/video-js.css" rel="stylesheet">
-            <link href="https://vjs.zencdn.net/7.15.4/video-js.css" rel="stylesheet">
             <style>
                 /* Add custom CSS to make the video player fill the iframe/screen and center it */
                 #my-video {
@@ -693,14 +692,14 @@ elif display_type == "Live Translation":
                 <source src="https://globalbroadcasthub.net/playlist.m3u8" type="application/x-mpegURL">
             </video>
             <script src="https://vjs.zencdn.net/7.15.4/video.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/5.15.0/videojs-contrib-hls.js"></script>
             <script>
                 var player = videojs('my-video', {
                     html5: {
-                        hls: {
+                        vhs: {
                             enableLowInitialPlaylist: true,
                             liveSyncDuration: 604800
-                        }
+                        },
+                        // Other player options can be specified here
                     }
                 });
             </script>
