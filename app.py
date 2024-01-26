@@ -620,7 +620,6 @@ elif display_type == "Live Translation":
     #live_url = "https://35.222.235.96/playlist.m3u8"
     live_url = "https://globalbroadcasthub.net/playlist.m3u8"
 
-
     live_translate_video_player_html = f"""
         <!DOCTYPE html>
         <html>
@@ -645,7 +644,7 @@ elif display_type == "Live Translation":
             var video = document.getElementById('video');
             if (Hls.isSupported()) {{
                 var hls = new Hls();
-                hls.loadSource('{live_url_timestamped}');
+                hls.loadSource('{live_url}');
                 hls.attachMedia(video);
                 hls.on(Hls.Events.MANIFEST_PARSED, function() {{
                     video.play();
@@ -653,7 +652,7 @@ elif display_type == "Live Translation":
             }}
             // For browsers like Safari that support HLS natively
             else if (video.canPlayType('application/vnd.apple.mpegurl')) {{
-                video.src = '{live_url_timestamped}';
+                video.src = '{live_url}';
                 video.addEventListener('loadedmetadata', function() {{
                     video.play();
                 }});
