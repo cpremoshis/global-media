@@ -647,7 +647,7 @@ elif display_type == "Live Translation":
             var video = document.getElementById('video');
             if (Hls.isSupported()) {{
                 var hls = new Hls();
-                hls.loadSource('{live_url}');
+                hls.loadSource('{live_url_timestamped}');
                 hls.attachMedia(video);
                 hls.on(Hls.Events.MANIFEST_PARSED, function() {{
                     video.play();
@@ -655,7 +655,7 @@ elif display_type == "Live Translation":
             }}
             // For browsers like Safari that support HLS natively
             else if (video.canPlayType('application/vnd.apple.mpegurl')) {{
-                video.src = '{live_url}';
+                video.src = '{live_url_timestamped}';
                 video.addEventListener('loadedmetadata', function() {{
                     video.play();
                 }});
