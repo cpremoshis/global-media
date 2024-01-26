@@ -620,8 +620,6 @@ elif display_type == "Live Translation":
     #live_url = "https://35.222.235.96/playlist.m3u8"
     live_url = "https://globalbroadcasthub.net/playlist.m3u8"
 
-    timestamp = int(time.time())
-    live_url_timestamped = f"{live_url}?timestamp={timestamp}"
 
     live_translate_video_player_html = f"""
         <!DOCTYPE html>
@@ -665,4 +663,22 @@ elif display_type == "Live Translation":
         </html>
         """
     
-    components.html(live_translate_video_player_html, height=525)
+    #components.html(live_translate_video_player_html, height=525)
+
+    alt_video_player_html = """<link href="https://vjs.zencdn.net/7.15.4/video-js.css" rel="stylesheet">
+           <video id="my-video" class="video-js" controls autoplay preload="auto" width="640" height="360">
+             <source src="https://globalbroadcasthub.net/playlist.m3u8" type="application/x-mpegURL">
+           </video>
+           <script src="https://vjs.zencdn.net/7.15.4/video.js"></script>
+           <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/5.15.0/videojs-contrib-hls.js"></script>
+           <script>
+               var player = videojs('my-video', {
+                 html5: {
+                   hls: {
+                     enableLowInitialPlaylist: true
+                   }
+                 }
+               });
+           </script>"""
+
+    components.html(alt_video_player_html, unsafe_allow_html=True, height=525)
