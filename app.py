@@ -661,5 +661,4 @@ elif display_type == "Live Translation":
         </html>
         """
     
-    #components.html(live_translate_video_player_html, height=525)
-    st.video(live_url)
+    components.html(live_translate_video_player_html, height=525)
