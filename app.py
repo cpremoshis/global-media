@@ -680,4 +680,4 @@ elif display_type == "Live Translation":
                });
            </script>"""
 
-    components.html(alt_video_player_html, unsafe_allow_html=True, height=525)
+    components.html(alt_video_player_html, height=525)
