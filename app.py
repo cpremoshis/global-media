@@ -698,7 +698,8 @@ elif display_type == "Live Translation":
                 var player = videojs('my-video', {
                     html5: {
                         hls: {
-                            enableLowInitialPlaylist: true
+                            enableLowInitialPlaylist: true,
+                            liveSyncDuration: 604800
                         }
                     }
                 });
