@@ -665,15 +665,28 @@ elif display_type == "Live Translation":
     #components.html(live_translate_video_player_html, height=525)
 
     alt_video_player_html = """<link href="https://vjs.zencdn.net/7.15.4/video-js.css" rel="stylesheet">
+            <link href="https://vjs.zencdn.net/7.15.4/video-js.css" rel="stylesheet">
             <style>
-                /* Add custom CSS to make the video player fill the iframe/screen */
+                /* Add custom CSS to make the video player fill the iframe/screen and center it */
                 #my-video {
                     width: 100vw;
                     height: 100vh;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    margin: auto;
                 }
                 .video-js {
                     width: 100vw;
                     height: 100vh;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    margin: auto;
                 }
             </style>
             <video id="my-video" class="video-js" controls autoplay preload="auto">
