@@ -621,7 +621,7 @@ elif display_type == "Live Translation":
     m3u8_live_url = "https://globalbroadcasthub.net/playlist.m3u8"
     dash_url = "https://globalbroadcasthub.net/dash_1/stream.mpd"
 
-    live_translate_video_player_html = f"""
+    hls_player_html = f"""
         <!DOCTYPE html>
         <html>
         <head>
@@ -663,7 +663,7 @@ elif display_type == "Live Translation":
         </html>
         """
     
-    #components.html(live_translate_video_player_html, height=525)
+    components.html(hls_player_html, height=525)
 
     dash_player_html = ash_video_player_html = f"""
         <!DOCTYPE html>
@@ -694,4 +694,4 @@ elif display_type == "Live Translation":
         </html>
         """
     
-    components.html(dash_player_html, height=525)
+    #components.html(dash_player_html, height=525)
