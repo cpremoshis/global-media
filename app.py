@@ -662,7 +662,7 @@ elif display_type == "Live Translation":
         </html>
         """
     
-    #components.html(live_translate_video_player_html, height=525)
+    components.html(live_translate_video_player_html, height=525)
 
     alt_video_player_html = """<link href="https://vjs.zencdn.net/7.15.4/video-js.css" rel="stylesheet">
             <style>
@@ -705,4 +705,4 @@ elif display_type == "Live Translation":
             </script>
             """
 
-    components.html(alt_video_player_html, height=525)
+    #components.html(alt_video_player_html, height=525)
