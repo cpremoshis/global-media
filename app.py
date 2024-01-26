@@ -617,8 +617,9 @@ elif display_type == "Multiview":
 elif display_type == "Live Translation":
     st.warning("Under construction.")
 
-    #live_url = "https://35.222.235.96/playlist.m3u8"
-    live_url = "https://globalbroadcasthub.net/playlist.m3u8"
+    #m3u8_live_url = "https://35.222.235.96/playlist.m3u8"
+    m3u8_live_url = "https://globalbroadcasthub.net/playlist.m3u8"
+    dash_url = "https://globalbroadcasthub.net/dash_1/stream.mpd"
 
     live_translate_video_player_html = f"""
         <!DOCTYPE html>
@@ -644,7 +645,7 @@ elif display_type == "Live Translation":
             var video = document.getElementById('video');
             if (Hls.isSupported()) {{
                 var hls = new Hls();
-                hls.loadSource('{live_url}');
+                hls.loadSource('{m3u8_live_url}');
                 hls.attachMedia(video);
                 hls.on(Hls.Events.MANIFEST_PARSED, function() {{
                     video.play();
@@ -652,7 +653,7 @@ elif display_type == "Live Translation":
             }}
             // For browsers like Safari that support HLS natively
             else if (video.canPlayType('application/vnd.apple.mpegurl')) {{
-                video.src = '{live_url}';
+                video.src = '{m3u8_live_url}';
                 video.addEventListener('loadedmetadata', function() {{
                     video.play();
                 }});
@@ -662,47 +663,35 @@ elif display_type == "Live Translation":
         </html>
         """
     
-    components.html(live_translate_video_player_html, height=525)
+    #components.html(live_translate_video_player_html, height=525)
 
-    alt_video_player_html = """<link href="https://vjs.zencdn.net/7.15.4/video-js.css" rel="stylesheet">
+    dash_player_html = ash_video_player_html = f"""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>DASH Stream</title>
+            <script src="https://cdn.dashjs.org/latest/dash.all.min.js"></script>
             <style>
-                /* Add custom CSS to make the video player fill the iframe/screen and center it */
-                #my-video {
-                    width: 100vw;
-                    height: 100vh;
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    right: 0;
-                    bottom: 0;
-                    margin: auto;
-                }
-                .video-js {
-                    width: 100vw;
-                    height: 100vh;
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    right: 0;
-                    bottom: 0;
-                    margin: auto;
-                }
+                html, body, div, span, applet, object, iframe,
+                video, audio {{
+                    margin: 0;
+                    padding: 0;
+                    border: 0;
+                    background-color: #0E1117;
+                    vertical-align: baseline;
+                    box-sizing: border-box; /* Include padding and border in the element's size */
+                }}
             </style>
-            <video id="my-video" class="video-js" controls autoplay preload="auto">
-                <source src="https://globalbroadcasthub.net/playlist.m3u8" type="application/x-mpegURL">
-            </video>
-            <script src="https://vjs.zencdn.net/7.15.4/video.js"></script>
-            <script>
-                var player = videojs('my-video', {
-                    html5: {
-                        vhs: {
-                            enableLowInitialPlaylist: true,
-                            liveSyncDuration: 604800
-                        },
-                        // Other player options can be specified here
-                    }
-                });
-            </script>
-            """
-
-    #components.html(alt_video_player_html, height=525)
+        </head>
+        <body>
+        <video id="video" controls autoplay style="width:100vw; height:100vh; object-fit: contain; margin:auto"></video>
+        <script>
+            var video = document.getElementById('video');
+            var player = dashjs.MediaPlayer().create();
+            player.initialize(video, '{dash_url}', true);
+        </script>
+        </body>
+        </html>
+        """
+    
+    components.html(dash_player_html, height=525)
