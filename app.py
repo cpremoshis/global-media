@@ -665,7 +665,7 @@ elif display_type == "Live Translation":
     #components.html(live_translate_video_player_html, height=525)
 
     alt_video_player_html = """<link href="https://vjs.zencdn.net/7.15.4/video-js.css" rel="stylesheet">
-           <video id="my-video" class="video-js" controls autoplay preload="auto" width="100vw" height="100vh">
+        <video id="video" controls autoplay style="width:100vw; height:100vh; object-fit: contain; margin:auto"></video>
              <source src="https://globalbroadcasthub.net/playlist.m3u8" type="application/x-mpegURL">
            </video>
            <script src="https://vjs.zencdn.net/7.15.4/video.js"></script>
