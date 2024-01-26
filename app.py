@@ -4,6 +4,7 @@ import pandas as pd
 import requests
 from recording import record_m3u8, record_youtube, record_mp3, multi_record
 import zipfile
+import time
 
 st.set_page_config(
     page_title="GlobalBroadcastHub",
@@ -618,6 +619,9 @@ elif display_type == "Live Translation":
 
     #live_url = "https://35.222.235.96/playlist.m3u8"
     live_url = "https://globalbroadcasthub.net/playlist.m3u8"
+
+    timestamp = int(time.time())
+    live_url_timestamped = f"{live_url}?timestamp={timestamp}"
 
     live_translate_video_player_html = f"""
         <!DOCTYPE html>
