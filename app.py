@@ -665,19 +665,31 @@ elif display_type == "Live Translation":
     #components.html(live_translate_video_player_html, height=525)
 
     alt_video_player_html = """<link href="https://vjs.zencdn.net/7.15.4/video-js.css" rel="stylesheet">
-           <video id="my-video" class="video-js" controls autoplay preload="auto" width=100% height=100%>
-             <source src="https://globalbroadcasthub.net/playlist.m3u8" type="application/x-mpegURL">
-           </video>
-           <script src="https://vjs.zencdn.net/7.15.4/video.js"></script>
-           <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/5.15.0/videojs-contrib-hls.js"></script>
-           <script>
-               var player = videojs('my-video', {
-                 html5: {
-                   hls: {
-                     enableLowInitialPlaylist: true
-                   }
-                 }
-               });
-           </script>"""
+            <style>
+                /* Add custom CSS to make the video player fill the iframe/screen */
+                #my-video {
+                    width: 100%;
+                    height: 100%;
+                }
+                .video-js {
+                    width: 100%;
+                    height: 100%;
+                }
+            </style>
+            <video id="my-video" class="video-js" controls autoplay preload="auto">
+                <source src="https://globalbroadcasthub.net/playlist.m3u8" type="application/x-mpegURL">
+            </video>
+            <script src="https://vjs.zencdn.net/7.15.4/video.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/5.15.0/videojs-contrib-hls.js"></script>
+            <script>
+                var player = videojs('my-video', {
+                    html5: {
+                        hls: {
+                            enableLowInitialPlaylist: true
+                        }
+                    }
+                });
+            </script>
+            """
 
     components.html(alt_video_player_html, height=525)
