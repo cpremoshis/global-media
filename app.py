@@ -662,4 +662,4 @@ elif display_type == "Live Translation":
         """
     
     #components.html(live_translate_video_player_html, height=525)
-    st.video(live_url, cache=False)
+    st.video(live_url)
