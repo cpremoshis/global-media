@@ -668,12 +668,12 @@ elif display_type == "Live Translation":
             <style>
                 /* Add custom CSS to make the video player fill the iframe/screen */
                 #my-video {
-                    width: 100%;
-                    height: 100%;
+                    width: 100vw;
+                    height: 100vh;
                 }
                 .video-js {
-                    width: 100%;
-                    height: 100%;
+                    width: 100vw;
+                    height: 100vh;
                 }
             </style>
             <video id="my-video" class="video-js" controls autoplay preload="auto">
