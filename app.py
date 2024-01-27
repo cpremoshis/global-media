@@ -680,6 +680,7 @@ elif display_type == "Live Translation":
     st.markdown(
         """
             - Live feed processed, hosted, and delivered by Ubuntu server running Nginx, via Amazon Web Services.
-            - Translations generated using OpenAI's Whisper automatic speech recognition model and API.
+            - Custom Python script with multithreading used to ingest, process, and deliver video simultaneously.
+            - Translations generated with OpenAI's Whisper automatic speech recognition model and API.
         """
     )
