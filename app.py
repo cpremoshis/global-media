@@ -683,6 +683,7 @@ elif display_type == "Live Translation":
             - Custom Python script with multithreading used to record, process, and deliver video simultaneously.
             - Nginx and custom web domain used to create SSL certificates and ensure HTTPS delivery of processed video feed.
             - Translations generated with OpenAI's 'Whisper' speech recognition model and API.
-            - Subtitle overlay created with ffmpeg. 
+            - Subtitle overlay created with ffmpeg.
+            - Video delivered via custom HLS live stream.
         """
     )
