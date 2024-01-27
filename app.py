@@ -669,3 +669,5 @@ elif display_type == "Live Translation":
         """
     
     #components.html(hls_player_html, height=525)
+
+    st.write("Live feed processed and hosted on Amazon Web Services Ubuntu server.")
