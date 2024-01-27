@@ -653,13 +653,13 @@ elif display_type == "Live Translation":
                     video.play();
                 }});
 
-                hls.on(Hls.Events.MANIFEST_LOADED, function () {
+                hls.on(Hls.Events.MANIFEST_LOADED, function () {{
                     var subtitleTracks = hls.subtitleTracks;
-                    if (subtitleTracks.length > 0) {
+                    if (subtitleTracks.length > 0) {{
                         hls.subtitleTrack = 0; // Select the first subtitle track
-                    }
+                    }}
 
-            }}
+            }}}
             // For browsers like Safari that support HLS natively
             else if (video.canPlayType('application/vnd.apple.mpegurl')) {{
                 video.src = '{m3u8_live_url}';
