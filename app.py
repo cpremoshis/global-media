@@ -617,10 +617,10 @@ elif display_type == "Multiview":
 elif display_type == "Live Translation":
     st.warning("Under construction.")
 
-    m3u8_live_url = "https://globalbroadcasthub.net/combined_playlist.m3u8"
+    m3u8_live_url = "https://globalbroadcasthub.net/playlist.m3u8"
     dash_url = "https://globalbroadcasthub.net/dash_1/stream.mpd"
 
-    #st.video("https://globalbroadcasthub.net/playlist.m3u8")
+    st.video("https://globalbroadcasthub.net/playlist.m3u8")
 
     hls_player_html = f"""
         <!DOCTYPE html>
@@ -668,35 +668,4 @@ elif display_type == "Live Translation":
         </html>
         """
     
-    components.html(hls_player_html, height=525)
-
-    dash_player_html = ash_video_player_html = f"""
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <title>DASH Stream</title>
-            <script src="https://cdn.dashjs.org/latest/dash.all.min.js"></script>
-            <style>
-                html, body, div, span, applet, object, iframe,
-                video, audio {{
-                    margin: 0;
-                    padding: 0;
-                    border: 0;
-                    background-color: #0E1117;
-                    vertical-align: baseline;
-                    box-sizing: border-box; /* Include padding and border in the element's size */
-                }}
-            </style>
-        </head>
-        <body>
-        <video id="video" controls autoplay style="width:100vw; height:100vh; object-fit: contain; margin:auto"></video>
-        <script>
-            var video = document.getElementById('video');
-            var player = dashjs.MediaPlayer().create();
-            player.initialize(video, '{dash_url}', true);
-        </script>
-        </body>
-        </html>
-        """
-    
-    #components.html(dash_player_html, height=525)
+    #components.html(hls_player_html, height=525)
