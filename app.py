@@ -679,8 +679,9 @@ elif display_type == "Live Translation":
 
     st.markdown(
         """
-            - Live feed processed, hosted, and delivered by Ubuntu server running Nginx, via Amazon Web Services.
+            - Live feed processed, hosted, and delivered by Ubuntu server via Amazon Web Services.
             - Custom Python script with multithreading used to ingest, process, and deliver video simultaneously.
+            - Nginx and custom web domain used to ensure SSL certificates and HTTPS delivery of video feed.
             - Translations generated with OpenAI's Whisper automatic speech recognition model and API.
         """
     )
