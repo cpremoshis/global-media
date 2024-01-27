@@ -682,6 +682,6 @@ elif display_type == "Live Translation":
             - Live feed processed, hosted, and delivered by Ubuntu server via Amazon Web Services.
             - Custom Python script with multithreading used to ingest, process, and deliver video simultaneously.
             - Nginx and custom web domain used to ensure SSL certificates and HTTPS delivery of video feed.
-            - Translations generated with OpenAI's 'Whisper' automatic speech recognition model and API.
+            - Translations generated with OpenAI's 'Whisper' speech recognition model and API.
         """
     )
