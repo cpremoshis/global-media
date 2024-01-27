@@ -622,7 +622,7 @@ elif display_type == "Live Translation":
 
     #st.video("https://globalbroadcasthub.net/playlist.m3u8")
 
-    hls_player_html = f"""
+    hls_player_html = hls_player_html = """
         <!DOCTYPE html>
         <html>
         <head>
@@ -630,40 +630,60 @@ elif display_type == "Live Translation":
             <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
             <style>
                 html, body, div, span, applet, object, iframe,
-                video, audio {{
+                video, audio {
                     margin: 0;
                     padding: 0;
                     border: 0;
                     background-color: #0E1117;
                     vertical-align: baseline;
                     box-sizing: border-box; /* Include padding and border in the element's size */
-                }}
+                }
             </style>
         </head>
         <body>
         <video id="video" controls autoplay style="width:100vw; height:100vh; object-fit: contain; margin:auto"></video>
+        <div id="subtitle-container"></div>
         <script>
             var video = document.getElementById('video');
-            if (Hls.isSupported()) {{
+            var subtitleContainer = document.getElementById('subtitle-container');
+
+            if (Hls.isSupported()) {
                 var hls = new Hls();
-                hls.loadSource('{m3u8_live_url}');
+                hls.loadSource('{https://globalbroadcasthub.net/combined_playlist.m3u8}');
                 hls.attachMedia(video);
 
-                hls.on(Hls.Events.MANIFEST_PARSED, function() {{
+                hls.on(Hls.Events.MANIFEST_PARSED, function() {
                     video.play();
-                }});
-            }}
-            // For browsers like Safari that support HLS natively
-            else if (video.canPlayType('application/vnd.apple.mpegurl')) {{
-                video.src = '{m3u8_live_url}';
-                video.addEventListener('loadedmetadata', function() {{
+                });
+
+                // Handle subtitle rendering
+                hls.on(Hls.Events.SUBTITLE_TRACKS_UPDATED, function (event, data) {
+                    if (data.subtitleTracks && data.subtitleTracks.length > 0) {
+                        // Enable the first subtitle track
+                        hls.subtitleTrack = data.subtitleTracks[0].id;
+
+                        // Listen for subtitle cues and display them in the subtitle container
+                        video.textTracks[hls.subtitleTrack].addEventListener('cuechange', function () {
+                            var cues = this.activeCues;
+                            var subtitleText = '';
+                            for (var i = 0; i < cues.length; i++) {
+                                subtitleText += cues[i].text + ' ';
+                            }
+                            subtitleContainer.textContent = subtitleText;
+                        });
+                    }
+                });
+            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                video.src = '{https://globalbroadcasthub.net/combined_playlist.m3u8}';
+                video.addEventListener('loadedmetadata', function () {
                     video.play();
-                }});
-            }}
+                });
+            }
         </script>
         </body>
         </html>
         """
+
     
     components.html(hls_player_html, height=525)
 
