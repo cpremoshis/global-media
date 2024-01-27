@@ -650,7 +650,7 @@ elif display_type == "Live Translation":
                 hls.loadSource('{m3u8_live_url}');
                 hls.attachMedia(video);
 
-                video.textTracks[0].mode = 'showing';
+                video.textTracks[1].mode = 'showing';
 
                 hls.on(Hls.Events.MANIFEST_PARSED, function() {{
                     video.play();
