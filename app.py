@@ -668,4 +668,4 @@ elif display_type == "Live Translation":
         </html>
         """
     
-    components.html(hls_player_html, height=525)
+    #components.html(hls_player_html, height=525)
