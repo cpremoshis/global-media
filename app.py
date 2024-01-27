@@ -615,7 +615,7 @@ elif display_type == "Multiview":
             else:
                 player_html = fourth_result[0]
 elif display_type == "Live Translation":
-    st.warning("Under construction.")
+    st.warning("Under construction. Only Safari web browser will play live feed for now.")
 
     m3u8_live_url = "https://globalbroadcasthub.net/playlist.m3u8"
     #dash_url = "https://globalbroadcasthub.net/dash_1/stream.mpd"
