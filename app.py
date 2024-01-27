@@ -670,4 +670,11 @@ elif display_type == "Live Translation":
     
     #components.html(hls_player_html, height=525)
 
-    st.write("Live feed processed and hosted on Amazon Web Services Ubuntu server.")
+    st.markdown(
+        """
+            - Live feed processed, hosted, and delivered by Ubuntu server running Nginx, via Amazon Web Services.
+            - Translations generated using OpenAI's Whisper automatic speech recognition model and API.
+        """
+    )
+    st.write("Live feed processed and hosted on Amazon Web Services Ubuntu 22.0 server.")
+    st.write("Translations generated using OpenAI's Whisper automatic speech recognition model and API.")
