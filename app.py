@@ -649,6 +649,9 @@ elif display_type == "Live Translation":
                 var hls = new Hls();
                 hls.loadSource('{m3u8_live_url}');
                 hls.attachMedia(video);
+
+                video.textTracks[0].mode = 'showing';
+
                 hls.on(Hls.Events.MANIFEST_PARSED, function() {{
                     video.play();
                 }});
