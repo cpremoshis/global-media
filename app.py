@@ -617,8 +617,7 @@ elif display_type == "Multiview":
 elif display_type == "Live Translation":
     st.warning("Under construction.")
 
-    #m3u8_live_url = "https://35.222.235.96/playlist.m3u8"
-    m3u8_live_url = "https://globalbroadcasthub.net/playlist.m3u8"
+    m3u8_live_url = "https://globalbroadcasthub.net/combined_playlist.m3u8"
     dash_url = "https://globalbroadcasthub.net/dash_1/stream.mpd"
 
     #st.video("https://globalbroadcasthub.net/playlist.m3u8")
@@ -650,7 +649,7 @@ elif display_type == "Live Translation":
                 hls.loadSource('{m3u8_live_url}');
                 hls.attachMedia(video);
 
-                video.textTracks[1].mode = 'showing';
+                video.textTracks[0].mode = 'showing';
 
                 hls.on(Hls.Events.MANIFEST_PARSED, function() {{
                     video.play();
