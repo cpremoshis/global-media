@@ -618,7 +618,7 @@ elif display_type == "Live Translation":
     st.warning("Under construction.")
 
     m3u8_live_url = "https://globalbroadcasthub.net/playlist.m3u8"
-    dash_url = "https://globalbroadcasthub.net/dash_1/stream.mpd"
+    #dash_url = "https://globalbroadcasthub.net/dash_1/stream.mpd"
 
     st.video("https://globalbroadcasthub.net/playlist.m3u8")
 
