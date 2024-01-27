@@ -626,7 +626,7 @@ elif display_type == "Live Translation":
     with middle:
         st.metric("Country", "China 🇨🇳")
     with right:
-        st.metric("Language", "Mandarin Chinese")
+        st.metric("Language", "Mandarin")
     st.video("https://globalbroadcasthub.net/playlist.m3u8")
 
     hls_player_html = f"""
