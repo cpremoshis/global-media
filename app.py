@@ -687,3 +687,7 @@ elif display_type == "Live Translation":
             - Video delivered via custom HLS live stream.
         """
     )
+
+    response = requests.get('www.globalbroadcasthub.net/m3u8/code_sample/live_hls.py')
+    code = response.text
+    st.code(code)
