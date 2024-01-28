@@ -689,5 +689,5 @@ elif display_type == "Live Translation":
     )
 
     response = requests.get('www.globalbroadcasthub.net/m3u8/code_sample/live_hls.py')
-    code = response.text
+    code = str(response.text)
     st.code(code)
