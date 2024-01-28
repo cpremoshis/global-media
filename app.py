@@ -689,6 +689,7 @@ elif display_type == "Live Translation":
         """
     )
 
+    st.subheader("Partial Live Stream Script")
     code_response = requests.get('https://www.globalbroadcasthub.net/code_sample/live_hls.py')
     code = code_response.text
     st.code(code)
