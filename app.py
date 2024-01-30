@@ -622,13 +622,13 @@ elif display_type == "Live Translation":
     m3u8_live_url = "https://globalbroadcasthub.net/playlist.m3u8"
     #dash_url = "https://globalbroadcasthub.net/dash_1/stream.mpd"
 
-    left, middle, right = st.columns(3)
-    with left:
-        st.metric("Name", "CCTV 13")
-    with middle:
-        st.metric("Country", "China 🇨🇳")
-    with right:
-        st.metric("Language", "Mandarin")
+    #left, middle, right = st.columns(3)
+    #with left:
+    #    st.metric("Name", "CCTV 13")
+    #with middle:
+    #    st.metric("Country", "China 🇨🇳")
+    #with right:
+    #    st.metric("Language", "Mandarin")
 
     hls_player_html = f"""
         <!DOCTYPE html>
