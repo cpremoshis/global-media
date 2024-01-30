@@ -616,18 +616,30 @@ elif display_type == "Multiview":
                 player_html = fourth_result[0]
 elif display_type == "Live Translation":
 
+    def get_stream_status():
+
+        status_url = "http://globalbroadcasthub.net/stream_status.txt"
+
+        stream_staus = requests.get(status_url)
+        
+        try:
+            update_time = float(stream_staus.text)
+        except:
+            status = st.error("Stream status: Disabled")
+            return status
+
+        now = time.time()
+        if now - update_time >= 90:
+            status = st.error("Stream status: Disabled")
+            return status
+        else:
+            status = st.error("Stream status: Enabled")
+            return status
+
     st.header("CCTV 13 Live Translation")
     st.warning("Under construction.")
 
-    #Displays stream status
-    status_url = "http://globalbroadcasthub.net/stream_status.txt"
-    stream_staus = requests.get(status_url)
-    update_time = float(stream_staus.text)
-    now = time.time()
-    if now - update_time >= 90:
-        st.error("Stream status: Disabled")
-    else:
-        st.success("Stream status: Enabled")
+    status = get_stream_status()
 
     m3u8_live_url = "https://globalbroadcasthub.net/playlist.m3u8"
 
