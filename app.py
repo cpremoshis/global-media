@@ -7,7 +7,7 @@ import zipfile
 import time
 
 st.set_page_config(
-    page_title="GlobalBroadcastHub 📡",
+    page_title="GlobalBroadcastHub",
     page_icon="🌐",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -227,7 +227,7 @@ if 'recordings' not in st.session_state:
 
 #Sidebar with user input options
 with st.sidebar:
-    #st.title("GlobalBroadcastHub")
+    st.title("GlobalBroadcastHub 📡")
 
     display_type = st.radio("Display type:", ['Single', 'Multiview', 'CCTV 13 Live Translation'], horizontal=True)
 
