@@ -638,8 +638,6 @@ elif display_type == "Live Translation":
 
     st.header("CCTV 13 Live Translation")
 
-    status = get_stream_status()
-
     m3u8_live_url = "https://globalbroadcasthub.net/playlist.m3u8"
 
     #left, middle, right = st.columns(3)
@@ -697,6 +695,8 @@ elif display_type == "Live Translation":
         """
     
     components.html(hls_player_html, height=525)
+
+    status = get_stream_status()
 
     st.markdown(
         """
