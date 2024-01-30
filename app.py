@@ -637,7 +637,6 @@ elif display_type == "Live Translation":
             return status
 
     st.header("CCTV 13 Live Translation")
-    st.warning("Under construction.")
 
     status = get_stream_status()
 
