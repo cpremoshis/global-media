@@ -678,7 +678,7 @@ elif display_type == "Live Translation":
                 hls.loadSource('{m3u8_live_url}');
                 hls.attachMedia(video);
                 
-                #hls.subtitleTrack = data.subtitleTracks[0].id;
+                hls.subtitleTrack = data.subtitleTracks[0].id;
 
                 hls.on(Hls.Events.MANIFEST_PARSED, function() {{
                     video.play();
