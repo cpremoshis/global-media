@@ -633,7 +633,7 @@ elif display_type == "Live Translation":
             status = st.error("Stream status: Disabled")
             return status
         else:
-            status = st.error("Stream status: Enabled")
+            status = st.success("Stream status: Enabled")
             return status
 
     st.header("CCTV 13 Live Translation")
