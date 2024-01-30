@@ -696,7 +696,9 @@ elif display_type == "Live Translation":
     
     components.html(hls_player_html, height=525)
 
-    status = get_stream_status()
+    while True:
+        status = get_stream_status()
+        time.sleep(30)
 
     st.markdown(
         """
