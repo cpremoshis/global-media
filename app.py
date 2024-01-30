@@ -636,7 +636,7 @@ elif display_type == "Live Translation":
             status = st.success("Stream status: Enabled")
             return status
 
-    st.header("CCTV 13 Live Translation")
+    st.header("CCTV 13 Live Translation 📡")
 
     m3u8_live_url = "https://globalbroadcasthub.net/playlist.m3u8"
 
