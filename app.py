@@ -768,7 +768,9 @@ elif display_type == "CCTV 13 Live Translation":
         </html>
         """
 
-    components.html(plyr_player_html, height=525)
+    castr_player = """<iframe src="https://player.castr.com/live_7fdd4890bf8811eeaba01b409efd5f4f" width="100%" style="aspect-ratio: 16/9; min-height: 340px;" frameborder="0" scrolling="no" allow="autoplay" allowfullscreen  webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"""
+
+    components.html(castr_player, height=525)
     
     status = get_stream_status()
 
