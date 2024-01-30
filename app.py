@@ -686,7 +686,7 @@ elif display_type == "CCTV 13 Live Translation":
     #with right:
     #    st.metric("Language", "Mandarin")
 
-    hls_player_html = f"""
+    hls_js_player_html = f"""
         <!DOCTYPE html>
         <html>
         <head>
@@ -732,7 +732,43 @@ elif display_type == "CCTV 13 Live Translation":
         </html>
         """
     
-    components.html(hls_player_html, height=525)
+    plyr_player_html = f"""
+            <!DOCTYPE html>
+        <html>
+        <head>
+            <title>HLS Stream with Plyr</title>
+            <link rel="stylesheet" href="https://cdn.plyr.io/3.6.4/plyr.css" />
+            <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+            <script src="https://cdn.plyr.io/3.6.4/plyr.polyfilled.js"></script>
+            <style>
+                /* Your existing styles */
+            </style>
+        </head>
+        <body>
+            <video id="video" playsinline controls style="width:100%; max-width:100%;"></video>
+            <script>
+                const video = document.getElementById('video');
+                const player = new Plyr(video);
+
+                if (Hls.isSupported()) {{
+                    var hls = new Hls();
+                    hls.loadSource('{m3u8_live_url}');
+                    hls.attachMedia(video);
+                    hls.on(Hls.Events.MANIFEST_PARSED, function() {{
+                        video.play();
+                    }});
+                }} else if (video.canPlayType('application/vnd.apple.mpegurl')) {{
+                    video.src = '{m3u8_live_url}';
+                    video.addEventListener('loadedmetadata', function() {{
+                        video.play();
+                    }});
+                }}
+            </script>
+        </body>
+        </html>
+        """
+
+    components.html(plyr_player_html, height=525)
     
     status = get_stream_status()
 
