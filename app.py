@@ -7,7 +7,7 @@ import zipfile
 import time
 
 st.set_page_config(
-    page_title="GlobalBroadcastHub",
+    page_title="GlobalBroadcastHub 📡",
     page_icon="🌐",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -674,7 +674,7 @@ elif display_type == "CCTV 13 Live Translation":
             status = st.success("Stream status: Enabled")
             return status
 
-    st.header("CCTV 13 Live Translation 📡")
+    st.header("CCTV 13 Live Translation")
 
     m3u8_live_url = "https://globalbroadcasthub.net/playlist.m3u8"
 
