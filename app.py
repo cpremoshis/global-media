@@ -628,7 +628,6 @@ elif display_type == "Live Translation":
         st.metric("Country", "China 🇨🇳")
     with right:
         st.metric("Language", "Mandarin")
-    st.video("https://globalbroadcasthub.net/playlist.m3u8")
 
     hls_player_html = f"""
         <!DOCTYPE html>
@@ -676,7 +675,7 @@ elif display_type == "Live Translation":
         </html>
         """
     
-    #components.html(hls_player_html, height=525)
+    components.html(hls_player_html, height=525)
 
     st.markdown(
         """
