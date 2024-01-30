@@ -229,7 +229,7 @@ if 'recordings' not in st.session_state:
 with st.sidebar:
     #st.title("GlobalBroadcastHub")
 
-    display_type = st.radio("Display type:", ['Single', 'Multiview', 'Live Translation'], horizontal=True)
+    display_type = st.radio("Display type:", ['Single', 'Multiview', 'CCTV 13 Live Translation'], horizontal=True)
 
     #Reformats the full file name into just the ending (ex: "Outlet_time.mp4")
     def format_file_names(option):
@@ -442,6 +442,21 @@ with st.sidebar:
                     file_name = download_select.split("/")[2]
                     dwnbtn = st.download_button("Download", data=f, file_name=file_name, mime="video/mp4")
 
+    if display_type == "CCTV 13 Live Translation":
+        
+        #----->Recording and download functions<-----
+
+        record_time = st.slider("Record length (minutes):", min_value=.5, max_value=5.0, step=.5)
+        record_time = record_time * 60
+
+        if st.button("Record", type="primary"):  
+
+            status, name, recording = record_m3u8('CCTV_13', record_time, 'https://www.globalbroadcasthub.net/playlist.m3u8', 'https://www.globalbroadcasthub.net/', False)
+            if status == True:
+                st.session_state['recordings'].append(recording)
+            else:
+                st.error("Error.")
+
 #Media display
 if display_type == "Single":
 
@@ -614,7 +629,7 @@ elif display_type == "Multiview":
                 components.html(player_html, height=365)
             else:
                 player_html = fourth_result[0]
-elif display_type == "Live Translation":
+elif display_type == "CCTV 13 Live Translation":
 
     def get_stream_status():
 
