@@ -615,6 +615,7 @@ elif display_type == "Multiview":
             else:
                 player_html = fourth_result[0]
 elif display_type == "Live Translation":
+    st.header("CCTV 13 Live Translation")
     st.warning("Under construction.")
     st.error("Stream status: Disabled")
 
