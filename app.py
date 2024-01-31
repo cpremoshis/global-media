@@ -5,6 +5,7 @@ import requests
 from recording import record_m3u8, record_youtube, record_mp3, multi_record
 import zipfile
 import time
+from datetime import datetime
 
 st.set_page_config(
     page_title="GlobalBroadcastHub",
@@ -670,7 +671,8 @@ elif display_type == "CCTV 13 Live Translation":
 
         now = time.time()
         if now - update_time >= 90:
-            status = st.error("Stream status: Disabled")
+            human_readable_time = datetime.fromtimestamp(update_time).strftime('%Y-%m-%d %H:%M:%S')
+            status = st.error(f"Stream status: Disabled as of {human_readable_time} GMT")
             return status
         else:
             status = st.success("Stream status: Enabled")
