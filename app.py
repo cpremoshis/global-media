@@ -449,9 +449,9 @@ with st.sidebar:
         record_time = st.slider("Record length (minutes):", min_value=.5, max_value=5.0, step=.5)
         record_time = record_time * 60
 
-        with st.spinner("Recording in progress. Do not change any settings."):
+        if st.button("Record", type="primary"):  
 
-            if st.button("Record", type="primary"):  
+            with st.spinner("Recording in progress. Do not change any settings."):
 
                 status, name, recording = record_m3u8('CCTV_13', record_time, 'https://www.globalbroadcasthub.net/playlist.m3u8', 'https://www.globalbroadcasthub.net/', False)
                 if status == True:
