@@ -768,9 +768,49 @@ elif display_type == "CCTV 13 Live Translation":
         </html>
         """
 
+    clappr_player_html = f"""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>HLS Stream with Clappr</title>
+            <!-- Clappr Library -->
+            <script src="https://cdn.jsdelivr.net/clappr/latest/clappr.min.js"></script>
+            <style>
+                html, body, div, span, applet, object, iframe,
+                video, audio {{
+                    margin: 0;
+                    padding: 0;
+                    border: 0;
+                    background-color: #0E1117;
+                    vertical-align: baseline;
+                    box-sizing: border-box; /* Include padding and border in the element's size */
+                }}
+
+                #player {{
+                    width: 100vw;
+                    height: 100vh;
+                }}
+            </style>
+        </head>
+        <body>
+            <div id="player"></div>
+            <script>
+                var player = new Clappr.Player({{
+                    source: '{m3u8_live_url}',
+                    parentId: '#player',
+                    autoPlay: true,
+                    height: '100%',
+                    width: '100%'
+                }});
+            </script>
+        </body>
+        </html>
+
+        """
+
     castr_player = """<iframe src="https://player.castr.com/live_7fdd4890bf8811eeaba01b409efd5f4f" width="100%" style="aspect-ratio: 16/9; min-height: 340px;" frameborder="0" scrolling="no" allow="autoplay" allowfullscreen  webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"""
 
-    components.html(mediaelement_player_html, height=525)
+    components.html(clappr_player_html, height=525)
     
     status = get_stream_status()
 
