@@ -691,7 +691,7 @@ elif display_type == "CCTV 13 Live Translation":
         <html>
         <head>
             <title>HLS Stream</title>
-            <script src="https://cdn.jsdelivr.net/npm/mediaelement@latest/build/mediaelement-and-player.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
             <style>
                 html, body, div, span, applet, object, iframe,
                 video, audio {{
@@ -768,9 +768,34 @@ elif display_type == "CCTV 13 Live Translation":
         </html>
         """
 
+    mediaelement_player_html = f"""
+
+        <!-- Import Mediaelement CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/mediaelement@latest/build/mediaelementplayer.min.css" rel="stylesheet">
+        <!-- Import Mediaelement JS -->
+        <script src="https://cdn.jsdelivr.net/npm/mediaelement@latest/build/mediaelement-and-player.min.js"></script>
+
+        <div class="player">
+            <video id="player-demo" width="640" height="360" preload="none" style="max-width: 100%" controls="" poster="images/big_buck_bunny.jpg">
+                <source src="{m3u8_live_url}" type="video/mp2t">
+                    <!-- Just add multiple <track> files, they get integrated automatically -->
+                    <track src="dist/mediaelement.vtt" srclang="en" label="English" kind="captions" type="text/vtt">
+                    <track src="dist/mediaelement_german.vtt" srclang="de" label="Deutsch" kind="subtitles" type="text/vtt">
+            </video>
+        </div>
+
+        <script>
+            // You can use either a string for the player ID (i.e., `player`), 
+            // or `document.querySelector()` for any selector
+            const playerCaptions = new MediaElementPlayer('player', {{
+                iconSprite: '/images/mejs-controls.svg', // path to svg-spritemap for all icons
+            }});
+        </script>
+    """
+
     castr_player = """<iframe src="https://player.castr.com/live_7fdd4890bf8811eeaba01b409efd5f4f" width="100%" style="aspect-ratio: 16/9; min-height: 340px;" frameborder="0" scrolling="no" allow="autoplay" allowfullscreen  webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"""
 
-    components.html(hls_js_player_html, height=525)
+    components.html(mediaelement_player_html, height=525)
     
     status = get_stream_status()
 
