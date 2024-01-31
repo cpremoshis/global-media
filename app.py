@@ -451,7 +451,7 @@ with st.sidebar:
 
         if st.button("Record", type="primary"):  
 
-            with st.spinner("Recording in progress. Do not change any settings."):
+            with st.spinner("Recording in progress - Do not change any settings. Playback may pause while recording."):
 
                 status, name, recording = record_m3u8('CCTV_13', record_time, 'https://www.globalbroadcasthub.net/playlist.m3u8', 'https://www.globalbroadcasthub.net/', False)
                 if status == True:
