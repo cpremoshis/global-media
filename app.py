@@ -691,7 +691,7 @@ elif display_type == "CCTV 13 Live Translation":
         <html>
         <head>
             <title>HLS Stream</title>
-            <script src="https://cdn.jsdelivr.net/npm/mediaelement@latest/build/mediaelement-and-player.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
             <style>
                 html, body, div, span, applet, object, iframe,
                 video, audio {{
