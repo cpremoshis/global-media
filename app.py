@@ -266,7 +266,7 @@ with st.sidebar:
         #----->Recording and download functions<-----
         if st.button("Record", type="primary"):
 
-            with st.spinner("Recording in progress. Do not change any settings."):
+            with st.spinner("Recording in progress - Do not change any settings. Playback may pause while recording."):
 
                 if outlet.format == "M3U8" and translate == True:
                     status, name, recording, translation, audio = record_m3u8(outlet.name, record_time, outlet.recording_url, outlet.root_url, translate)
@@ -346,7 +346,7 @@ with st.sidebar:
 
         if record_multiple:
 
-            with st.spinner("Recording in progress. Do not change any settings."):
+            with st.spinner("Recording in progress - Do not change any settings. Playback may pause while recording."):
 
                 if selections_len == 2:
 
