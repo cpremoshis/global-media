@@ -675,7 +675,7 @@ elif display_type == "CCTV 13 Live Translation":
             status = st.error(f"Stream status: Live stream ended at {human_readable_time} GMT")
             return status
         else:
-            status = st.success("Stream status: Enabled")
+            status = st.success("Stream status: Live")
             return status
 
     st.header("CCTV 13 Live Translation")
