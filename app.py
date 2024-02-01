@@ -260,7 +260,7 @@ with st.sidebar:
         outlet = Outlet(st.session_state['selection'], broadcasters_df)
 
         record_time = st.slider("Record length (minutes):", min_value=.5, max_value=10.0, step=.5)
-        record_time = record_time * 60
+        record_time = record_time * 6
 
         translate = st.checkbox("Translate")
 
