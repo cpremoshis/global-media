@@ -262,7 +262,7 @@ with st.sidebar:
         record_time = st.slider("Record length (minutes):", min_value=.5, max_value=5.0, step=.5)
         record_time = record_time * 60
 
-        translate = st.checkbox("Translate/transcribe")
+        translate = st.checkbox("Translate")
 
         #----->Recording and download functions<-----
         if st.button("Record", type="primary"):
@@ -340,7 +340,7 @@ with st.sidebar:
         record_time = st.slider("Record length (minutes):", min_value=.5, max_value=5.0, step=.5)
         record_time = record_time * 60
 
-        translate = st.checkbox("Translate/transcribe")
+        translate = st.checkbox("Translate")
 
         #Recording and processing
         record_multiple = st.button("Record Multiple", type="primary")
