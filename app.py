@@ -259,7 +259,7 @@ with st.sidebar:
 
         outlet = Outlet(st.session_state['selection'], broadcasters_df)
 
-        record_time = st.slider("Record length (minutes):", min_value=.5, max_value=10.0, step=.5)
+        record_time = st.slider("Record length (minutes):", min_value=.5, max_value=5.0, step=.5)
         record_time = record_time * 60
 
         translate = st.checkbox("Translate")
@@ -337,7 +337,7 @@ with st.sidebar:
         selections = st.multiselect("Select outlets:", broadcasters_filtered_by_lang, max_selections=4)
         selections_len = len(selections)
 
-        record_time = st.slider("Record length (minutes):", min_value=.5, max_value=10.0, step=.5)
+        record_time = st.slider("Record length (minutes):", min_value=.5, max_value=5.0, step=.5)
         record_time = record_time * 60
 
         translate = st.checkbox("Translate")
@@ -447,7 +447,7 @@ with st.sidebar:
         
         #----->Recording and download functions<-----
 
-        record_time = st.slider("Record length (minutes):", min_value=.5, max_value=10.0, step=.5)
+        record_time = st.slider("Record length (minutes):", min_value=.5, max_value=5.0, step=.5)
         record_time = record_time * 60
 
         if st.button("Record", type="primary"):  
