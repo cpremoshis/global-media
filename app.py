@@ -817,6 +817,7 @@ elif display_type == "CCTV 13 Live Translation":
     components.html(hls_js_player_html, height=525)
     
     status = get_stream_status()
+    st.warning("Revamp under construction")
 
     st.markdown(
         """
@@ -829,7 +830,7 @@ elif display_type == "CCTV 13 Live Translation":
         """
     )
 
-    st.subheader("Partial Live Stream Script")
-    code_response = requests.get('https://www.globalbroadcasthub.net/code_sample/live_hls.py')
-    code = code_response.text
-    st.code(code)
+    #st.subheader("Partial Live Stream Script")
+    #code_response = requests.get('https://www.globalbroadcasthub.net/code_sample/live_hls.py')
+    #code = code_response.text
+    #st.code(code)
