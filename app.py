@@ -672,7 +672,7 @@ elif display_type == "CCTV 13 Live Translation":
         now = time.time()
         if now - update_time >= 90:
             human_readable_time = datetime.fromtimestamp(update_time).strftime('%Y-%m-%d %H:%M:%S')
-            status = st.error(f"Stream status: Live stream ended at {human_readable_time} GMT")
+            status = st.error(f"Stream status: Ended at {human_readable_time} GMT")
             return status
         else:
             status = st.success("Stream status: Live")
