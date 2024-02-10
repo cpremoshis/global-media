@@ -735,89 +735,12 @@ elif display_type == "CCTV 13 Live Translation":
         </body>
         </html>
         """
-    
-    plyr_player_html = f"""
-            <!DOCTYPE html>
-        <html>
-        <head>
-            <title>HLS Stream with Plyr</title>
-            <link rel="stylesheet" href="https://cdn.plyr.io/3.6.4/plyr.css" />
-            <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-            <script src="https://cdn.plyr.io/3.6.4/plyr.polyfilled.js"></script>
-            <style>
-                /* Your existing styles */
-            </style>
-        </head>
-        <body>
-            <video id="video" playsinline controls style="width:100%; max-width:100%;"></video>
-            <script>
-                const video = document.getElementById('video');
-                const player = new Plyr(video);
-
-                if (Hls.isSupported()) {{
-                    var hls = new Hls();
-                    hls.loadSource('{m3u8_live_url}');
-                    hls.attachMedia(video);
-                    hls.on(Hls.Events.MANIFEST_PARSED, function() {{
-                        video.play();
-                    }});
-                }} else if (video.canPlayType('application/vnd.apple.mpegurl')) {{
-                    video.src = '{m3u8_live_url}';
-                    video.addEventListener('loadedmetadata', function() {{
-                        video.play();
-                    }});
-                }}
-            </script>
-        </body>
-        </html>
-        """
-
-    clappr_player_html = f"""
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <title>HLS Stream with Clappr</title>
-            <!-- Clappr Library -->
-            <script src="https://cdn.jsdelivr.net/clappr/latest/clappr.min.js"></script>
-            <style>
-                html, body, div, span, applet, object, iframe,
-                video, audio {{
-                    margin: 0;
-                    padding: 0;
-                    border: 0;
-                    background-color: #0E1117;
-                    vertical-align: baseline;
-                    box-sizing: border-box; /* Include padding and border in the element's size */
-                }}
-
-                #player {{
-                    width: 100vw;
-                    height: 100vh;
-                }}
-            </style>
-        </head>
-        <body>
-            <div id="player"></div>
-            <script>
-                var player = new Clappr.Player({{
-                    source: '{m3u8_live_url}',
-                    parentId: '#player',
-                    autoPlay: true,
-                    height: '100%',
-                    width: '100%'
-                }});
-            </script>
-        </body>
-        </html>
-
-        """
 
     castr_player = """<iframe src="https://player.castr.com/live_7fdd4890bf8811eeaba01b409efd5f4f" width="100%" style="aspect-ratio: 16/9; min-height: 340px;" frameborder="0" scrolling="no" allow="autoplay" allowfullscreen  webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"""
 
     components.html(hls_js_player_html, height=525)
     
     status = get_stream_status()
-    st.warning("Revamp under construction")
 
     st.markdown(
         """
