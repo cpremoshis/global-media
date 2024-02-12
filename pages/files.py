@@ -19,7 +19,7 @@ def zip_files(selections):
 
     with zipfile.ZipFile(zip_folder_name, 'w') as zipf:
         for file in files_to_zip:
-            file_name = file.split("/")[2]
+            file_name = os.path.basename(file)
             zipf.write(file, arcname=file_name)
 
     return zip_folder_name
