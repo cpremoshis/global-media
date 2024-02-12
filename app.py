@@ -709,7 +709,7 @@ elif display_type == "CCTV 13 Live Translation":
             </style>
         </head>
         <body>
-        <video id="video" controls autoplay style="width:100vw; height:100vh; object-fit: contain; margin:auto"></video>
+        <video id="video" autoplay style="width:100vw; height:100vh; object-fit: contain; margin:auto"></video>
         <script>
             var video = document.getElementById('video');
             if (Hls.isSupported()) {{
