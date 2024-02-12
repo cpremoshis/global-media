@@ -229,6 +229,7 @@ if 'recordings' not in st.session_state:
 #Sidebar with user input options
 with st.sidebar:
     st.title("GlobalBroadcastHub 📡")
+    st.caption("Beta")
 
     display_type = st.radio("Display type:", ['Single', 'Multiview', 'CCTV 13 Live Translation'], horizontal=True)
 
