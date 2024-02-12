@@ -28,5 +28,9 @@ def zip_files(selections):
 
 if st.button("Zip for download"):
     zip_folder = zip_files(files)
+    st.write(f"Zip folder: {zip_folder}")
+
     file_name = os.path.basename(zip_folder)
+    st.write(f"Zip file name: {file_name}")
+
     dwnbtn = st.download_button("Download", data=zip_folder, file_name=file_name, mime="applicatioin/zip")
