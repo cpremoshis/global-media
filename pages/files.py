@@ -30,7 +30,7 @@ def zip_files(selections):
 
     return zip_folder_name
 
-if st.download_button("Zip for download"):
+if st.button("Zip for download"):
     zip_folder = zip_files(files)
     file_name = os.path.basename(zip_folder)
 
