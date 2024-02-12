@@ -11,14 +11,8 @@ st.write(files)
 selections = st.multiselect("Select files:", files)
 
 def zip_files(selections):
-    video_dict = {}
-    for item in selections:
-        if item[0] == True:
-            video_dict[item[1]] = {"Video":item[2], "Subtitles":"None"}
 
-    values = [value for key in video_dict for value in video_dict[key].values()]
-
-    files_to_zip = [item for item in values if item != "None"]
+    files_to_zip = [item for item in selections if item != "None"]
 
     now = time.time()
     zip_folder_name = f"./Recordings/download_{now}.zip"
