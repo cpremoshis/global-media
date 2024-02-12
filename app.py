@@ -706,12 +706,33 @@ elif display_type == "CCTV 13 Live Translation":
                     vertical-align: baseline;
                     box-sizing: border-box; /* Include padding and border in the element's size */
                 }}
+                #volumeControl {{
+                    -webkit-appearance: none;
+                    width: 100%;
+                    height: 15px;
+                    border-radius: 5px;
+                    background: #fff;
+                    outline: none;
+                    opacity: 0.7;
+                    -webkit-transition: .2s;
+                    transition: opacity .2s;
+                }}
+                #volumeControl:hover {{
+                    opacity: 1;
+                }}
             </style>
         </head>
         <body>
         <video id="video" autoplay style="width:100vw; height:100vh; object-fit: contain; margin:auto"></video>
+        <input type="range" id="volumeControl" min="0" max="1 step="0.01" value="1">
         <script>
             var video = document.getElementById('video');
+            var volumeControl = document.getElementById('volumeControl');
+
+            volumeControl.addEventListener('input', function() {{
+                video.volume = this.value;
+                }});
+
             if (Hls.isSupported()) {{
                 var hls = new Hls();
                 hls.loadSource('{m3u8_live_url}');
