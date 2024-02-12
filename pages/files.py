@@ -14,7 +14,7 @@ def zip_files(selections):
 
     files_to_zip = [item for item in selections if item != "None"]
 
-    now = time.time()
+    now = str(time.time())
     zip_folder_name = f"./Recordings/download_{now}.zip"
 
     with zipfile.ZipFile(zip_folder_name, 'w') as zipf:
