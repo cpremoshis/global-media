@@ -12,16 +12,15 @@ selections = st.multiselect("Select files:", files)
 
 def zip_files(selections):
 
-    files_to_zip = [item for item in selections if item != "None"]
+    files_to_zip = [f"./Recordings/{item}" for item in selections if item != "None"]
 
     now = str(time.time())
     zip_folder_name = f"./Recordings/download_{now}.zip"
 
     with zipfile.ZipFile(zip_folder_name, 'w') as zipf:
         for file in files_to_zip:
-            file_name = file
-            file_path = f"./Recordings/{file_name}"
-            zipf.write(file_path, arcname=file_name)
+            file_name = file.split("/")[-1]
+            zipf.write(file, arcname=file_name)
 
     return zip_folder_name
 
