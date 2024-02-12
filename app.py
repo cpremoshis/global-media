@@ -308,7 +308,7 @@ with st.sidebar:
             elif download_select.endswith(".zip"):
                 with open(download_select, 'rb') as f:
                     file_name = download_select.split("/")[2]
-                    dwnbtn = st.download_button("Download", data=f, file_name=file_name, mime="applicatioin/zip")
+                    dwnbtn = st.download_button("Download", data=f, file_name=file_name, mime="application/zip")
 
             #Download option for videos
             else:                        
@@ -435,7 +435,7 @@ with st.sidebar:
             elif download_select.endswith(".zip"):
                 with open(download_select, 'rb') as f:
                     file_name = download_select.split("/")[2]
-                    dwnbtn = st.download_button("Download", data=f, file_name=file_name, mime="applicatioin/zip")
+                    dwnbtn = st.download_button("Download", data=f, file_name=file_name, mime="application/zip")
 
             #Download option for videos
             else:                        
@@ -474,7 +474,7 @@ with st.sidebar:
             elif download_select.endswith(".zip"):
                 with open(download_select, 'rb') as f:
                     file_name = download_select.split("/")[2]
-                    dwnbtn = st.download_button("Download", data=f, file_name=file_name, mime="applicatioin/zip")
+                    dwnbtn = st.download_button("Download", data=f, file_name=file_name, mime="application/zip")
 
             #Download option for videos
             else:                        
