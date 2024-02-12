@@ -711,11 +711,17 @@ elif display_type == "CCTV 13 Live Translation":
                     width: 100%;
                     height: 15px;
                     border-radius: 5px;
-                    background: #fff;
+                    background: #d3d3d3;
                     outline: none;
                     opacity: 0.7;
                     -webkit-transition: .2s;
                     transition: opacity .2s;
+                    display: block;
+                    position: fixed;
+                    bottom: 20px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    z-index: 1000;
                 }}
                 #volumeControl:hover {{
                     opacity: 1;
