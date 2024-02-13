@@ -283,10 +283,10 @@ with st.sidebar:
                     status, recording = record_mp3(outlet.name, record_time, outlet.recording_url, translate)
 
                 elif outlet.format == "YouTube" and translate == True:
-                    status, recording, translation, audio = record_youtube(outlet.name, record_time, outlet.recording_url, translate)
+                    status, name, recording, translation, audio = record_youtube(outlet.name, record_time, outlet.recording_url, translate)
                     zipped_files = zip_single_recording(recording, translation, audio)
                 elif outlet.format == "YouTube":
-                    status, recording = record_youtube(outlet.name, record_time, outlet.recording_url, translate)
+                    status, name, recording = record_youtube(outlet.name, record_time, outlet.recording_url, translate)
 
             if status == True and 'zipped_files' in locals():
                 st.session_state['recordings'].append(zipped_files)
