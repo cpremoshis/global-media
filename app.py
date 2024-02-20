@@ -514,7 +514,7 @@ if display_type == "Single":
     st.subheader("Summary")
     st.write(wiki_summary(outlet.wiki))
     st.write(outlet.page_url)
-    st.caption("Summary from Wikipedia")
+    st.caption("*Summary from Wikipedia")
 
 elif display_type == "Multiview":
     #No media
