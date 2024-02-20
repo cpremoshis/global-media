@@ -514,7 +514,8 @@ if display_type == "Single":
     st.subheader("Summary")
     st.write(wiki_summary(outlet.wiki))
     st.write(outlet.page_url)
-    st.caption("Information from Wikipedia")
+    st.caption("Summary from Wikipedia")
+
 elif display_type == "Multiview":
     #No media
     if selections_len == 0:
@@ -661,6 +662,7 @@ elif display_type == "Multiview":
                 components.html(player_html, height=365)
             else:
                 player_html = fourth_result[0]
+
 elif display_type == "CCTV 13 Live Translation":
 
     def get_stream_status():
