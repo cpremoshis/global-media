@@ -765,7 +765,7 @@ elif display_type == "CCTV 13 Live Translation":
     castr_player = """<iframe src="https://player.castr.com/live_7fdd4890bf8811eeaba01b409efd5f4f" width="100%" style="aspect-ratio: 16/9; min-height: 340px;" frameborder="0" scrolling="no" allow="autoplay" allowfullscreen  webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"""
 
     if stream_status[0] == False:
-        st.image("Assets/offline_2.png")
+        st.image("Assets/offline_3.png")
         st.error(f"Stream ended at {stream_status[1]} GMT")
     elif stream_status[0] == True:
         components.html(hls_js_player_html, height=525)
