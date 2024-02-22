@@ -772,7 +772,8 @@ elif display_type == "CCTV 13 Live Translation":
         components.html(hls_js_player_html, height=525)
         st.success("Stream status: Live")
     else:
-        pass
+        st.image("Assets/offline_3.png")
+        st.error("Stream ended.")
 
     st.markdown(
         """
