@@ -682,7 +682,7 @@ elif display_type == "CCTV 13 Live Translation":
             human_readable_time = datetime.fromtimestamp(update_time).strftime('%Y-%m-%d %H:%M:%S')
             return False, human_readable_time
         else:
-            return (True)
+            return True,
 
     st.header("CCTV 13 Live Translation")
 
