@@ -679,15 +679,15 @@ elif display_type == "CCTV 13 Live Translation":
         now = time.time()
         if now - update_time >= 90:
             human_readable_time = datetime.fromtimestamp(update_time).strftime('%Y-%m-%d %H:%M:%S')
-            status = st.error(f"Stream status: Ended at {human_readable_time} GMT")
-            return status
+            return False, human_readable_time
         else:
-            status = st.success("Stream status: Live")
-            return status
+            return True
 
     st.header("CCTV 13 Live Translation")
 
     m3u8_live_url = "https://globalbroadcasthub.net/playlist.m3u8"
+
+    stream_status = get_stream_status()
 
     #left, middle, right = st.columns(3)
     #with left:
@@ -764,9 +764,14 @@ elif display_type == "CCTV 13 Live Translation":
 
     castr_player = """<iframe src="https://player.castr.com/live_7fdd4890bf8811eeaba01b409efd5f4f" width="100%" style="aspect-ratio: 16/9; min-height: 340px;" frameborder="0" scrolling="no" allow="autoplay" allowfullscreen  webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"""
 
-    components.html(hls_js_player_html, height=525)
-    
-    status = get_stream_status()
+    if stream_status[0] == False:
+        st.image("cpremoshis/global-media/Assets/offline_2.png")
+        st.error(f"Stream status: Ended at {stream_status[1]} GMT")
+    elif stream_status[0] == True:
+        components.html(hls_js_player_html, height=525)
+        st.success("Stream status: Live")
+    else:
+        pass
 
     st.markdown(
         """
