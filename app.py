@@ -731,7 +731,7 @@ elif display_type == "CCTV 13 Live Translation":
             </style>
         </head>
         <body>
-        <video id="video" autoplay style="width:100vw; height:100vh; object-fit: contain; margin:auto"></video>
+        <video id="video" controls autoplay style="width:100vw; height:100vh; object-fit: contain; margin:auto"></video>
         <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="1">
         <script>
             var video = document.getElementById('video');
