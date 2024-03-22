@@ -844,14 +844,14 @@ elif display_type == "Upload":
 
                     st.text(translation)
 
-        if st.session_state.processed:
-            with open(temp_subtitle_file_path, 'r') as file:
-                with status.container():
-                    st.success("Automated translation by OpenAI's Whisper. Please double-check accuracy before use.")
-                    st.download_button(
-                        label="Download translation",
-                        data=file,
-                        file_name=download_file_name,
-                        mime='text/plain')
+    if st.session_state.processed:
+        with open(temp_subtitle_file_path, 'r') as file:
+            with status.container():
+                st.success("Automated translation by OpenAI's Whisper. Please double-check accuracy before use.")
+                st.download_button(
+                    label="Download translation",
+                    data=file,
+                    file_name=download_file_name,
+                    mime='text/plain')
 
-                    st.text(translation)
+                st.text(translation)
