@@ -780,6 +780,10 @@ elif display_type == "CCTV 13 Live Translation":
     )
 
 elif display_type == "Upload":
+
+    if "processed" not in st.session_state:
+        st.session_state.processed = False
+
     uploaded_file = st.file_uploader("Select file")
 
     status = st.empty()
