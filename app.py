@@ -795,8 +795,12 @@ elif display_type == "Upload":
             with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as temp_audio_file:
                 temp_audio_file_path = temp_audio_file.name
 
+            st.spinner("Extracting audio")
+
             input_file = ffmpeg.input(temp_video_file_path)
             ffmpeg.output(input_file, temp_audio_file_path, acodec="mp3").run()
+
+            st.spinner("Translating audio")
 
             openai.api_key = st.secrets['openai_key']
 
