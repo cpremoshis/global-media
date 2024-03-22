@@ -6,6 +6,11 @@ from recording import record_m3u8, record_youtube, record_mp3, multi_record
 import zipfile
 import time
 from datetime import datetime
+import tempfile
+import os
+import ffmpeg
+import openai
+import BytesIO
 
 st.set_page_config(
     page_title="GlobalBroadcastHub",
@@ -689,14 +694,6 @@ elif display_type == "CCTV 13 Live Translation":
 
     stream_status = get_stream_status()
 
-    #left, middle, right = st.columns(3)
-    #with left:
-    #    st.metric("Name", "CCTV 13")
-    #with middle:
-    #    st.metric("Country", "China 🇨🇳")
-    #with right:
-    #    st.metric("Language", "Mandarin")
-
     hls_js_player_html = f"""
         <!DOCTYPE html>
         <html>
@@ -762,8 +759,6 @@ elif display_type == "CCTV 13 Live Translation":
         </html>
         """
 
-    castr_player = """<iframe src="https://player.castr.com/live_7fdd4890bf8811eeaba01b409efd5f4f" width="100%" style="aspect-ratio: 16/9; min-height: 340px;" frameborder="0" scrolling="no" allow="autoplay" allowfullscreen  webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"""
-
     if stream_status[0] == False:
         st.image("Assets/offline_3.png")
         st.error(f"Stream ended at {stream_status[1]} GMT")
@@ -784,7 +779,41 @@ elif display_type == "CCTV 13 Live Translation":
         """
     )
 
-    #st.subheader("Partial Live Stream Script")
-    #code_response = requests.get('https://www.globalbroadcasthub.net/code_sample/live_hls.py')
-    #code = code_response.text
-    #st.code(code)
+elif display_type == "Upload":
+    uploaded_file = st.file_uploader("Select file")
+
+    translation_container = st.container()
+
+    if uploaded_file is not None:
+
+        file_ending = uploaded_file.split(".")[-1]
+
+        with tempfile.NamedTemporaryFile(delete=False, suffix = f".{file_ending}") as temp_video_file:
+            temp_video_file.write(uploaded_file.getvalue())
+            temp_video_file_path = temp_video_file.name
+
+            with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as temp_audio_file:
+                temp_audio_file_path = temp_audio_file.name
+
+            input_file = ffmpeg.input(temp_video_file_path)
+            ffmpeg.output(input_file, temp_audio_file_path, acodec="mp3").run()
+
+            openai.api_key = st.secrets['openai_key']
+
+            with open(temp_audio_file, 'rb') as f:
+                audio_bytes = BytesIO(f.read())
+                audio_bytes.name = "audio.mp3"
+
+            translation = openai.audio.translations.create(
+                file = audio_bytes,
+                model='whisper-1',
+                response_format="srt"
+                )
+            
+            with tempfile.NamedTemporaryFile(delete=False, suffix=".srt") as temp_subtitle_file:
+                temp_subtitle_file_path = temp_subtitle_file.name
+
+            with open(temp_subtitle_file_path, 'w') as file:
+                file.write(translation)
+
+            translation_container.write(translation)
