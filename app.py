@@ -817,23 +817,23 @@ elif display_type == "Upload":
                 audio_bytes = BytesIO(f.read())
                 audio_bytes.name = "audio.mp3"
 
-            translation = openai.audio.translations.create(
+            st.session_state.translation = openai.audio.translations.create(
                 file = audio_bytes,
                 model='whisper-1',
                 response_format="srt"
                 )
             
             with tempfile.NamedTemporaryFile(delete=False, suffix=".srt") as temp_subtitle_file:
-                temp_subtitle_file_path = temp_subtitle_file.name
+                st.session_state.temp_subtitle_file_path = temp_subtitle_file.name
 
-            with open(temp_subtitle_file_path, 'w') as file:
-                file.write(translation)
+            with open(st.session_state.temp_subtitle_file_path, 'w') as file:
+                file.write(st.session_state.translation)
 
             download_file_name = uploaded_file.name.split(".")[0] + ".srt"
 
             st.session_state.processed = True
 
-            with open(temp_subtitle_file_path, 'r') as file:
+            with open(st.session_state.temp_subtitle_file_path, 'r') as file:
                 with status.container():
                     st.success("Automated translation by OpenAI's Whisper. Please double-check accuracy before use.")
                     st.download_button(
@@ -842,10 +842,10 @@ elif display_type == "Upload":
                         file_name=download_file_name,
                         mime='text/plain')
 
-                    st.text(translation)
+                    st.text(st.session_state.translation)
 
     if st.session_state.processed:
-        with open(temp_subtitle_file_path, 'r') as file:
+        with open(st.session_state.temp_subtitle_file_path, 'r') as file:
             with status.container():
                 st.success("Automated translation by OpenAI's Whisper. Please double-check accuracy before use.")
                 st.download_button(
@@ -854,4 +854,4 @@ elif display_type == "Upload":
                     file_name=download_file_name,
                     mime='text/plain')
 
-                st.text(translation)
+                st.text(st.session_state.translation)
