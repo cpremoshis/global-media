@@ -822,6 +822,10 @@ elif display_type == "Upload":
                     response_format="srt"
                     )
                 
+                #Removes uploaded video and ffmpeg created audio files
+                os.remove(temp_video_file_path)
+                os.remove(temp_audio_file_path)
+
                 with tempfile.NamedTemporaryFile(delete=False, suffix=".srt") as temp_subtitle_file:
                     temp_subtitle_file_path = temp_subtitle_file.name
 
@@ -840,6 +844,5 @@ elif display_type == "Upload":
 
                         st.text(translation)
         finally:
-            os.remove(temp_video_file_path)
-            os.remove(temp_audio_file_path)
+
             os.remove(temp_subtitle_file_path)
