@@ -828,7 +828,7 @@ elif display_type == "Upload":
         with open(temp_subtitle_file_path, 'r') as file:
             with status.container():
                 st.download_button(
-                    label="Download as file",
+                    label="Download translation",
                     data=file,
                     file_name=download_file_name,
                     mime='text/plain')
