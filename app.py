@@ -832,4 +832,4 @@ elif display_type == "Upload":
                 file_name=download_file_name,
                 mime='text/plain')
 
-        status.text(translation)
+            st.text(translation)
