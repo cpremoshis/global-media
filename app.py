@@ -795,7 +795,6 @@ elif display_type == "Upload":
 
         with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as temp_audio_file:
             temp_audio_file_path = temp_audio_file.name
-            temp_audio_file.flush()
 
         st.write("Extracting audio")
 
