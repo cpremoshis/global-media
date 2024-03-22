@@ -860,6 +860,6 @@ elif display_type == "Upload":
                     st.text(st.session_state.translation)
 
     if uploaded_file is None:
-        if st.session_state.processed = True:
+        if st.session_state.processed:
             st.session_state.processed = False
             os.remove(st.session_state.temp_subtitle_file_path)
