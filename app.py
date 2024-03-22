@@ -790,6 +790,18 @@ elif display_type == "Upload":
 
     if uploaded_file is not None:
 
+        if st.session_state.processed:
+            with open(st.session_state.temp_subtitle_file_path, 'r') as file:
+                with status.container():
+                    st.success("Automated translation by OpenAI's Whisper. Please double-check accuracy before use.")
+                    st.download_button(
+                        label="Download translation",
+                        data=file,
+                        file_name=st.session_state.download_file_name,
+                        mime='text/plain')
+
+                    st.text(st.session_state.translation)
+
         if not st.session_state.processed:
 
             file_ending = uploaded_file.name.split(".")[-1]
@@ -829,7 +841,7 @@ elif display_type == "Upload":
             with open(st.session_state.temp_subtitle_file_path, 'w') as file:
                 file.write(st.session_state.translation)
 
-            download_file_name = uploaded_file.name.split(".")[0] + ".srt"
+            st.session_state.download_file_name = uploaded_file.name.split(".")[0] + ".srt"
 
             st.session_state.processed = True
 
@@ -839,19 +851,8 @@ elif display_type == "Upload":
                     st.download_button(
                         label="Download translation",
                         data=file,
-                        file_name=download_file_name,
+                        file_name=st.session_state.download_file_name,
                         mime='text/plain')
 
                     st.text(st.session_state.translation)
 
-    if st.session_state.processed:
-        with open(st.session_state.temp_subtitle_file_path, 'r') as file:
-            with status.container():
-                st.success("Automated translation by OpenAI's Whisper. Please double-check accuracy before use.")
-                st.download_button(
-                    label="Download translation",
-                    data=file,
-                    file_name=download_file_name,
-                    mime='text/plain')
-
-                st.text(st.session_state.translation)
