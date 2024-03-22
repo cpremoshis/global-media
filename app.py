@@ -790,11 +790,12 @@ elif display_type == "Upload":
 
         with tempfile.NamedTemporaryFile(delete=False, suffix = f".{file_ending}") as temp_video_file:
             temp_video_file.write(uploaded_file.getvalue())
-            temp_video_file_path = temp_video_file.name
             temp_video_file.flush()
+            temp_video_file_path = temp_video_file.name
 
         with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as temp_audio_file:
             temp_audio_file_path = temp_audio_file.name
+            temp_audio_file.flush()
 
         st.write("Extracting audio")
 
