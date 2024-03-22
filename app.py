@@ -823,12 +823,13 @@ elif display_type == "Upload":
         with open(temp_subtitle_file_path, 'w') as file:
             file.write(translation)
 
-            download_file_name = uploaded_file.name.split(".")[0] + ".srt"
+        download_file_name = uploaded_file.name.split(".")[0] + ".srt"
 
+        with open(temp_subtitle_file, 'r') as file:
             with status.container():
                 st.download_button(
                     label="Download as file",
-                    data=temp_subtitle_file,
+                    data=file,
                     file_name=download_file_name,
                     mime='text/plain')
 
