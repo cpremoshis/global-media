@@ -828,7 +828,7 @@ elif display_type == "Upload":
         with status.container():
             st.download_button(
                 label="Download as file",
-                data=temp_subtitle_file_path,
+                data=temp_subtitle_file,
                 file_name=download_file_name,
                 mime='text/plain')
 
