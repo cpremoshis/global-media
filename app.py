@@ -845,4 +845,5 @@ elif display_type == "Upload":
                         data=file,
                         file_name=download_file_name,
                         mime='text/plain')
+                    st.success("Automated translation by OpenAI's Whisper. Please double-check accuracy before use.")
                     st.text(translation)
