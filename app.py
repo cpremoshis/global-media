@@ -825,7 +825,7 @@ elif display_type == "Upload":
 
         download_file_name = uploaded_file.name.split(".")[0] + ".srt"
 
-        with open(temp_subtitle_file, 'r') as file:
+        with open(temp_subtitle_file_path, 'r') as file:
             with status.container():
                 st.download_button(
                     label="Download as file",
