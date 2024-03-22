@@ -858,4 +858,3 @@ elif display_type == "Upload":
                         mime='text/plain')
 
                     st.text(st.session_state.translation)
-
