@@ -235,14 +235,14 @@ if 'recordings' not in st.session_state:
 with st.sidebar:
     st.title("GlobalBroadcastHub 📡")
 
-    display_type = st.radio("Display type:", ['Single', 'Multiview', 'CCTV 13 Live', 'Upload'], label_visibility="collapsed", horizontal=True)
+    display_type = st.radio("Display type:", ['Single view', 'Multiview', 'CCTV 13 Live', 'Upload'], label_visibility="collapsed", horizontal=True)
 
     #Reformats the full file name into just the ending (ex: "Outlet_time.mp4")
     def format_file_names(option):
         option = option.split("/")[2]
         return option
 
-    if display_type == 'Single':
+    if display_type == 'Single view':
 
         #----->User input<-----
         #Filters list of outlets based on selected languages
@@ -493,7 +493,7 @@ with st.sidebar:
                     dwnbtn = st.download_button("Download", data=f, file_name=file_name, mime="video/mp4")
 
 #Media display
-if display_type == "Single":
+if display_type == "Single view":
 
     #Metrics/info display
     left_column, middle_column, right_column = st.columns(3)
