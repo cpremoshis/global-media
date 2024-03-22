@@ -805,32 +805,37 @@ elif display_type == "Upload":
 
         status.status("Translating audio")
 
-        openai.api_key = st.secrets['openai_key']
+        file_size = os.path.getsize(temp_audio_file_path)
 
-        with open(temp_audio_file.name, 'rb') as f:
-            audio_bytes = BytesIO(f.read())
-            audio_bytes.name = "audio.mp3"
+        if file_size >= 26214400:
+            status.warning("Audio file too large.")
+        else:
+            openai.api_key = st.secrets['openai_key']
 
-        translation = openai.audio.translations.create(
-            file = audio_bytes,
-            model='whisper-1',
-            response_format="srt"
-            )
-        
-        with tempfile.NamedTemporaryFile(delete=False, suffix=".srt") as temp_subtitle_file:
-            temp_subtitle_file_path = temp_subtitle_file.name
+            with open(temp_audio_file.name, 'rb') as f:
+                audio_bytes = BytesIO(f.read())
+                audio_bytes.name = "audio.mp3"
 
-        with open(temp_subtitle_file_path, 'w') as file:
-            file.write(translation)
+            translation = openai.audio.translations.create(
+                file = audio_bytes,
+                model='whisper-1',
+                response_format="srt"
+                )
+            
+            with tempfile.NamedTemporaryFile(delete=False, suffix=".srt") as temp_subtitle_file:
+                temp_subtitle_file_path = temp_subtitle_file.name
 
-        download_file_name = uploaded_file.name.split(".")[0] + ".srt"
+            with open(temp_subtitle_file_path, 'w') as file:
+                file.write(translation)
 
-        with open(temp_subtitle_file_path, 'r') as file:
-            with status.container():
-                st.download_button(
-                    label="Download translation",
-                    data=file,
-                    file_name=download_file_name,
-                    mime='text/plain')
+            download_file_name = uploaded_file.name.split(".")[0] + ".srt"
 
-                st.text(translation)
+            with open(temp_subtitle_file_path, 'r') as file:
+                with status.container():
+                    st.download_button(
+                        label="Download translation",
+                        data=file,
+                        file_name=download_file_name,
+                        mime='text/plain')
+
+                    st.text(translation)
