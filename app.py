@@ -787,55 +787,59 @@ elif display_type == "Upload":
     if uploaded_file is not None:
 
         file_ending = uploaded_file.name.split(".")[-1]
+        try:
+            with tempfile.NamedTemporaryFile(delete=False, suffix = f".{file_ending}") as temp_video_file:
+                temp_video_file.write(uploaded_file.getvalue())
+                temp_video_file.flush()
+                temp_video_file_path = temp_video_file.name
 
-        with tempfile.NamedTemporaryFile(delete=False, suffix = f".{file_ending}") as temp_video_file:
-            temp_video_file.write(uploaded_file.getvalue())
-            temp_video_file.flush()
-            temp_video_file_path = temp_video_file.name
+            with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as temp_audio_file:
+                temp_audio_file_path = temp_audio_file.name
 
-        with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as temp_audio_file:
-            temp_audio_file_path = temp_audio_file.name
+            status.status("Extracting audio")
 
-        status.status("Extracting audio")
+            input_file = ffmpeg.input(temp_video_file_path)
+            output_file = ffmpeg.output(input_file, temp_audio_file_path, acodec="mp3")
+            output_file = output_file.global_args('-y')
+            output_file.run()
 
-        input_file = ffmpeg.input(temp_video_file_path)
-        output_file = ffmpeg.output(input_file, temp_audio_file_path, acodec="mp3")
-        output_file = output_file.global_args('-y')
-        output_file.run()
+            file_size = os.path.getsize(temp_audio_file_path)
 
-        file_size = os.path.getsize(temp_audio_file_path)
+            if file_size >= 26214400:
+                status.warning("Audio file too large.")
+            else:
+                status.status("Translating audio")
 
-        if file_size >= 26214400:
-            status.warning("Audio file too large.")
-        else:
-            status.status("Translating audio")
+                openai.api_key = st.secrets['openai_key']
 
-            openai.api_key = st.secrets['openai_key']
+                with open(temp_audio_file.name, 'rb') as f:
+                    audio_bytes = BytesIO(f.read())
+                    audio_bytes.name = "audio.mp3"
 
-            with open(temp_audio_file.name, 'rb') as f:
-                audio_bytes = BytesIO(f.read())
-                audio_bytes.name = "audio.mp3"
+                translation = openai.audio.translations.create(
+                    file = audio_bytes,
+                    model='whisper-1',
+                    response_format="srt"
+                    )
+                
+                with tempfile.NamedTemporaryFile(delete=False, suffix=".srt") as temp_subtitle_file:
+                    temp_subtitle_file_path = temp_subtitle_file.name
 
-            translation = openai.audio.translations.create(
-                file = audio_bytes,
-                model='whisper-1',
-                response_format="srt"
-                )
-            
-            with tempfile.NamedTemporaryFile(delete=False, suffix=".srt") as temp_subtitle_file:
-                temp_subtitle_file_path = temp_subtitle_file.name
+                with open(temp_subtitle_file_path, 'w') as file:
+                    file.write(translation)
 
-            with open(temp_subtitle_file_path, 'w') as file:
-                file.write(translation)
+                download_file_name = uploaded_file.name.split(".")[0] + ".srt"
 
-            download_file_name = uploaded_file.name.split(".")[0] + ".srt"
+                with open(temp_subtitle_file_path, 'r') as file:
+                    with status.container():
+                        st.download_button(
+                            label="Download translation",
+                            data=file,
+                            file_name=download_file_name,
+                            mime='text/plain')
 
-            with open(temp_subtitle_file_path, 'r') as file:
-                with status.container():
-                    st.download_button(
-                        label="Download translation",
-                        data=file,
-                        file_name=download_file_name,
-                        mime='text/plain')
-
-                    st.text(translation)
+                        st.text(translation)
+        finally:
+            os.remove(temp_video_file_path)
+            os.remove(temp_audio_file_path)
+            os.remove(temp_subtitle_file_path)
