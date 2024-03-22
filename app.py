@@ -782,7 +782,7 @@ elif display_type == "CCTV 13 Live Translation":
 elif display_type == "Upload":
     uploaded_file = st.file_uploader("Select file")
 
-    translation_container = st.container()
+    status = st.empty()
 
     if uploaded_file is not None:
 
@@ -796,14 +796,14 @@ elif display_type == "Upload":
         with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as temp_audio_file:
             temp_audio_file_path = temp_audio_file.name
 
-        st.write("Extracting audio")
+        status.spinner("Extracting audio")
 
         input_file = ffmpeg.input(temp_video_file_path)
         output_file = ffmpeg.output(input_file, temp_audio_file_path, acodec="mp3")
         output_file = output_file.global_args('-y')
         output_file.run()
 
-        st.write("Translating audio")
+        status.spinner("Translating audio")
 
         openai.api_key = st.secrets['openai_key']
 
@@ -823,4 +823,4 @@ elif display_type == "Upload":
         with open(temp_subtitle_file_path, 'w') as file:
             file.write(translation)
 
-        translation_container.write(translation)
+        status.text(translation)
