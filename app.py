@@ -800,7 +800,7 @@ elif display_type == "Upload":
 
         input_file = ffmpeg.input(temp_video_file_path)
         output_file = ffmpeg.output(input_file, temp_audio_file_path, acodec="mp3")
-        output_file = output_file.args('-y')
+        output_file = output_file.global_args('-y')
         output_file.run()
 
         st.write("Translating audio")
