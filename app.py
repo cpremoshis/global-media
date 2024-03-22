@@ -796,14 +796,14 @@ elif display_type == "Upload":
         with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as temp_audio_file:
             temp_audio_file_path = temp_audio_file.name
 
-        status.warning("Extracting audio")
+        status.status("Extracting audio")
 
         input_file = ffmpeg.input(temp_video_file_path)
         output_file = ffmpeg.output(input_file, temp_audio_file_path, acodec="mp3")
         output_file = output_file.global_args('-y')
         output_file.run()
 
-        status.warning("Translating audio")
+        status.status("Translating audio")
 
         openai.api_key = st.secrets['openai_key']
 
