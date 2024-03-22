@@ -135,7 +135,7 @@ def generate_player(format, type, url, muted=""):
         </html>
         """
 
-        if display_type == "Single":
+        if display_type == "Single view":
             return m3u8_video_player_html, 525
         elif display_type == "Multiview":
             return m3u8_video_player_html, 475
