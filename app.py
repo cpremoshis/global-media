@@ -792,32 +792,32 @@ elif display_type == "Upload":
             temp_video_file.write(uploaded_file.getvalue())
             temp_video_file_path = temp_video_file.name
 
-            with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as temp_audio_file:
-                temp_audio_file_path = temp_audio_file.name
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as temp_audio_file:
+            temp_audio_file_path = temp_audio_file.name
 
-            print("Extracting audio")
+        print("Extracting audio")
 
-            input_file = ffmpeg.input(temp_video_file_path)
-            ffmpeg.output(input_file, temp_audio_file_path, acodec="mp3").run()
+        input_file = ffmpeg.input(temp_video_file_path)
+        ffmpeg.output(input_file, temp_audio_file_path, acodec="mp3").run()
 
-            print("Translating audio")
+        print("Translating audio")
 
-            openai.api_key = st.secrets['openai_key']
+        openai.api_key = st.secrets['openai_key']
 
-            with open(temp_audio_file, 'rb') as f:
-                audio_bytes = BytesIO(f.read())
-                audio_bytes.name = "audio.mp3"
+        with open(temp_audio_file, 'rb') as f:
+            audio_bytes = BytesIO(f.read())
+            audio_bytes.name = "audio.mp3"
 
-            translation = openai.audio.translations.create(
-                file = audio_bytes,
-                model='whisper-1',
-                response_format="srt"
-                )
-            
-            with tempfile.NamedTemporaryFile(delete=False, suffix=".srt") as temp_subtitle_file:
-                temp_subtitle_file_path = temp_subtitle_file.name
+        translation = openai.audio.translations.create(
+            file = audio_bytes,
+            model='whisper-1',
+            response_format="srt"
+            )
+        
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".srt") as temp_subtitle_file:
+            temp_subtitle_file_path = temp_subtitle_file.name
 
-            with open(temp_subtitle_file_path, 'w') as file:
-                file.write(translation)
+        with open(temp_subtitle_file_path, 'w') as file:
+            file.write(translation)
 
-            translation_container.write(translation)
+        translation_container.write(translation)
