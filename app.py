@@ -453,7 +453,7 @@ with st.sidebar:
                     file_name = download_select.split("/")[2]
                     dwnbtn = st.download_button("Download", data=f, file_name=file_name, mime="video/mp4")
 
-    if display_type == "CCTV 13 Live":
+    if display_type == "CCTV 13 Live Translation":
         
         #----->Recording and download functions<-----
 
@@ -666,7 +666,7 @@ elif display_type == "Multiview":
             else:
                 player_html = fourth_result[0]
 
-elif display_type == "CCTV 13 Live":
+elif display_type == "CCTV 13 Live Translation":
 
     def get_stream_status():
 
@@ -780,7 +780,6 @@ elif display_type == "CCTV 13 Live":
     )
 
 elif display_type == "Upload":
-
     uploaded_file = st.file_uploader("Select file")
 
     status = st.empty()
@@ -788,7 +787,7 @@ elif display_type == "Upload":
     if uploaded_file is not None:
 
         file_ending = uploaded_file.name.split(".")[-1]
-        #Creates tempfile objects for video and audio
+
         with tempfile.NamedTemporaryFile(delete=False, suffix = f".{file_ending}") as temp_video_file:
             temp_video_file.write(uploaded_file.getvalue())
             temp_video_file.flush()
@@ -797,7 +796,6 @@ elif display_type == "Upload":
         with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as temp_audio_file:
             temp_audio_file_path = temp_audio_file.name
 
-        #Audio extraction for later upload to OpenAI
         status.status("Extracting audio")
 
         input_file = ffmpeg.input(temp_video_file_path)
@@ -805,10 +803,6 @@ elif display_type == "Upload":
         output_file = output_file.global_args('-y')
         output_file.run()
 
-        #Checks if mp3 file is larger than 25 MB (OpenAI limit)
-        #file_size = os.path.getsize(temp_audio_file_path)
-
-        #Audio translation
         status.status("Translating audio")
 
         openai.api_key = st.secrets['openai_key']
@@ -823,11 +817,6 @@ elif display_type == "Upload":
             response_format="srt"
             )
         
-        #Removes uploaded video and ffmpeg created audio files
-        os.remove(temp_video_file_path)
-        os.remove(temp_audio_file_path)
-
-        #Creates subtitle tempfile object and displayable/downloadable file
         with tempfile.NamedTemporaryFile(delete=False, suffix=".srt") as temp_subtitle_file:
             temp_subtitle_file_path = temp_subtitle_file.name
 
@@ -844,4 +833,5 @@ elif display_type == "Upload":
                     data=file,
                     file_name=download_file_name,
                     mime='text/plain')
+
                 st.text(translation)
