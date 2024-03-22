@@ -453,7 +453,7 @@ with st.sidebar:
                     file_name = download_select.split("/")[2]
                     dwnbtn = st.download_button("Download", data=f, file_name=file_name, mime="video/mp4")
 
-    if display_type == "CCTV 13 Live Translation":
+    if display_type == "CCTV 13 Live":
         
         #----->Recording and download functions<-----
 
@@ -666,7 +666,7 @@ elif display_type == "Multiview":
             else:
                 player_html = fourth_result[0]
 
-elif display_type == "CCTV 13 Live Translation":
+elif display_type == "CCTV 13 Live":
 
     def get_stream_status():
 
