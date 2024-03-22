@@ -10,7 +10,7 @@ import tempfile
 import os
 import ffmpeg
 import openai
-from io import BytesIO
+from io import BytesIO, StringIO
 
 st.set_page_config(
     page_title="GlobalBroadcastHub",
@@ -786,7 +786,8 @@ elif display_type == "Upload":
 
     if uploaded_file is not None:
 
-        file_ending = uploaded_file.split(".")[-1]
+        file_name = StringIO(uploaded_file.getvalue().decode('utf-8'))
+        file_ending = file_name.split(".")[-1]
 
         with tempfile.NamedTemporaryFile(delete=False, suffix = f".{file_ending}") as temp_video_file:
             temp_video_file.write(uploaded_file.getvalue())
