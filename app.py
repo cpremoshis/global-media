@@ -803,13 +803,13 @@ elif display_type == "Upload":
         output_file = output_file.global_args('-y')
         output_file.run()
 
-        status.status("Translating audio")
-
         file_size = os.path.getsize(temp_audio_file_path)
 
         if file_size >= 26214400:
             status.warning("Audio file too large.")
         else:
+            status.status("Translating audio")
+
             openai.api_key = st.secrets['openai_key']
 
             with open(temp_audio_file.name, 'rb') as f:
