@@ -820,7 +820,7 @@ elif display_type == "Upload":
         with tempfile.NamedTemporaryFile(delete=False, suffix=".srt") as temp_subtitle_file:
             temp_subtitle_file_path = temp_subtitle_file.name
 
-        with open(temp_subtitle_file_path.name, 'w') as file:
+        with open(temp_subtitle_file_path, 'w') as file:
             file.write(translation)
 
         translation_container.write(translation)
