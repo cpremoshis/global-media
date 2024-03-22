@@ -229,9 +229,8 @@ if 'recordings' not in st.session_state:
 #Sidebar with user input options
 with st.sidebar:
     st.title("GlobalBroadcastHub 📡")
-    st.caption("Beta")
 
-    display_type = st.radio("Display type:", ['Single', 'Multiview', 'CCTV 13 Live Translation'], horizontal=True)
+    display_type = st.radio("Display type:", ['Single', 'Multiview', 'CCTV 13 Live', 'Upload'], horizontal=True)
 
     #Reformats the full file name into just the ending (ex: "Outlet_time.mp4")
     def format_file_names(option):
