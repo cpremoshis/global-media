@@ -784,6 +784,9 @@ elif display_type == "Upload":
     if "processed" not in st.session_state:
         st.session_state.processed = False
 
+    if 'temp_subtitle_file_path' not in st.session_state:
+        st.session_state.temp_subtitle_file_path = None
+
     uploaded_file = st.file_uploader("Select file")
 
     status = st.empty()
