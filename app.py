@@ -818,45 +818,42 @@ elif display_type == "Upload":
         output_file.run()
 
         #Checks if mp3 file is larger than 25 MB (OpenAI limit)
-        file_size = os.path.getsize(temp_audio_file_path)
+        #file_size = os.path.getsize(temp_audio_file_path)
 
-        if file_size >= 26214400:
-            status.warning("Audio file too large; cannot send to translation API.")
-        else:
-            #Audio translation
-            status.status("Translating audio")
+        #Audio translation
+        status.status("Translating audio")
 
-            openai.api_key = st.secrets['openai_key']
+        openai.api_key = st.secrets['openai_key']
 
-            with open(temp_audio_file.name, 'rb') as f:
-                audio_bytes = BytesIO(f.read())
-                audio_bytes.name = "audio.mp3"
+        with open(temp_audio_file.name, 'rb') as f:
+            audio_bytes = BytesIO(f.read())
+            audio_bytes.name = "audio.mp3"
 
-            translation = openai.audio.translations.create(
-                file = audio_bytes,
-                model='whisper-1',
-                response_format="srt"
-                )
-            
-            #Removes uploaded video and ffmpeg created audio files
-            os.remove(temp_video_file_path)
-            os.remove(temp_audio_file_path)
+        translation = openai.audio.translations.create(
+            file = audio_bytes,
+            model='whisper-1',
+            response_format="srt"
+            )
+        
+        #Removes uploaded video and ffmpeg created audio files
+        os.remove(temp_video_file_path)
+        os.remove(temp_audio_file_path)
 
-            #Creates subtitle tempfile object and displayable/downloadable file
-            with tempfile.NamedTemporaryFile(delete=False, suffix=".srt") as temp_subtitle_file:
-                temp_subtitle_file_path = temp_subtitle_file.name
+        #Creates subtitle tempfile object and displayable/downloadable file
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".srt") as temp_subtitle_file:
+            temp_subtitle_file_path = temp_subtitle_file.name
 
-            with open(temp_subtitle_file_path, 'w') as file:
-                file.write(translation)
+        with open(temp_subtitle_file_path, 'w') as file:
+            file.write(translation)
 
-            download_file_name = uploaded_file.name.split(".")[0] + ".srt"
+        download_file_name = uploaded_file.name.split(".")[0] + ".srt"
 
-            with open(temp_subtitle_file_path, 'r') as file:
-                with status.container():
-                    st.success("Automated translation by OpenAI's Whisper. Please double-check accuracy before use.")
-                    st.download_button(
-                        label="Download translation",
-                        data=file,
-                        file_name=download_file_name,
-                        mime='text/plain')
-                    st.text(translation)
+        with open(temp_subtitle_file_path, 'r') as file:
+            with status.container():
+                st.success("Automated translation by OpenAI's Whisper. Please double-check accuracy before use.")
+                st.download_button(
+                    label="Download translation",
+                    data=file,
+                    file_name=download_file_name,
+                    mime='text/plain')
+                st.text(translation)
