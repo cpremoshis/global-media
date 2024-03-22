@@ -847,7 +847,7 @@ elif display_type == "Upload":
                 st.session_state.temp_subtitle_file_path = temp_subtitle_file.name
 
             with open(st.session_state.temp_subtitle_file_path, 'w') as file:
-                file.write(translation)
+                file.write(st.session_state.translation)
 
             st.session_state.download_file_name = uploaded_file.name.split(".")[0] + ".srt"
             st.session_state.processed = True
