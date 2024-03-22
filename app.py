@@ -10,7 +10,7 @@ import tempfile
 import os
 import ffmpeg
 import openai
-import BytesIO
+from io import BytesIO
 
 st.set_page_config(
     page_title="GlobalBroadcastHub",
