@@ -189,7 +189,7 @@ def generate_player(format, type, url, muted=""):
         return m3u8_audio_player_html, 40
     
     if format == "MPD" and type == "Video":
-        m3u8_video_player_html = f"""
+        mpd_video_player_html = f"""
         <!DOCTYPE html>
         <html>
         <head>
@@ -232,9 +232,9 @@ def generate_player(format, type, url, muted=""):
         """
 
         if display_type == "Single view":
-            return m3u8_video_player_html, 525
+            return mpd_video_player_html, 525
         elif display_type == "Multiview":
-            return m3u8_video_player_html, 475
+            return mpd_video_player_html, 475
 
     if format == "MP3":
         mp3_audio_player_html = f"""
