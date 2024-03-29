@@ -193,7 +193,7 @@ def generate_player(format, type, url, muted=""):
         <!DOCTYPE html>
         <html>
         <head>
-            <title>HLS Stream</title>
+            <title>DASH Stream</title>
             <script src="https://cdn.dashjs.org/latest/dash.all.min.js"></script>
             <style>
                 html, body, div, span, applet, object, iframe,
@@ -211,21 +211,8 @@ def generate_player(format, type, url, muted=""):
         <video id="video" controls autoplay {muted} style="width:100vw; height:100vh; object-fit: contain; margin:auto"></video>
         <script>
             var video = document.getElementById('video');
-            if (Hls.isSupported()) {{
-                var hls = new Hls();
-                hls.loadSource('{url}');
-                hls.attachMedia(video);
-                hls.on(Hls.Events.MANIFEST_PARSED, function() {{
-                    video.play();
-                }});
-            }}
-            // For browsers like Safari that support HLS natively
-            else if (video.canPlayType('application/vnd.apple.mpegurl')) {{
-                video.src = '{url}';
-                video.addEventListener('loadedmetadata', function() {{
-                    video.play();
-                }});
-            }}
+            var player = dashjs.MediaPlayer().create();
+            player.initialize(video, "{url}", true);
         </script>
         </body>
         </html>
