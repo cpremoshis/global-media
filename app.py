@@ -188,6 +188,54 @@ def generate_player(format, type, url, muted=""):
 
         return m3u8_audio_player_html, 40
     
+    if format == "MPD" and type == "Video":
+        m3u8_video_player_html = f"""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>HLS Stream</title>
+            <script src="https://cdn.dashjs.org/latest/dash.all.min.js"></script>
+            <style>
+                html, body, div, span, applet, object, iframe,
+                video, audio {{
+                    margin: 0;
+                    padding: 0;
+                    border: 0;
+                    background-color: #0E1117;
+                    vertical-align: baseline;
+                    box-sizing: border-box; /* Include padding and border in the element's size */
+                }}
+            </style>
+        </head>
+        <body>
+        <video id="video" controls autoplay {muted} style="width:100vw; height:100vh; object-fit: contain; margin:auto"></video>
+        <script>
+            var video = document.getElementById('video');
+            if (Hls.isSupported()) {{
+                var hls = new Hls();
+                hls.loadSource('{url}');
+                hls.attachMedia(video);
+                hls.on(Hls.Events.MANIFEST_PARSED, function() {{
+                    video.play();
+                }});
+            }}
+            // For browsers like Safari that support HLS natively
+            else if (video.canPlayType('application/vnd.apple.mpegurl')) {{
+                video.src = '{url}';
+                video.addEventListener('loadedmetadata', function() {{
+                    video.play();
+                }});
+            }}
+        </script>
+        </body>
+        </html>
+        """
+
+        if display_type == "Single view":
+            return m3u8_video_player_html, 525
+        elif display_type == "Multiview":
+            return m3u8_video_player_html, 475
+
     if format == "MP3":
         mp3_audio_player_html = f"""
         <!DOCTYPE html>
