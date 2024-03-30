@@ -195,8 +195,9 @@ def record_m3u8(outlet, seconds, playlist_url, root_url, translate):
                 'ffmpeg',
                 '-i', concat_string,
                 '-c:v', 'copy',
-                '-c:a', 'copy',
-                '-bsf:a', 'aac_adtstoasc',
+                '-c:a', 'aac',
+                '-b:a', '128k',
+                #'-bsf:a', 'aac_adtstoasc',
                 output_file
             ]
 
