@@ -251,6 +251,55 @@ def record_m3u8(outlet, seconds, playlist_url, root_url, translate):
 
         return False, e
 
+def record_mpd(outlet, seconds, stream_url, translate):
+
+    now = datetime.now()
+    savetime = now.strftime("%Y_%m_%d_%H%M%S")
+
+    save_file = f"./Recordings/{outlet}_{savetime}.ts"
+    output_file = f"./Recordings/{outlet}_{savetime}.mp4"
+
+    save_command = [
+        'timeout', str(seconds),
+        'streamlink',
+        stream_url,
+        'best',
+        '-o', save_file
+        ]
+
+    convert_command = [
+        'ffmpeg',
+        '-i', save_file,
+        '-c:v', 'libx264',
+        '-c:a', 'aac',
+        output_file
+        ]
+
+    subprocess.run(save_command)
+    subprocess.run(convert_command)
+
+    if translate == True:
+        #TRANSLATION command
+        translation_file, audio_file = translate_audio(output_file, outlet, savetime)
+
+        # Add subtitle file to the mp4
+        subtitle_command = [
+            'ffmpeg',
+            '-y',
+            '-i', output_file,
+            '-i', translation_file,  #SRT file
+            '-c', 'copy',
+            '-c:s', 'mov_text',  #Subtitle codec compatible with MP4
+            '-metadata:s:s:0', 'language=eng',  #Change 'eng' to the appropriate language code if other than English
+            output_file  #Output file with subtitles
+        ]
+
+        subprocess.run(subtitle_command)
+
+        return True, outlet, output_file, translation_file, audio_file
+    else:
+        return True, outlet, output_file
+
 #Enter seconds in intervals of FIVE
 def record_youtube(outlet, seconds, stream_url, translate):
     try:
@@ -425,6 +474,8 @@ def multi_record(*outlets, seconds, translate=False):
             for outlet in outlets:
                 if outlet.format == "M3U8":
                     future = executor.submit(record_m3u8, outlet.name, seconds, outlet.recording_url, outlet.root_url, translate)
+                if outlet.format == "MPD":
+                    future = executor.submit(record_mpd, outlet.name, seconds, outlet.recording_url, translate)
                 if outlet.format == "YouTube":
                     future = executor.submit(record_youtube, outlet.name, seconds, outlet.recording_url, translate)
                 future_to_outlet[future] = outlet
@@ -464,21 +515,3 @@ def multi_record(*outlets, seconds, translate=False):
 
     except Exception as e:
         return e
-
-
-#create_ffmpeg_command_gpt(video_dict, output_path)
-
-#video_dict = {name1:{'Video':video1, 'Subtitles':sub1}}
-    
-#recording, translation, audio
-
-
-
-#Original ffmpeg command
-#    command = [
-#    'ffmpeg',
-#    '-i', concat_string,
-#    '-c', 'copy',
-#    '-bsf:a', 'aac_adtstoasc',
-#    output_file
-#]
