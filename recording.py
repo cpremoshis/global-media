@@ -278,6 +278,10 @@ def record_mpd(outlet, seconds, stream_url, translate):
     result = subprocess.run(save_command)
     subprocess.run(convert_command)
 
+######
+######
+#NEED TO FIX EDITING IN PLACE ERROR WITH FFMPEG WHEN ADDING SUBTITLES
+
     if translate == True:
         #TRANSLATION command
         translation_file, audio_file = translate_audio(output_file, outlet, savetime)
