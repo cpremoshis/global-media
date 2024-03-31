@@ -276,7 +276,7 @@ def record_mpd(outlet, seconds, stream_url, translate):
         ]
 
     result = subprocess.run(save_command, capture_output=True, text=True)
-    print(result.stderr)
+    print(result.stdout)
     subprocess.run(convert_command)
 
     if translate == True:
