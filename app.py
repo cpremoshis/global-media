@@ -2,7 +2,7 @@ import streamlit as st
 import streamlit.components.v1 as components
 import pandas as pd
 import requests
-from recording import record_m3u8, record_youtube, record_mp3, multi_record
+from recording import record_m3u8, record_mpd, record_youtube, record_mp3, multi_record
 import zipfile
 import time
 from datetime import datetime
@@ -319,6 +319,12 @@ with st.sidebar:
                     zipped_files = zip_single_recording(recording, translation, audio)
                 elif outlet.format == "M3U8":
                     status, name, recording = record_m3u8(outlet.name, record_time, outlet.recording_url, outlet.root_url, translate)
+
+                if outlet.format == "MPD" and translate == True:
+                    status, name, recording, translation, audio = record_mpd(outlet.name, record_time, outlet.recording_url, translate)
+                    zipped_files = zip_single_recording(recording, translation, audio)
+                elif outlet.format == "MPD":
+                    status, name, recording = record_mpd(outlet.name, record_time, outlet.recording_url, translate)
 
                 elif outlet.format == "MP3" and translate == True:
                     status, recording, translation, audio = record_mp3(outlet.name, record_time, outlet.recording_url, translate)
