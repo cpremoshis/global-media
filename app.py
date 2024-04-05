@@ -303,8 +303,12 @@ with st.sidebar:
         else:
             for row in broadcasters_df.itertuples():
                 if len(languages) != 0:
-                    if row.Language in languages:
-                        broadcasters_filtered.append(row.Name)
+                    if len(countries) != 0:
+                        if row.Language in languages and row.Country in countries:
+                            broadcasters_filtered.append(row.Name)
+                    if len(countries) == 0:
+                        if row.Language in languages:
+                            broadcasters_filtered.append(row.Name)
                 if len(countries) != 0:
                     if row.Country in countries:
                         broadcasters_filtered.append(row.Name)       
