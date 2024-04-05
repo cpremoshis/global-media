@@ -284,7 +284,7 @@ with st.sidebar:
         #If no language is selected, defaults to all languages
 
         languages = st.multiselect("Select languages:", broadcasters_df['Language'].unique(), placeholder="All languages")
-        countries = st.multiselect("Select countries:", broadcasters_df['Country'].unique(), placeholder="All languages")
+        countries = st.multiselect("Select countries:", broadcasters_df['Country'].unique(), placeholder="All countries")
 
         broadcasters_filtered_by_lang = []
         broadcasters_filtered = []
