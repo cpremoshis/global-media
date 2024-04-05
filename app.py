@@ -297,9 +297,11 @@ with st.sidebar:
                 if row.Language in languages:
                     broadcasters_filtered_by_lang.append(row.Name)
 
+        #If no language or country is selected
         if len(languages) == 0 and len(countries) == 0:
             for row in broadcasters_df.itertuples():
                 broadcasters_filtered.append(row.Name)
+        #If some combination of country and language is selected
         else:
             for row in broadcasters_df.itertuples():
                 if len(languages) != 0:
