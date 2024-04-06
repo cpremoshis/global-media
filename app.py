@@ -837,7 +837,7 @@ elif display_type == "Upload":
         if st.session_state.processed:
             with open(st.session_state.temp_subtitle_file_path, 'r') as file:
                 with status.container():
-                    st.success("Automated translation by OpenAI's Whisper. Please double-check accuracy before use.")
+                    st.warning("Automated translation by OpenAI's Whisper. Please double-check accuracy before use.")
                     st.download_button(
                         label="Download translation",
                         data=file,
