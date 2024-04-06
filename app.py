@@ -283,10 +283,9 @@ with st.sidebar:
         #Filters list of outlets based on selected languages
         #If no language is selected, defaults to all languages
 
-        languages = st.multiselect("Select languages:", broadcasters_df['Language'].unique(), placeholder="All languages")
-
         broadcasters_filtered_by_lang = []
-        broadcasters_filtered = []
+
+        languages = st.multiselect("Select languages:", broadcasters_df['Language'].unique(), placeholder="All languages")
 
         if len(languages) == 0:
             for row in broadcasters_df.itertuples():
