@@ -270,12 +270,12 @@ if 'recordings' not in st.session_state:
 with st.sidebar:
     st.title("GlobalBroadcastHub 📡")
 
-    display_type = st.radio("Display type:", ['Single view', 'Multiview', 'CCTV 13 Live', 'Upload'], label_visibility="collapsed", horizontal=True)
-
     #Reformats the full file name into just the ending (ex: "Outlet_time.mp4")
     def format_file_names(option):
         option = option.split("/")[2]
         return option
+
+    display_type = st.radio("Display type:", ['Single view', 'Multiview', 'CCTV 13 Live', 'Upload'], label_visibility="collapsed", horizontal=True)
 
     if display_type == 'Single view':
 
