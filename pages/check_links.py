@@ -60,14 +60,9 @@ def check_record_links(row):
             lines = manifest_response.text.splitlines()
             ts_files = [line for line in lines if ".ts" in line or ".aac" in line]
 
-            st.write(row['Name'])
-            st.write(ts_files)
-
             if root_link != "Null":
                 test_file = root_link + ts_files[0]
-                st.write(test_file)
                 test_file_response = requests.get(test_file)
-                st.write(test_file_response)
                 if test_file_response.status_code == 200:
                     status = True
                     return status
@@ -90,7 +85,11 @@ with open("./Assets/broadcasters.csv") as file:
 
 if st.button("Check links"):
 
-    #df['Playback Status'] = df.apply(check_playback_links, axis=1)
+    status = st.empty()
+
+    status.status("Checking PLAYBACK statuses")
+    df['Playback Status'] = df.apply(check_playback_links, axis=1)
+    status.status("Checking RECORD statuses")
     df['Record Status'] = df.apply(check_record_links, axis=1)
 
     st.write(df[['Name', 'Format', 'Record Status']])
