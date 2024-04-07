@@ -62,7 +62,7 @@ def check_record_links(row):
 
             print(ts_files)
 
-            if row['Root URL'] != "Null":
+            if root_link != "Null":
                 test_file = root_link + ts_files[0]
                 test_file_response = requests.get(test_file)
                 if test_file_response.status_code == 200:
