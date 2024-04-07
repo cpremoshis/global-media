@@ -32,12 +32,18 @@ def check_record_links(row):
         if response.status_code == 200:
             html = response.content
             soup = BeautifulSoup(html, 'html.parser')
-            meta_tag = soup.find('meta', attrs={'itemprop':'endDate'})
+            live_tag = soup.find('meta', attrs={'itemprop':'isLiveBroadcast'})
 
-            if not meta_tag:
-                is_live = meta_tag['content']
+            if live_tag:
+                is_live = live_tag['content']
                 if is_live == "True":
-                    return True
+                    end_tag = soup.find('meta', attrs={'itemprop':'endDate'})
+                    if end_tag:
+                        status = False
+                        return status
+                    else:
+                        status = True
+                        return status
     
 with open("./Assets/broadcasters.csv") as file:
     df = pd.read_csv(file)
