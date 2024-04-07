@@ -5,26 +5,29 @@ from bs4 import BeautifulSoup
 import subprocess
 
 def check_playback_links(row):
-    if row['Format'] == "YouTube":
-        link = row['Playback M3U8']
-        response = requests.get(link)
-        status = response.status_code
+    try:
+        if row['Format'] == "YouTube":
+            link = row['Playback M3U8']
+            response = requests.get(link)
+            status = response.status_code
 
-        return status
-    
-    if row['Format'] == "MPD":
-        link = row['Playback M3U8']
-        response = requests.get(link)
-        status = response.status_code
+            return status
+        
+        if row['Format'] == "MPD":
+            link = row['Playback M3U8']
+            response = requests.get(link)
+            status = response.status_code
 
-        return status
+            return status
 
-    if row['Format'] == "M3U8":
-        link = row['Playback M3U8']
-        response = requests.get(link)
-        status = response.status_code
+        if row['Format'] == "M3U8":
+            link = row['Playback M3U8']
+            response = requests.get(link)
+            status = response.status_code
 
-        return status
+            return status
+    except:
+        pass
     
 def check_record_links(row):
     if row['Format'] == "YouTube":
