@@ -1,4 +1,3 @@
-broadcasters,,,,,,,,,,,
 Name,Wiki,Country,City,Timezone,Type,Language,Format,Playback M3U8,Recording M3U8,Root URL,Page URL
 ABC (TV),ABC_News_(Australia),Australia 🇦🇺,Sydney,Australia/Sydney,Video,English,M3U8,https://abc-iview-mediapackagestreams-2.akamaized.net/out/v1/6e1cc6d25ec0480ea099a5399d73bc4b/index.m3u8,https://abc-iview-mediapackagestreams-2.akamaized.net/out/v1/6e1cc6d25ec0480ea099a5399d73bc4b/index_45.m3u8,https://abc-iview-mediapackagestreams-2.akamaized.net/out/v1/6e1cc6d25ec0480ea099a5399d73bc4b/,https://www.abc.net.au/news
 ABC (Radio),ABC_News_(Australia),Australia 🇦🇺,Sydney,Australia/Sydney,Audio,English,M3U8,https://mediaserviceslive.akamaized.net/hls/live/2038311/newsradio/index.m3u8,https://mediaserviceslive.akamaized.net/hls/live/2038311/newsradio/masterhq.m3u8,https://mediaserviceslive.akamaized.net/hls/live/2038311/newsradio/,https://www.abc.net.au/news
