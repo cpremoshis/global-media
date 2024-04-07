@@ -2,3 +2,4 @@ tqdm
 yt-dlp
 ffmpeg-python
 openai
+bs4
