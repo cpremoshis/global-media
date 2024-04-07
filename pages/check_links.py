@@ -55,30 +55,32 @@ def check_record_links(row):
         root_link = row['Root URL']
 
         manifest_response = requests.get(record_link)
-        lines = manifest_response.text.splitlines()
-        ts_files = [line for line in lines if ".ts" in line]
+        if manifest_response.status_code == 200:
 
-        print(ts_files)
+            lines = manifest_response.text.splitlines()
+            ts_files = [line for line in lines if ".ts" in line]
 
-        if row['Root URL'] != "Null":
-            test_file = root_link + ts_files[0]
-            test_file_response = requests.get(test_file)
-            if test_file_response.status_code == 200:
-                status = True
-                return status
+            print(ts_files)
+
+            if row['Root URL'] != "Null":
+                test_file = root_link + ts_files[0]
+                test_file_response = requests.get(test_file)
+                if test_file_response.status_code == 200:
+                    status = True
+                    return status
+                else:
+                    status = False
+                    return status
+            #This block is for RTVE, BBC TV
             else:
-                status = False
-                return status
-        #This block is for RTVE, BBC TV
-        else:
-            test_file = ts_files[0]
-            test_file_response = requests.get(test_file)
-            if test_file_response.status_code == 200:
-                status = True
-                return status
-            else:
-                status = False
-                return status
+                test_file = ts_files[0]
+                test_file_response = requests.get(test_file)
+                if test_file_response.status_code == 200:
+                    status = True
+                    return status
+                else:
+                    status = False
+                    return status
     
 with open("./Assets/broadcasters.csv") as file:
     df = pd.read_csv(file)
