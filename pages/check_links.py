@@ -52,13 +52,14 @@ def check_record_links(row):
     
     if row['Format'] == "M3U8":
         record_link = row['Recording M3U8']
+        root_link = row['Root URL']
 
         manifest_response = requests.get(record_link)
         lines = manifest_response.text.splitlines()
         ts_files = [line for line in lines if ".ts" in line]
 
         if row['Root URL'] != "Null":
-            test_file = record_link + ts_files[0]
+            test_file = root_link + ts_files[0]
             test_file_response = requests.get(test_file)
             if test_file_response.status_code == 200:
                 status = True
