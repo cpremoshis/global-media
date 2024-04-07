@@ -30,59 +30,62 @@ def check_playback_links(row):
         pass
     
 def check_record_links(row):
-    if row['Format'] == "YouTube":
-        link = row['Playback M3U8']
-        response = requests.get(link)
-        if response.status_code == 200:
-            html = response.content
-            soup = BeautifulSoup(html, 'html.parser')
-            live_tag = soup.find('meta', attrs={'itemprop':'isLiveBroadcast'})
+    try:
+        if row['Format'] == "YouTube":
+            link = row['Playback M3U8']
+            response = requests.get(link)
+            if response.status_code == 200:
+                html = response.content
+                soup = BeautifulSoup(html, 'html.parser')
+                live_tag = soup.find('meta', attrs={'itemprop':'isLiveBroadcast'})
 
-            if live_tag:
-                is_live = live_tag['content']
-                if is_live == "True":
-                    end_tag = soup.find('meta', attrs={'itemprop':'endDate'})
-                    if end_tag is None:
+                if live_tag:
+                    is_live = live_tag['content']
+                    if is_live == "True":
+                        end_tag = soup.find('meta', attrs={'itemprop':'endDate'})
+                        if end_tag is None:
+                            status = True
+                            return status
+                        else:
+                            status = False
+                            return status
+                        
+        if row['Format'] == "MPD":
+            status = True
+            return True
+        
+        if row['Format'] == "M3U8":
+            record_link = row['Recording M3U8']
+            root_link = row['Root URL']
+
+            manifest_response = requests.get(record_link)
+            if manifest_response.status_code == 200:
+
+                lines = manifest_response.text.splitlines()
+                ts_files = [line for line in lines if ".ts" in line or ".aac" in line]
+
+                if root_link != "Null":
+                    test_file = root_link + ts_files[0]
+                    test_file_response = requests.get(test_file)
+                    if test_file_response.status_code == 200:
                         status = True
                         return status
                     else:
                         status = False
                         return status
-                    
-    if row['Format'] == "MPD":
-        status = True
-        return True
-    
-    if row['Format'] == "M3U8":
-        record_link = row['Recording M3U8']
-        root_link = row['Root URL']
-
-        manifest_response = requests.get(record_link)
-        if manifest_response.status_code == 200:
-
-            lines = manifest_response.text.splitlines()
-            ts_files = [line for line in lines if ".ts" in line or ".aac" in line]
-
-            if root_link != "Null":
-                test_file = root_link + ts_files[0]
-                test_file_response = requests.get(test_file)
-                if test_file_response.status_code == 200:
-                    status = True
-                    return status
+                #This block is for RTVE, BBC TV
                 else:
-                    status = False
-                    return status
-            #This block is for RTVE, BBC TV
-            else:
-                test_file = ts_files[0]
-                test_file_response = requests.get(test_file)
-                if test_file_response.status_code == 200:
-                    status = True
-                    return status
-                else:
-                    status = False
-                    return status
-    
+                    test_file = ts_files[0]
+                    test_file_response = requests.get(test_file)
+                    if test_file_response.status_code == 200:
+                        status = True
+                        return status
+                    else:
+                        status = False
+                        return status
+    except:
+        pass
+
 with open("./Assets/broadcasters.csv") as file:
     df = pd.read_csv(file)
 
