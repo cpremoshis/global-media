@@ -8,21 +8,21 @@ def check_playback_links(row):
     try:
         if row['Format'] == "YouTube":
             link = row['Playback M3U8']
-            response = requests.get(link)
+            response = requests.get(link, timeout=5)
             status = response.status_code
 
             return status
         
         if row['Format'] == "MPD":
             link = row['Playback M3U8']
-            response = requests.get(link)
+            response = requests.get(link, timeout=5)
             status = response.status_code
 
             return status
 
         if row['Format'] == "M3U8":
             link = row['Playback M3U8']
-            response = requests.get(link)
+            response = requests.get(link, timeout=5)
             status = response.status_code
 
             return status
