@@ -66,7 +66,7 @@ def check_record_links(row):
 
                 if root_link != "Null":
                     test_file = root_link + ts_files[0]
-                    test_file_response = requests.get(test_file)
+                    test_file_response = requests.get(test_file, timeout=5)
                     if test_file_response.status_code == 200:
                         status = True
                         return status
@@ -76,7 +76,7 @@ def check_record_links(row):
                 #This block is for RTVE, BBC TV
                 else:
                     test_file = ts_files[0]
-                    test_file_response = requests.get(test_file)
+                    test_file_response = requests.get(test_file, timeout=5)
                     if test_file_response.status_code == 200:
                         status = True
                         return status
@@ -98,4 +98,4 @@ if st.button("Check links"):
     status.status("Checking RECORD statuses")
     df['Record Status'] = df.apply(check_record_links, axis=1)
 
-    st.write(df[['Name', 'Format', 'Record Status']])
+    st.write(df[['Name', 'Format', 'Playback Status', 'Record Status']])
