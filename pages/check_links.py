@@ -58,7 +58,7 @@ def check_record_links(row):
         if manifest_response.status_code == 200:
 
             lines = manifest_response.text.splitlines()
-            ts_files = [line for line in lines if ".ts" in line]
+            ts_files = [line for line in lines if ".ts" in line or ".aac" in line]
 
             st.write(row['Name'])
             st.write(ts_files)
