@@ -25,6 +25,13 @@ def check_playback_links(row):
             status = response.status_code
 
             return status
+        
+        if row['Format'] == "MP3":
+            link = row['Playback M3U8']
+            response = requests.get(link, timeout=5)
+            status = response.status_code
+
+            return status
     except:
         pass
     
@@ -82,6 +89,17 @@ def check_record_links(row):
                     else:
                         status = False
                         return status
+                    
+        if row['Format'] == "MP3":
+            record_link = row['Recording M3U8']
+            response = requests.get(record_link)
+            status = response.status_code
+            if status == 200:
+                status = True
+                return status
+            else:
+                status = False
+                return status
     except:
         pass
 
