@@ -58,6 +58,8 @@ def check_record_links(row):
         lines = manifest_response.text.splitlines()
         ts_files = [line for line in lines if ".ts" in line]
 
+        print(ts_files)
+
         if row['Root URL'] != "Null":
             test_file = root_link + ts_files[0]
             test_file_response = requests.get(test_file)
