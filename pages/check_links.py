@@ -3,7 +3,7 @@ import requests
 import pandas as pd
 
 def check_links(row):
-    if row['Format'] == "M3U8":
+    if str(row['Format']) == "M3U8":
         link = row['Playback M3U8']
         response = requests.get(link)
         status = response.status_code
