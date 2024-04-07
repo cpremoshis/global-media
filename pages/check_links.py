@@ -64,6 +64,7 @@ def check_record_links(row):
 
             if root_link != "Null":
                 test_file = root_link + ts_files[0]
+                st.write(test_file)
                 test_file_response = requests.get(test_file)
                 if test_file_response.status_code == 200:
                     status = True
