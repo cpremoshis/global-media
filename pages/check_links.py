@@ -15,4 +15,4 @@ with open("./Assets/broadcasters.csv") as file:
 
 df['Status'] = df.apply(check_links, axis=1)
 
-st.write(df['Name', 'Status'])
+st.write(df[['Name', 'Status']])
