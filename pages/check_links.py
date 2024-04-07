@@ -42,7 +42,9 @@ def check_record_links(row):
 with open("./Assets/broadcasters.csv") as file:
     df = pd.read_csv(file)
 
-df['Playback Status'] = df.apply(check_playback_links, axis=1)
-df['Record Status'] = df.apply(check_record_links, axis=1)
+if st.button("Check links"):
+
+    df['Playback Status'] = df.apply(check_playback_links, axis=1)
+    df['Record Status'] = df.apply(check_record_links, axis=1)
 
 st.write(df[['Name', 'Format', 'Playback Status']])
