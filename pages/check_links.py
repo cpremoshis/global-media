@@ -60,7 +60,7 @@ def check_record_links(row):
             lines = manifest_response.text.splitlines()
             ts_files = [line for line in lines if ".ts" in line]
 
-            print(ts_files)
+            st.write(ts_files)
 
             if root_link != "Null":
                 test_file = root_link + ts_files[0]
