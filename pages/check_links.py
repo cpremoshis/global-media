@@ -39,10 +39,10 @@ def check_record_links(row):
                 if is_live == "True":
                     end_tag = soup.find('meta', attrs={'itemprop':'endDate'})
                     if end_tag is None:
-                        status = False
+                        status = True
                         return status
                     else:
-                        status = True
+                        status = False
                         return status
     
 with open("./Assets/broadcasters.csv") as file:
