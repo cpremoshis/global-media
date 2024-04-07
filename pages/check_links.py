@@ -38,7 +38,7 @@ def check_record_links(row):
                 is_live = live_tag['content']
                 if is_live == "True":
                     end_tag = soup.find('meta', attrs={'itemprop':'endDate'})
-                    if end_tag:
+                    if end_tag is None:
                         status = False
                         return status
                     else:
