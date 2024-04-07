@@ -28,7 +28,7 @@ def check_playback_links(row):
         
         if row['Format'] == "MP3":
             link = row['Playback M3U8']
-            response = requests.get(link, timeout=5)
+            response = requests.get(link, stream=True, timeout=5)
             status = response.status_code
 
             return status
@@ -92,7 +92,7 @@ def check_record_links(row):
                     
         if row['Format'] == "MP3":
             record_link = row['Recording M3U8']
-            response = requests.get(record_link)
+            response = requests.get(record_link, stream=True, timeout=5)
             status = response.status_code
             if status == 200:
                 status = True
