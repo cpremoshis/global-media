@@ -92,10 +92,10 @@ if st.button("Check links"):
 
     status = st.empty()
 
-    with status.status("Checking links"):
-        st.write("Playback evaluation")
+    with status.status("Checking links..."):
+        st.write("Playback evaluation...")
         df['Playback Status'] = df.apply(check_playback_links, axis=1)
-        st.write("Record evaluation")
+        st.write("Record evaluation...")
         df['Record Status'] = df.apply(check_record_links, axis=1)
 
     st.write(df[['Name', 'Format', 'Playback Status', 'Record Status']])
