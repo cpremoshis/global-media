@@ -32,7 +32,7 @@ def check_record_links(row):
         if response.status_code == 200:
             html = response.content
             soup = BeautifulSoup(html, 'html.parser')
-            meta_tag = soup.find('meta', attrs={'itemprop':'isLiveBroadcast'})
+            meta_tag = soup.find('meta', attrs={'itemprop':'endDate'})
 
             if meta_tag:
                 is_live = meta_tag['content']
@@ -47,4 +47,4 @@ if st.button("Check links"):
     #df['Playback Status'] = df.apply(check_playback_links, axis=1)
     df['Record Status'] = df.apply(check_record_links, axis=1)
 
-st.write(df[['Name', 'Format', 'Record Status']])
+    st.write(df[['Name', 'Format', 'Record Status']])
