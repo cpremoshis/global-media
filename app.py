@@ -84,8 +84,11 @@ def zip_multiple_recordings(video_dict, savetime):
 
     with zipfile.ZipFile(zip_folder_name, 'w') as zipf:
         for file in files_to_zip:
-            file_name = file.split("/")[2]
-            zipf.write(file, arcname=file_name)
+            try:
+                file_name = file.split("/")[2]
+                zipf.write(file, arcname=file_name)
+            except:
+                pass
 
     return zip_folder_name
 

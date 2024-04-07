@@ -2,7 +2,6 @@ import streamlit as st
 import requests
 import pandas as pd
 from bs4 import BeautifulSoup
-import subprocess
 
 def check_playback_links(row):
     try:
