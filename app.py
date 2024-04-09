@@ -830,11 +830,13 @@ elif display_type == "Upload":
 
     with st.form("translate"):
 
-        uploaded_file = st.file_uploader("Select file")
 
-        left_col, right_col = st.columns(2)
+        left_col, middle_col, right_col = st.columns(3)
 
         with left_col:
+            uploaded_file = st.file_uploader("Select file")
+
+        with middle_col:
             translation_selection = st.radio(
                 "Select translation format",
                 ["Subtitles", "Plain text"],
