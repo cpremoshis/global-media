@@ -833,17 +833,19 @@ elif display_type == "Upload":
 
     uploaded_file = st.file_uploader("Select file")
 
-    translation_selection = st.radio(
-        "Select translation format:",
-        ["Subtitles", "Plain text"],
-        index=0
-        )
-    
-    #Converts translation_selection to format required for the OpenAI API
-    if translation_selection == "Subtitles":
-        translation_format = "srt"
-    if translation_selection == "Plain text":
-        translation_format = "txt"
+    if not st.session_state.processed and uploaded_file is None:
+
+        translation_selection = st.radio(
+            "Select translation format:",
+            ["Subtitles", "Plain text"],
+            index=0
+            )
+        
+        #Converts translation_selection to format required for the OpenAI API
+        if translation_selection == "Subtitles":
+            translation_format = "srt"
+        if translation_selection == "Plain text":
+            translation_format = "txt"
 
     status = st.empty()
 
