@@ -847,7 +847,7 @@ elif display_type == "Upload":
 
         submitted = st.form_submit_button("Submit")
 
-        status = st.empty()
+    status = st.empty()
 
     if submitted:
 
