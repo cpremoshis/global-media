@@ -835,7 +835,7 @@ elif display_type == "Upload":
 
     if st.session_state.processed == False:
         translation_selection = st.radio(
-            "Select translation format:",
+            "Select translation format",
             ["Subtitles", "Plain text"],
             index=0
             )
