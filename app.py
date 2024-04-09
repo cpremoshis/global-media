@@ -838,7 +838,8 @@ elif display_type == "Upload":
         translation_selection = st.radio(
             "Select translation format:",
             ["Subtitles", "Plain text"],
-            index=0
+            index=0,
+            horizontal=True
             )
         
         #Converts translation_selection to format required for the OpenAI API
