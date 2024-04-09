@@ -833,7 +833,7 @@ elif display_type == "Upload":
 
     uploaded_file = st.file_uploader("Select file")
 
-    if st.session_state.processed == False:
+    if not st.session_state.processed:
         translation_selection = st.radio(
             "Select translation format",
             ["Subtitles", "Plain text"],
