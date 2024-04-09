@@ -841,7 +841,7 @@ elif display_type == "Upload":
             )
         
     #Converts translation_selection to format required for the OpenAI API
-    if translation_selection in globals():
+    if "translation_selection" in globals():
         if translation_selection == "Subtitles":
             translation_format = "srt"
         if translation_selection == "Plain text":
