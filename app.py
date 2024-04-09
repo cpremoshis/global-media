@@ -845,7 +845,7 @@ elif display_type == "Upload":
         if translation_selection == "Plain text":
             translation_format = "txt"
 
-        submitted = st.form_submit_button("Translate")
+        submitted = st.form_submit_button("Submit")
 
         status = st.empty()
 
