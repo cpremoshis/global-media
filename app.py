@@ -825,18 +825,15 @@ elif display_type == "CCTV 13 Live":
 
 elif display_type == "Upload":
 
-    if "processed" not in st.session_state:
-        st.session_state.processed = False
-
     if 'temp_subtitle_file_path' not in st.session_state:
         st.session_state.temp_subtitle_file_path = None
 
-    uploaded_file = st.file_uploader("Select file")
+    with st.form("translate"):
 
-    if not st.session_state.processed and uploaded_file is None:
+        uploaded_file = st.file_uploader("Select file")
 
         translation_selection = st.radio(
-            "Select translation format:",
+            "Select translation format",
             ["Subtitles", "Plain text"],
             index=0,
             horizontal=True
@@ -848,23 +845,10 @@ elif display_type == "Upload":
         if translation_selection == "Plain text":
             translation_format = "txt"
 
-    status = st.empty()
+        status = st.empty()
 
-    if uploaded_file is not None:
-
-        if st.session_state.processed:
-            with open(st.session_state.temp_subtitle_file_path, 'r') as file:
-                with status.container():
-                    st.warning("Automated translation by OpenAI's Whisper. Please double-check accuracy before use.")
-                    st.download_button(
-                        label="Download translation",
-                        data=file,
-                        file_name=st.session_state.download_file_name,
-                        mime='text/plain')
-
-                    st.text(st.session_state.translation)
-
-        if not st.session_state.processed:
+        submitted = st.form_submit_button("Translate")
+        if submitted:
 
             file_ending = uploaded_file.name.split(".")[-1]
 
@@ -905,8 +889,6 @@ elif display_type == "Upload":
 
             st.session_state.download_file_name = uploaded_file.name.split(".")[0] + ".srt"
 
-            st.session_state.processed = True
-
             with open(st.session_state.temp_subtitle_file_path, 'r') as file:
                 with status.container():
                     st.warning("Please double-check accuracy before use. Automated translation by OpenAI's Whisper.")
@@ -918,7 +900,13 @@ elif display_type == "Upload":
 
                     st.text(st.session_state.translation)
 
-    if uploaded_file is None:
-        if st.session_state.processed:
-            st.session_state.processed = False
-            os.remove(st.session_state.temp_subtitle_file_path)
+            with open(st.session_state.temp_subtitle_file_path, 'r') as file:
+                with status.container():
+                    st.warning("Automated translation by OpenAI's Whisper. Please double-check accuracy before use.")
+                    st.download_button(
+                        label="Download translation",
+                        data=file,
+                        file_name=st.session_state.download_file_name,
+                        mime='text/plain')
+
+                    st.text(st.session_state.translation)
