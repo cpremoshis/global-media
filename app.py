@@ -902,4 +902,7 @@ elif display_type == "Upload":
                     file_name=st.session_state.download_file_name,
                     mime='text/plain')
 
-                st.text(st.session_state.translation)
+                if translation_format == "srt":
+                    st.text(st.session_state.translation)
+                if translation_format == "text":
+                    st.write(st.session_state.translation)
