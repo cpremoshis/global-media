@@ -828,6 +828,9 @@ elif display_type == "Upload":
     if 'temp_subtitle_file_path' not in st.session_state:
         st.session_state.temp_subtitle_file_path = None
 
+    if "translation" not in st.session_state:
+        st.session_state.translation = None
+
     with st.form("translate"):
 
         uploaded_file = st.file_uploader("Select file")
