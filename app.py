@@ -830,90 +830,84 @@ elif display_type == "Upload":
 
     with st.form("translate"):
 
+        uploaded_file = st.file_uploader("Select file")
 
-        left_col, middle_col, right_col = st.columns(3)
+        translation_selection = st.radio(
+            "Select translation format",
+            ["Subtitles", "Plain text"],
+            index=0,
+            horizontal=True
+            )
+        
+        #Converts translation_selection to format required for the OpenAI API
+        if translation_selection == "Subtitles":
+            translation_format = "srt"
+        if translation_selection == "Plain text":
+            translation_format = "txt"
 
-        with left_col:
-            uploaded_file = st.file_uploader("Select file")
-
-        with middle_col:
-            translation_selection = st.radio(
-                "Select translation format",
-                ["Subtitles", "Plain text"],
-                index=0,
-                horizontal=True
-                )
-            
-            #Converts translation_selection to format required for the OpenAI API
-            if translation_selection == "Subtitles":
-                translation_format = "srt"
-            if translation_selection == "Plain text":
-                translation_format = "txt"
-
-        with right_col:
-            submitted = st.form_submit_button("Translate")
+        submitted = st.form_submit_button("Translate")
 
         status = st.empty()
 
-        if submitted:
+    if submitted:
 
-            file_ending = uploaded_file.name.split(".")[-1]
+        file_ending = uploaded_file.name.split(".")[-1]
 
-            with tempfile.NamedTemporaryFile(delete=False, suffix = f".{file_ending}") as temp_video_file:
-                temp_video_file.write(uploaded_file.getvalue())
-                temp_video_file.flush()
-                temp_video_file_path = temp_video_file.name
+        with tempfile.NamedTemporaryFile(delete=False, suffix = f".{file_ending}") as temp_video_file:
+            temp_video_file.write(uploaded_file.getvalue())
+            temp_video_file.flush()
+            temp_video_file_path = temp_video_file.name
 
-            with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as temp_audio_file:
-                temp_audio_file_path = temp_audio_file.name
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as temp_audio_file:
+            temp_audio_file_path = temp_audio_file.name
 
-            status.status("Extracting audio")
+        status.status("Extracting audio")
 
-            input_file = ffmpeg.input(temp_video_file_path)
-            output_file = ffmpeg.output(input_file, temp_audio_file_path, acodec="mp3")
-            output_file = output_file.global_args('-y')
-            output_file.run()
+        input_file = ffmpeg.input(temp_video_file_path)
+        output_file = ffmpeg.output(input_file, temp_audio_file_path, acodec="mp3")
+        output_file = output_file.global_args('-y')
+        output_file.run()
 
-            status.status("Translating audio")
+        status.status("Translating audio")
 
-            openai.api_key = st.secrets['openai_key']
+        openai.api_key = st.secrets['openai_key']
 
-            with open(temp_audio_file.name, 'rb') as f:
-                audio_bytes = BytesIO(f.read())
-                audio_bytes.name = "audio.mp3"
+        with open(temp_audio_file.name, 'rb') as f:
+            audio_bytes = BytesIO(f.read())
+            audio_bytes.name = "audio.mp3"
 
-            st.session_state.translation = openai.audio.translations.create(
-                file = audio_bytes,
-                model='whisper-1',
-                response_format=translation_format
-                )
-            
-            with tempfile.NamedTemporaryFile(delete=False, suffix=".srt") as temp_subtitle_file:
-                st.session_state.temp_subtitle_file_path = temp_subtitle_file.name
+        st.session_state.translation = openai.audio.translations.create(
+            file = audio_bytes,
+            model='whisper-1',
+            response_format=translation_format
+            )
+        
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".srt") as temp_subtitle_file:
+            st.session_state.temp_subtitle_file_path = temp_subtitle_file.name
 
-            with open(st.session_state.temp_subtitle_file_path, 'w') as file:
-                file.write(st.session_state.translation)
+        with open(st.session_state.temp_subtitle_file_path, 'w') as file:
+            file.write(st.session_state.translation)
 
-            st.session_state.download_file_name = uploaded_file.name.split(".")[0] + ".srt"
+        st.session_state.download_file_name = uploaded_file.name.split(".")[0] + ".srt"
 
-            with open(st.session_state.temp_subtitle_file_path, 'r') as file:
-                with status.container():
-                    st.warning("Please double-check accuracy before use. Automated translation by OpenAI's Whisper.")
-                    st.download_button(
-                        label="Download translation",
-                        data=file,
-                        file_name=st.session_state.download_file_name,
-                        mime='text/plain')
+        with open(st.session_state.temp_subtitle_file_path, 'r') as file:
+            with status.container():
+                st.warning("Please double-check accuracy before use. Automated translation by OpenAI's Whisper.")
+                st.download_button(
+                    label="Download translation",
+                    data=file,
+                    file_name=st.session_state.download_file_name,
+                    mime='text/plain')
 
-                    st.text(st.session_state.translation)
+                st.text(st.session_state.translation)
 
-            with open(st.session_state.temp_subtitle_file_path, 'r') as file:
-                with status.container():
-                    st.warning("Automated translation by OpenAI's Whisper. Please double-check accuracy before use.")
-                    st.download_button(
-                        label="Download translation",
-                        data=file,
-                        file_name=st.session_state.download_file_name,
-                        mime='text/plain')
+        with open(st.session_state.temp_subtitle_file_path, 'r') as file:
+            with status.container():
+                st.warning("Automated translation by OpenAI's Whisper. Please double-check accuracy before use.")
+                st.download_button(
+                    label="Download translation",
+                    data=file,
+                    file_name=st.session_state.download_file_name,
+                    mime='text/plain')
 
-                    st.text(st.session_state.translation)
+                st.text(st.session_state.translation)
