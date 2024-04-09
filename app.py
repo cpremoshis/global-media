@@ -833,8 +833,6 @@ elif display_type == "Upload":
 
     uploaded_file = st.file_uploader("Select file")
 
-
-    
     if "processed" not in st.session_state:
         translation_selection = st.radio(
             "Select translation format:",
