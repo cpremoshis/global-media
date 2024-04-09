@@ -846,7 +846,7 @@ elif display_type == "Upload":
         if translation_selection == "Subtitles":
             translation_format = "srt"
         if translation_selection == "Plain text":
-            translation_format = "txt"
+            translation_format = "text"
 
         submitted = st.form_submit_button("Submit")
 
