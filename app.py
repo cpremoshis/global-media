@@ -852,7 +852,7 @@ elif display_type == "Upload":
 
     status = st.empty()
 
-    if submitted:
+    if submitted and uploaded_file is not None:
 
         file_ending = uploaded_file.name.split(".")[-1]
 
@@ -893,16 +893,19 @@ elif display_type == "Upload":
 
         st.session_state.download_file_name = uploaded_file.name.split(".")[0] + ".srt"
 
-        with open(st.session_state.temp_subtitle_file_path, 'r') as file:
-            with status.container():
-                st.warning("Please double-check accuracy before use. Automated translation by OpenAI's Whisper.")
-                st.download_button(
-                    label="Download translation",
-                    data=file,
-                    file_name=st.session_state.download_file_name,
-                    mime='text/plain')
-
-                if translation_format == "srt":
-                    st.text(st.session_state.translation)
-                if translation_format == "text":
-                    st.write(st.session_state.translation)
+    if st.session_state.translation:
+        with status.container():
+            st.warning("Please double-check accuracy before use. Automated translation by OpenAI's Whisper.")
+            if 'temp_subtitle_file_path' in st.session_state and st.session_state.temp_subtitle_file_path:
+                with open(st.session_state.temp_subtitle_file_path, 'r') as file:
+                    with status.container():
+                        st.download_button(
+                            label="Download translation",
+                            data=file,
+                            file_name=st.session_state.download_file_name,
+                            mime='text/plain'
+                            )
+                        if translation_format == "srt":
+                            st.text(st.session_state.translation)
+                        elif translation_format == "text":
+                            st.write(st.session_state.translation)
