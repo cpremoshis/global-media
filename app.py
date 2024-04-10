@@ -837,12 +837,12 @@ elif display_type == "Upload":
 
         submitted = st.form_submit_button("Submit")
 
-        #Select subtitle or plain text
-        translation_selection = st.radio(
-            "Select translation format",
-            ["Subtitles", "Plain text"],
-            index=0,
-            horizontal=True
+    #Select subtitle or plain text
+    translation_selection = st.radio(
+        "Select translation format",
+        ["Subtitles", "Plain text"],
+        index=0,
+        horizontal=True
             )
 
     status = st.empty()
