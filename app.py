@@ -923,14 +923,13 @@ elif display_type == "Upload":
 
             st.session_state.download_file_name = uploaded_file.name.split(".")[0] + translation_file_extension
 
-            with status.container():
-                st.download_button(
-                    label="Download translation",
-                    data=file_to_download,
-                    file_name=st.session_state.download_file_name,
-                    mime='text/plain'
-                    )
-                if translation_format == "srt":
-                    st.text(content_to_display)
-                elif translation_format == "text":
-                    st.write(content_to_display)
+            st.download_button(
+                label="Download translation",
+                data=file_to_download,
+                file_name=st.session_state.download_file_name,
+                mime='text/plain'
+                )
+            if translation_format == "srt":
+                st.text(content_to_display)
+            elif translation_format == "text":
+                st.write(content_to_display)
