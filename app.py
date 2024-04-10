@@ -892,10 +892,12 @@ elif display_type == "Upload":
         if translation_selection == "Subtitles":
             translation_format = "srt"
             translation_file_extension = ".srt"
+            file_to_download = st.session_state.temp_subtitle_file_path
+            content_to_display = st.session_state.translation
         elif translation_selection == "Plain text":
             translation_file_extension = ".txt"
             translation_format = "text"
-            if 'temp_text_file' not in globals():
+            if 'temp_text_file' not in st.session_state:
 
                 with open(st.session_state.temp_subtitle_file_path, 'r') as file:
                     lines = file.readlines()
@@ -911,10 +913,8 @@ elif display_type == "Upload":
                             text += line.strip() + " "
                     text = text.replace("\n", " ")
 
-                with tempfile.NamedTemporaryFile(delete=False, suffix=".txt") as temp_text_file:
-                    st.session_state.temp_text_file_path = temp_text_file.name
-                with open(st.session_state.temp_text_file_path, 'w') as file:
-                    file.write(text)
+            file_to_download = st.session_state.temp_text_file
+            content_to_display = st.session_state.temp_text_file
 
         st.session_state.download_file_name = uploaded_file.name.split(".")[0] + translation_file_extension
 
