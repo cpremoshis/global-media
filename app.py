@@ -930,6 +930,6 @@ elif display_type == "Upload":
                             mime='text/plain'
                             )
                         if translation_format == "srt":
-                            st.text(st.session_state.translation)
+                            st.text(content_to_display)
                         elif translation_format == "text":
-                            st.write(st.session_state.translation)
+                            st.write(content_to_display)
