@@ -879,7 +879,7 @@ elif display_type == "Upload":
             file.write(st.session_state.translation)
 
     if st.session_state.translation:
-        with status.container():
+        with st.empty():
 
             #Select subtitle or plain text
             translation_selection = st.radio(
@@ -889,7 +889,7 @@ elif display_type == "Upload":
                 horizontal=True
                 )
 
-            #Converts translation_selection to proper file extension
+            #Converts translation_selection to proper file extension, reformats text if plain text is selected
             if translation_selection == "Subtitles":
                 translation_format = "srt"
                 translation_file_extension = ".srt"
@@ -919,6 +919,7 @@ elif display_type == "Upload":
 
             st.session_state.download_file_name = uploaded_file.name.split(".")[0] + translation_file_extension
 
+        with status.container():
             st.warning("Please double-check accuracy before use. Automated translation by OpenAI's Whisper.")
             if 'temp_subtitle_file_path' in st.session_state and st.session_state.temp_subtitle_file_path:
                 with open(st.session_state.temp_subtitle_file_path, 'r') as file:
