@@ -892,7 +892,7 @@ elif display_type == "Upload":
         if translation_selection == "Subtitles":
             translation_format = "srt"
             translation_file_extension = ".srt"
-            file_to_download = st.session_state.temp_subtitle_file_path
+            file_to_download = st.session_state.translation
             content_to_display = st.session_state.translation
         elif translation_selection == "Plain text":
             translation_file_extension = ".txt"
