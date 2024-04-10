@@ -880,48 +880,49 @@ elif display_type == "Upload":
 
     if st.session_state.translation:
 
-        #Select subtitle or plain text
-        translation_selection = st.radio(
-        "Select translation format",
-        ["Subtitles", "Plain text"],
-        index=0,
-        horizontal=True
-            )
-
-        #Converts translation_selection to proper file extension, reformats text if plain text is selected
-        if translation_selection == "Subtitles":
-            translation_format = "srt"
-            translation_file_extension = ".srt"
-            file_to_download = st.session_state.translation
-            content_to_display = st.session_state.translation
-        elif translation_selection == "Plain text":
-            translation_file_extension = ".txt"
-            translation_format = "text"
-            if 'temp_text_file' not in st.session_state:
-
-                with open(st.session_state.temp_subtitle_file_path, 'r') as file:
-                    lines = file.readlines()
-                    lines_to_exclude = []
-                    for i, line in enumerate(lines):
-                        if "-->" in line:
-                            lines_to_exclude.append(i - 1)
-                            lines_to_exclude.append(i)
-
-                    text = ""
-                    for i, line in enumerate(lines):
-                        if i not in lines_to_exclude:
-                            text += line.strip() + " "
-                    text = text.replace("\n", " ")
-
-                st.session_state.temp_text_file = text
-
-            file_to_download = st.session_state.temp_text_file
-            content_to_display = st.session_state.temp_text_file
-
-        st.session_state.download_file_name = uploaded_file.name.split(".")[0] + translation_file_extension
-
         with status.container():
             st.warning("Please double-check accuracy before use. Automated translation by OpenAI's Whisper.")
+
+            #Select subtitle or plain text
+            translation_selection = st.radio(
+            "Select translation format",
+            ["Subtitles", "Plain text"],
+            index=0,
+            horizontal=True
+                )
+
+            #Converts translation_selection to proper file extension, reformats text if plain text is selected
+            if translation_selection == "Subtitles":
+                translation_format = "srt"
+                translation_file_extension = ".srt"
+                file_to_download = st.session_state.translation
+                content_to_display = st.session_state.translation
+            elif translation_selection == "Plain text":
+                translation_file_extension = ".txt"
+                translation_format = "text"
+                if 'temp_text_file' not in st.session_state:
+
+                    with open(st.session_state.temp_subtitle_file_path, 'r') as file:
+                        lines = file.readlines()
+                        lines_to_exclude = []
+                        for i, line in enumerate(lines):
+                            if "-->" in line:
+                                lines_to_exclude.append(i - 1)
+                                lines_to_exclude.append(i)
+
+                        text = ""
+                        for i, line in enumerate(lines):
+                            if i not in lines_to_exclude:
+                                text += line.strip() + " "
+                        text = text.replace("\n", " ")
+
+                    st.session_state.temp_text_file = text
+
+                file_to_download = st.session_state.temp_text_file
+                content_to_display = st.session_state.temp_text_file
+
+            st.session_state.download_file_name = uploaded_file.name.split(".")[0] + translation_file_extension
+
             with status.container():
                 st.download_button(
                     label="Download translation",
