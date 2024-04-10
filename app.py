@@ -913,6 +913,8 @@ elif display_type == "Upload":
                             text += line.strip() + " "
                     text = text.replace("\n", " ")
 
+                st.session_state.temp_text_file = text
+
             file_to_download = st.session_state.temp_text_file
             content_to_display = st.session_state.temp_text_file
 
