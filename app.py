@@ -906,10 +906,10 @@ elif display_type == "Upload":
                             lines_to_exclude.append(i)
 
                     text = ""
-                    for i,line in enumerate(lines):
+                    for i, line in enumerate(lines):
                         if i not in lines_to_exclude:
-                            text += text + line.strip() + " "
-                    text.replace("\n", " ")
+                            text += line.strip() + " "
+                    text = text.replace("\n", " ")
 
                 with tempfile.NamedTemporaryFile(delete=False, suffix=".txt") as temp_text_file:
                     st.session_state.temp_text_file_path = temp_text_file.name
