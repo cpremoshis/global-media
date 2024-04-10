@@ -922,16 +922,14 @@ elif display_type == "Upload":
 
         with status.container():
             st.warning("Please double-check accuracy before use. Automated translation by OpenAI's Whisper.")
-            if 'temp_subtitle_file_path' in st.session_state and st.session_state.temp_subtitle_file_path:
-                with open(st.session_state.temp_subtitle_file_path, 'r') as file:
-                    with status.container():
-                        st.download_button(
-                            label="Download translation",
-                            data=file,
-                            file_name=st.session_state.download_file_name,
-                            mime='text/plain'
-                            )
-                        if translation_format == "srt":
-                            st.text(content_to_display)
-                        elif translation_format == "text":
-                            st.write(content_to_display)
+                with status.container():
+                    st.download_button(
+                        label="Download translation",
+                        data=file_to_download,
+                        file_name=st.session_state.download_file_name,
+                        mime='text/plain'
+                        )
+                    if translation_format == "srt":
+                        st.text(content_to_display)
+                    elif translation_format == "text":
+                        st.write(content_to_display)
