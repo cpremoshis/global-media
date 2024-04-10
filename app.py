@@ -835,21 +835,6 @@ elif display_type == "Upload":
 
         uploaded_file = st.file_uploader("Select file")
 
-        translation_selection = st.radio(
-            "Select translation format",
-            ["Subtitles", "Plain text"],
-            index=0,
-            horizontal=True
-            )
-        
-        #Converts translation_selection to format required for the OpenAI API
-        if translation_selection == "Subtitles":
-            translation_format = "srt"
-            translation_file_extension = ".srt"
-        if translation_selection == "Plain text":
-            translation_file_extension = ".txt"
-            translation_format = "text"
-
         submitted = st.form_submit_button("Submit")
 
     status = st.empty()
@@ -884,19 +869,56 @@ elif display_type == "Upload":
         st.session_state.translation = openai.audio.translations.create(
             file = audio_bytes,
             model='whisper-1',
-            response_format=translation_format
+            response_format="srt"
             )
         
-        with tempfile.NamedTemporaryFile(delete=False, suffix=translation_file_extension) as temp_subtitle_file:
+        #Saves temporary subtitle file to disk
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".srt") as temp_subtitle_file:
             st.session_state.temp_subtitle_file_path = temp_subtitle_file.name
-
         with open(st.session_state.temp_subtitle_file_path, 'w') as file:
             file.write(st.session_state.translation)
 
-        st.session_state.download_file_name = uploaded_file.name.split(".")[0] + translation_file_extension
-
     if st.session_state.translation:
         with status.container():
+
+            #Select subtitle or plain text
+            translation_selection = st.radio(
+                "Select translation format",
+                ["Subtitles", "Plain text"],
+                index=0,
+                horizontal=True
+                )
+
+            #Converts translation_selection to proper file extension
+            if translation_selection == "Subtitles":
+                translation_format = "srt"
+                translation_file_extension = ".srt"
+            elif translation_selection == "Plain text":
+                translation_file_extension = ".txt"
+                translation_format = "text"
+                if 'temp_text_file' not in globals():
+
+                    with open(st.session_state.temp_subtitle_file_path, 'r') as file:
+                        lines = file.readlines()
+                        lines_to_exclude = []
+                        for i, line in enumerate(lines):
+                            if "-->" in line[1]:
+                                lines_to_exclude.append(i - 1)
+                                lines_to_exclude.append(i)
+
+                        text = ""
+                        for i,line in enumerate(lines):
+                            if i not in lines_to_exclude:
+                                text += text + line[1]
+                        text.replace("\n", " ")
+
+                    with tempfile.NamedTemporaryFile(delete=False, suffix=".txt") as temp_text_file:
+                        st.session_state.temp_text_file_path = temp_text_file.name
+                    with open(st.session_state.temp_text_file_path, 'w') as file:
+                        file.write(text)
+
+            st.session_state.download_file_name = uploaded_file.name.split(".")[0] + translation_file_extension
+
             st.warning("Please double-check accuracy before use. Automated translation by OpenAI's Whisper.")
             if 'temp_subtitle_file_path' in st.session_state and st.session_state.temp_subtitle_file_path:
                 with open(st.session_state.temp_subtitle_file_path, 'r') as file:
