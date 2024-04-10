@@ -885,11 +885,11 @@ elif display_type == "Upload":
 
             #Select subtitle or plain text
             translation_selection = st.radio(
-            "Select translation format",
-            label_visibility="hidden",
-            ["Subtitles", "Plain text"],
-            index=0,
-            horizontal=True
+                "Select translation format",
+                ["Subtitles", "Plain text"],
+                label_visibility="hidden",
+                index=0,
+                horizontal=True
                 )
 
             #Converts translation_selection to proper file extension, reformats text if plain text is selected
