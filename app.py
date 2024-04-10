@@ -845,7 +845,9 @@ elif display_type == "Upload":
         #Converts translation_selection to format required for the OpenAI API
         if translation_selection == "Subtitles":
             translation_format = "srt"
+            translation_file_extension = ".srt"
         if translation_selection == "Plain text":
+            translation_file_extension = ".txt"
             translation_format = "text"
 
         submitted = st.form_submit_button("Submit")
@@ -885,13 +887,13 @@ elif display_type == "Upload":
             response_format=translation_format
             )
         
-        with tempfile.NamedTemporaryFile(delete=False, suffix=".srt") as temp_subtitle_file:
+        with tempfile.NamedTemporaryFile(delete=False, suffix=translation_file_extension) as temp_subtitle_file:
             st.session_state.temp_subtitle_file_path = temp_subtitle_file.name
 
         with open(st.session_state.temp_subtitle_file_path, 'w') as file:
             file.write(st.session_state.translation)
 
-        st.session_state.download_file_name = uploaded_file.name.split(".")[0] + ".srt"
+        st.session_state.download_file_name = uploaded_file.name.split(".")[0] + translation_file_extension
 
     if st.session_state.translation:
         with status.container():
