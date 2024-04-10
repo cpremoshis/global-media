@@ -837,14 +837,6 @@ elif display_type == "Upload":
 
         submitted = st.form_submit_button("Submit")
 
-    #Select subtitle or plain text
-    translation_selection = st.radio(
-        "Select translation format",
-        ["Subtitles", "Plain text"],
-        index=0,
-        horizontal=True
-            )
-
     status = st.empty()
 
     if submitted and uploaded_file is not None:
@@ -887,6 +879,14 @@ elif display_type == "Upload":
             file.write(st.session_state.translation)
 
     if st.session_state.translation:
+
+        #Select subtitle or plain text
+        translation_selection = st.radio(
+        "Select translation format",
+        ["Subtitles", "Plain text"],
+        index=0,
+        horizontal=True
+            )
 
         #Converts translation_selection to proper file extension, reformats text if plain text is selected
         if translation_selection == "Subtitles":
