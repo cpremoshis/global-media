@@ -902,14 +902,14 @@ elif display_type == "Upload":
                         lines = file.readlines()
                         lines_to_exclude = []
                         for i, line in enumerate(lines):
-                            if "-->" in line[1]:
+                            if "-->" in line:
                                 lines_to_exclude.append(i - 1)
                                 lines_to_exclude.append(i)
 
                         text = ""
                         for i,line in enumerate(lines):
                             if i not in lines_to_exclude:
-                                text += text + line[1]
+                                text += text + line.strip() + " "
                         text.replace("\n", " ")
 
                     with tempfile.NamedTemporaryFile(delete=False, suffix=".txt") as temp_text_file:
