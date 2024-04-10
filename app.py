@@ -837,6 +837,14 @@ elif display_type == "Upload":
 
         submitted = st.form_submit_button("Submit")
 
+        #Select subtitle or plain text
+        translation_selection = st.radio(
+            "Select translation format",
+            ["Subtitles", "Plain text"],
+            index=0,
+            horizontal=True
+            )
+
     status = st.empty()
 
     if submitted and uploaded_file is not None:
@@ -879,45 +887,36 @@ elif display_type == "Upload":
             file.write(st.session_state.translation)
 
     if st.session_state.translation:
-        with st.empty():
 
-            #Select subtitle or plain text
-            translation_selection = st.radio(
-                "Select translation format",
-                ["Subtitles", "Plain text"],
-                index=0,
-                horizontal=True
-                )
+        #Converts translation_selection to proper file extension, reformats text if plain text is selected
+        if translation_selection == "Subtitles":
+            translation_format = "srt"
+            translation_file_extension = ".srt"
+        elif translation_selection == "Plain text":
+            translation_file_extension = ".txt"
+            translation_format = "text"
+            if 'temp_text_file' not in globals():
 
-            #Converts translation_selection to proper file extension, reformats text if plain text is selected
-            if translation_selection == "Subtitles":
-                translation_format = "srt"
-                translation_file_extension = ".srt"
-            elif translation_selection == "Plain text":
-                translation_file_extension = ".txt"
-                translation_format = "text"
-                if 'temp_text_file' not in globals():
+                with open(st.session_state.temp_subtitle_file_path, 'r') as file:
+                    lines = file.readlines()
+                    lines_to_exclude = []
+                    for i, line in enumerate(lines):
+                        if "-->" in line:
+                            lines_to_exclude.append(i - 1)
+                            lines_to_exclude.append(i)
 
-                    with open(st.session_state.temp_subtitle_file_path, 'r') as file:
-                        lines = file.readlines()
-                        lines_to_exclude = []
-                        for i, line in enumerate(lines):
-                            if "-->" in line:
-                                lines_to_exclude.append(i - 1)
-                                lines_to_exclude.append(i)
+                    text = ""
+                    for i,line in enumerate(lines):
+                        if i not in lines_to_exclude:
+                            text += text + line.strip() + " "
+                    text.replace("\n", " ")
 
-                        text = ""
-                        for i,line in enumerate(lines):
-                            if i not in lines_to_exclude:
-                                text += text + line.strip() + " "
-                        text.replace("\n", " ")
+                with tempfile.NamedTemporaryFile(delete=False, suffix=".txt") as temp_text_file:
+                    st.session_state.temp_text_file_path = temp_text_file.name
+                with open(st.session_state.temp_text_file_path, 'w') as file:
+                    file.write(text)
 
-                    with tempfile.NamedTemporaryFile(delete=False, suffix=".txt") as temp_text_file:
-                        st.session_state.temp_text_file_path = temp_text_file.name
-                    with open(st.session_state.temp_text_file_path, 'w') as file:
-                        file.write(text)
-
-            st.session_state.download_file_name = uploaded_file.name.split(".")[0] + translation_file_extension
+        st.session_state.download_file_name = uploaded_file.name.split(".")[0] + translation_file_extension
 
         with status.container():
             st.warning("Please double-check accuracy before use. Automated translation by OpenAI's Whisper.")
