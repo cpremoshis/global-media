@@ -831,6 +831,8 @@ elif display_type == "Upload":
     if "translation" not in st.session_state:
         st.session_state.translation = None
 
+    st.heading("File Translation")
+
     with st.form("translate"):
 
         uploaded_file = st.file_uploader("Video and audio files accepted. If uploading an audio file, it must be less than 25 MB.")
