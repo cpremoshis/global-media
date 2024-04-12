@@ -831,7 +831,7 @@ elif display_type == "Upload":
     if "translation" not in st.session_state:
         st.session_state.translation = None
 
-    st.heading("File Translation")
+    st.header("File Translation")
 
     with st.form("translate"):
 
