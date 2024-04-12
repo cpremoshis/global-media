@@ -833,7 +833,7 @@ elif display_type == "Upload":
 
     with st.form("translate"):
 
-        uploaded_file = st.file_uploader("If uploading an audio file, it must be less than 25 MB.")
+        uploaded_file = st.file_uploader("Video and audio files accepted. If uploading an audio file, it must be less than 25 MB.")
 
         submitted = st.form_submit_button("Submit")
 
