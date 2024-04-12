@@ -884,7 +884,7 @@ elif display_type == "Upload":
     if st.session_state.translation:
 
         with status.container():
-            st.warning("Please double-check accuracy before use. Automated translation by OpenAI's Whisper.")
+            st.warning("Please double-check accuracy before use. Pay extra attention to proper nouns.")
 
             #Select subtitle or plain text
             translation_selection = st.radio(
