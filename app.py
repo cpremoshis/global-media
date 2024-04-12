@@ -832,7 +832,7 @@ elif display_type == "Upload":
         st.session_state.translation = None
 
     st.header("File Translation", divider=True)
-    st.caption("Translations provided by OpenAI's Whisper model")
+    st.caption("Translations provided by OpenAI's 'Whisper' model")
 
     with st.form("translate"):
 
