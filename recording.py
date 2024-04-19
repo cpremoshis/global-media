@@ -74,7 +74,7 @@ def record_m3u8(outlet, seconds, playlist_url, root_url, translate):
                 for item in ts_files:
                     if root_url + item not in files_list:
                         files_list.append(root_url + item)
-            #This block is for RTVE, BBC TV, CBS, ABC US
+            #This block is for RTVE, BBC TV
             else:
                 for item in ts_files:
                     if item not in files_list:
@@ -101,7 +101,7 @@ def record_m3u8(outlet, seconds, playlist_url, root_url, translate):
                     for item in ts_files:
                         if root_url + item not in files_list:
                             files_list.append(root_url + item)
-                #This block is for RTVE, BBC TV, CBS, ABC US
+                #This block is for RTVE, BBC TV
                 else:
                     for item in ts_files:
                         if item not in files_list:
