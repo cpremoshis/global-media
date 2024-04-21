@@ -36,7 +36,7 @@ def translate_audio(video_file, outlet, savetime):
             audio_bytes = BytesIO(f.read())
             audio_bytes.name = "audio.mp3"
 
-        translation = openai.audio.transcriptions.create(
+        translation = openai.audio.translations.create(
             file = audio_bytes,
             model='whisper-1',
             response_format="srt"
