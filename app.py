@@ -306,7 +306,7 @@ with st.sidebar:
             st.session_state['selection'] = st.selectbox("Outlet:", broadcasters_filtered_by_lang)
 
         outlet = Outlet(st.session_state['selection'], broadcasters_df)
-        st.caption("Access to some channels may vary depending on your current country/location")
+        st.caption("Access to some channels may vary depending on your current country/location.")
 
         record_time = st.slider("Record length (minutes):", min_value=.5, max_value=5.0, step=.5)
         record_time = record_time * 60
