@@ -738,7 +738,7 @@ elif display_type == "CCTV 13 Live":
     m3u8_live_url = "https://globalbroadcasthub.net/playlist.m3u8"
 
     #stream_status = get_stream_status()
-    st.error("Stream disabled. Ask for re-activation.")
+    st.error("Stream disabled.")
     stream_status = (False, "Unknown")
 
     hls_js_player_html = f"""
