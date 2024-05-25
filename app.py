@@ -943,6 +943,24 @@ elif tool_type == "Upload":
 
 elif tool_type == "YouTube Download":
 
-    yt_link = st.text_area("Paste YouTube link here:")
+    if 'temp_youtube_webm' not in st.session_state:
+        st.session_state.temp_youtube_webm = None
 
-    submit = st.button("Download")
+    st.header("YouTube Download", divider=True)
+
+    with st.form("youtube"):
+
+        yt_link = st.text_area("Paste YouTube link here:")
+
+        submitted = st.form_submit_button("Download")
+
+    status = st.empty()
+
+    if submitted and yt_link is not None:
+
+        download_path = 'tbd'
+
+        download_command = [
+            'yt-dlp',
+            yt_link
+        ]
