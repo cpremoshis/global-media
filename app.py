@@ -138,9 +138,9 @@ def generate_player(format, type, url, muted=""):
         </html>
         """
 
-        if display_type == "Single view":
+        if tool_type == "Single view":
             return m3u8_video_player_html, 525
-        elif display_type == "Multiview":
+        elif tool_type == "Multiview":
             return m3u8_video_player_html, 475
     
     if format == "M3U8" and type == "Audio":
@@ -221,9 +221,9 @@ def generate_player(format, type, url, muted=""):
         </html>
         """
 
-        if display_type == "Single view":
+        if tool_type == "Single view":
             return mpd_video_player_html, 525
-        elif display_type == "Multiview":
+        elif tool_type == "Multiview":
             return mpd_video_player_html, 475
 
     if format == "MP3":
@@ -278,9 +278,9 @@ if 'recordings' not in st.session_state:
 with st.sidebar:
     st.title("GlobalBroadcastHub 📡")
 
-    display_type = st.selectbox("Tool type:", ['Single view', 'Multiview', 'CCTV 13 Live', 'Upload', 'YouTube Download'])
+    tool_type = st.selectbox("Tool type:", ['Single view', 'Multiview', 'CCTV 13 Live', 'Upload', 'YouTube Download'])
 
-    if display_type == 'Single view':
+    if tool_type == 'Single view':
 
         #----->User input<-----
         #Filters list of outlets based on selected languages
@@ -371,7 +371,7 @@ with st.sidebar:
                     file_name = download_select.split("/")[2]
                     dwnbtn = st.download_button("Download", data=f, file_name=file_name, mime="video/mp4")
 
-    if display_type == "Multiview":
+    if tool_type == "Multiview":
 
         #Filters list of outlets based on selected languages
         #If no language is selected, defaults to all languages
@@ -498,7 +498,7 @@ with st.sidebar:
                     file_name = download_select.split("/")[2]
                     dwnbtn = st.download_button("Download", data=f, file_name=file_name, mime="video/mp4")
 
-    if display_type == "CCTV 13 Live":
+    if tool_type == "CCTV 13 Live":
         
         #----->Recording and download functions<-----
 
@@ -538,7 +538,7 @@ with st.sidebar:
                     dwnbtn = st.download_button("Download", data=f, file_name=file_name, mime="video/mp4")
 
 #Media display
-if display_type == "Single view":
+if tool_type == "Single view":
 
     #Metrics/info display
     left_column, middle_column, right_column = st.columns(3)
@@ -564,7 +564,7 @@ if display_type == "Single view":
     st.write(outlet.page_url)
     st.caption("Summary from Wikipedia")
 
-elif display_type == "Multiview":
+elif tool_type == "Multiview":
     #No media
     if selections_len == 0:
         st.warning("No outlets selected")
@@ -711,7 +711,7 @@ elif display_type == "Multiview":
             else:
                 player_html = fourth_result[0]
 
-elif display_type == "CCTV 13 Live":
+elif tool_type == "CCTV 13 Live":
 
     def get_stream_status():
 
@@ -826,7 +826,7 @@ elif display_type == "CCTV 13 Live":
         """
     )
 
-elif display_type == "Upload":
+elif tool_type == "Upload":
 
     if 'temp_subtitle_file_path' not in st.session_state:
         st.session_state.temp_subtitle_file_path = None
@@ -940,3 +940,7 @@ elif display_type == "Upload":
                 st.text(content_to_display)
             elif translation_format == "text":
                 st.write(content_to_display)
+
+elif tool_type == "YouTube Download":
+
+    yt_link = st.text_area("Paste YouTube link here:")
