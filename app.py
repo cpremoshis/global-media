@@ -278,7 +278,7 @@ if 'recordings' not in st.session_state:
 with st.sidebar:
     st.title("GlobalBroadcastHub 📡")
 
-    display_type = st.selectbox("Tool type:", ['Single view', 'Multiview', 'CCTV 13 Live', 'Upload'], label_visibility="collapsed")
+    display_type = st.selectbox("Tool type:", ['Single view', 'Multiview', 'CCTV 13 Live', 'Upload'])
 
     if display_type == 'Single view':
 
