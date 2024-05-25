@@ -944,3 +944,5 @@ elif tool_type == "Upload":
 elif tool_type == "YouTube Download":
 
     yt_link = st.text_area("Paste YouTube link here:")
+
+    submit = st.button("Download")
