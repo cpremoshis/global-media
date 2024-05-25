@@ -2,7 +2,7 @@ import streamlit as st
 import streamlit.components.v1 as components
 import pandas as pd
 import requests
-from recording import record_m3u8, record_mpd, record_youtube, record_mp3, multi_record
+from recording import record_m3u8, record_mpd, record_youtube, record_mp3, multi_record, download_youtube
 import zipfile
 import time
 from datetime import datetime
@@ -958,9 +958,4 @@ elif tool_type == "YouTube Download":
 
     if submitted and yt_link is not None:
 
-        download_path = 'tbd'
-
-        download_command = [
-            'yt-dlp',
-            yt_link
-        ]
+        pass

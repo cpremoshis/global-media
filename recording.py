@@ -519,3 +519,37 @@ def multi_record(*outlets, seconds, translate=False):
 
     except Exception as e:
         return e
+    
+def download_youtube(yt_link, translate):
+
+    #NEED TO ADD AUTO DELETION OF TEMP FILES
+    #ADD TRANSLATION OPTION
+    try:
+        now = datetime.now()
+        savetime = now.strftime("%Y_%m_%d_%H%M%S")
+
+        download_file_path = f'/mount/src/global-media/Recordings/youtube_{savetime}.webm'
+        convert_file_path = f'/mount/src/global-media/Recordings/youtube_{savetime}.mp4'
+
+        download_command = [
+            'yt-dlp',
+            '-o', download_file_path,
+            yt_link
+            ]
+        
+        subprocess.run(download_command)
+
+        convert_command = [
+            'ffmpeg',
+            '-i', download_file_path,
+            'c:v', 'libx264',
+            'c:a', 'aac',
+            convert_file_path
+            ]
+        
+        subprocess.run(convert_command)
+
+        return True, convert_file_path
+
+    except Exception as e:
+        return e
