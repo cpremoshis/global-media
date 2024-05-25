@@ -529,7 +529,7 @@ def download_youtube(yt_link, translate):
         savetime = now.strftime("%Y_%m_%d_%H%M%S")
 
         download_file_path = f'/mount/src/global-media/Recordings/youtube_{savetime}.webm'
-        convert_file_path = f'/mount/src/global-media/Recordings/youtube_{savetime}.mp4'
+        converted_file_path = f'/mount/src/global-media/Recordings/youtube_{savetime}.mp4'
 
         download_command = [
             'yt-dlp',
@@ -544,12 +544,12 @@ def download_youtube(yt_link, translate):
             '-i', download_file_path,
             'c:v', 'libx264',
             'c:a', 'aac',
-            convert_file_path
+            converted_file_path
             ]
         
         subprocess.run(convert_command)
 
-        return True, convert_file_path
+        return True, converted_file_path
 
     except Exception as e:
         return e
