@@ -995,7 +995,7 @@ elif tool_type == "YouTube Download":
                 with open(downloaded_file, 'rb') as f:
                     st.download_button(
                         label="Save file to disk",
-                        data=downloaded_file,
+                        data=f,
                         file_name=downloaded_file.split("/")[-1],
                         mime='video/mp4')
             else:
