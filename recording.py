@@ -520,7 +520,7 @@ def multi_record(*outlets, seconds, translate=False):
     except Exception as e:
         return e
     
-def download_from_webpages(link, translate, name="download"):
+def download_from_webpages(link, translate):
 
     #NEED TO ADD AUTO DELETION OF TEMP FILES
     #ADD TRANSLATION OPTION
