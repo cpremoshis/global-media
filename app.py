@@ -988,8 +988,9 @@ elif tool_type == "YouTube Download":
         with st.spinner("Downloading and converting video"):
 
             status, downloaded_file = download_from_webpages(link, translate)
-
-            if status == True:
+            
+            if isinstance(status, bool) and status:
                 st.session_state['recordings'].append(downloaded_file)
-
-        st.success("Success!")
+                st.success("Success!")
+            else:
+                st.error(f"Failed to download. Error: {status}") 
