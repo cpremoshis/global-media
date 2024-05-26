@@ -2,7 +2,7 @@ import streamlit as st
 import streamlit.components.v1 as components
 import pandas as pd
 import requests
-from recording import record_m3u8, record_mpd, record_youtube, record_mp3, multi_record, download_youtube
+from recording import record_m3u8, record_mpd, record_youtube, record_mp3, multi_record, download_from_webpages
 import zipfile
 import time
 from datetime import datetime
@@ -973,7 +973,7 @@ elif tool_type == "YouTube Download":
 
     with st.form("download_from_webpages"):
 
-        yt_link = st.text_input("Paste link here:")
+        link = st.text_input("Paste link here:")
 
         name = st.text_input("Create file name (optional):")
 
@@ -983,11 +983,11 @@ elif tool_type == "YouTube Download":
 
     status = st.empty()
 
-    if submitted and yt_link is not None:
+    if submitted and link is not None:
 
         with st.spinner("Downloading and converting video"):
 
-            status, downloaded_file = download_youtube(yt_link, translate)
+            status, downloaded_file = download_from_webpages(link, name, translate)
 
             if status == True:
                 st.session_state['recordings'].append(downloaded_file)

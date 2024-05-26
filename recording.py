@@ -520,7 +520,7 @@ def multi_record(*outlets, seconds, translate=False):
     except Exception as e:
         return e
     
-def download_youtube(yt_link, translate):
+def download_from_webpages(link, name, translate):
 
     #NEED TO ADD AUTO DELETION OF TEMP FILES
     #ADD TRANSLATION OPTION
@@ -535,7 +535,7 @@ def download_youtube(yt_link, translate):
             'yt-dlp',
             '-f', 'bestvideo[ext=mp4][vcodec^=avc1]+bestaudio[ext=m4a]/best[ext=mp4][vcodec^=avc1]',
             '-o', download_file_path,
-            yt_link
+            link
             ]
         
         subprocess.run(download_command)
