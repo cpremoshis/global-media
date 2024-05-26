@@ -602,7 +602,11 @@ def download_from_webpages(link, translate):
         
         #subprocess.run(convert_command)
 
-        return True, download_file_path
+        if translate == True:
+            translation_file, audio_file = translate_audio(download_file_path, source_type, savetime)
+            return True, download_file_path, translation_file
+        else:
+            return True, download_file_path
 
     except Exception as e:
         print(e)
