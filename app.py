@@ -993,4 +993,4 @@ elif tool_type == "YouTube Download":
                 st.session_state['recordings'].append(downloaded_file)
                 st.success("Success!")
             else:
-                st.error(f"Failed to download. Error: {status}") 
+                st.error(f"Failed to download.") 
