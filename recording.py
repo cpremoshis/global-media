@@ -541,8 +541,10 @@ def download_from_webpages(link, translate):
         elif "facebook.com" in link_lower or "fb.watch" in link_lower:
             source_type = "Facebook"
             if "fb.watch" in link_lower:
-                fb_page = requests.get(link_lower, allow_redirects=True, max_redirects=60)
-                link_lower = fb_page.url
+                session = requests.Session()
+                session.max_redirects = 60
+                session.get(link_lower)
+                link_lower = session.url
             else:
                 pass
         else:
