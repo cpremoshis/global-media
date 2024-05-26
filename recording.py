@@ -540,16 +540,15 @@ def download_from_webpages(link, translate):
             }
         
         for key, value in source_types_dict.items():
-            if link_lower == key:
+            if key in link_lower:
                 source_type = value
             else:
                 source_type = 'unknown_source'
 
-        if source_type == 'TwitterX':
-            if 'x.com' in link_lower:
-                link_lower = link_lower.replace('x.com', 'twitter.com')
-            else:
-                pass
+        if source_type == 'TwitterX' and 'x.com' in link_lower:
+            link_lower = link_lower.replace('x.com', 'twitter.com')
+        else:
+            pass
 
 #        if "youtube.com" in link_lower or "youtu.be" in link_lower:
 #            source_type = "YouTube"
@@ -558,9 +557,9 @@ def download_from_webpages(link, translate):
 #        elif "twitter.com" in link_lower or "x.com" in link_lower:
 #            source_type = "TwitterX"
 #            if "x.com" in link_lower:
-                link_lower = link_lower.replace("x.com", "twitter.com")
+#                link_lower = link_lower.replace("x.com", "twitter.com")
 #            else:
-                pass
+#                pass
 #        elif "facebook.com" in link_lower or "fb.watch" in link_lower:
 #            source_type = "Facebook"
 #        else:
