@@ -991,7 +991,7 @@ elif tool_type == "Social Media Download":
             if len(social_download_result) == 2:
                 status, downloaded_file = social_download_result
             elif len(social_download_result) == 4:
-                statis, downloaded_file, translation, audio_file = social_download_result
+                status, downloaded_file, translation, audio_file = social_download_result
 
             if status:
                 if translation in locals():
