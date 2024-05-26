@@ -37,3 +37,13 @@ if st.button("Zip for download"):
         zip_bytes = f.read()
 
     dwnbtn = st.download_button("Download", data=zip_bytes, file_name=file_name, mime="application/zip")
+
+if st.button("Delete files"):
+    confirmation = st.button("Confirm deletion", type='primary')
+
+    if confirmation:
+        for file in selections:
+            os.remove(file)
+
+        st.text("Deleted:")
+        st.write(selections)
