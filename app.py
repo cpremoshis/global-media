@@ -979,7 +979,8 @@ elif tool_type == "YouTube Download":
 
         translate = st.checkbox("Translate")
 
-        submitted = st.form_submit_button("Download")
+        if yt_link:
+            submitted = st.form_submit_button("Download")
 
     status = st.empty()
 
