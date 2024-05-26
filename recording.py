@@ -525,18 +525,37 @@ def download_from_webpages(link, name, translate):
     #NEED TO ADD AUTO DELETION OF TEMP FILES
     #ADD TRANSLATION OPTION
     try:
+
+        if "youtube.com" or "youtu.be" in link:
+            source_type = "YouTube"
+        elif "instagram.com" in link:
+            source_type = "Instagram"
+        elif "twitter.com" or "x.com" in link:
+            source_type = "TwitterX"
+        elif "facebook.com" or "fb.watch" in link:
+            source_type = "Facebook"
+        else:
+            source_type = "unknown_source"
+
         now = datetime.now()
         savetime = now.strftime("%Y_%m_%d_%H%M%S")
 
-        download_file_path = f'/mount/src/global-media/Recordings/youtube_{savetime}.mp4'
+        download_file_path = f'/mount/src/global-media/Recordings/{source_type}_{savetime}.mp4'
         #converted_file_path = f'/mount/src/global-media/Recordings/youtube_{savetime}.mp4'
 
-        download_command = [
-            'yt-dlp',
-            '-f', 'bestvideo[ext=mp4][vcodec^=avc1]+bestaudio[ext=m4a]/best[ext=mp4][vcodec^=avc1]',
-            '-o', download_file_path,
-            link
-            ]
+        if source_type == "YouTube":
+            download_command = [
+                'yt-dlp',
+                '-f', 'bestvideo[ext=mp4][vcodec^=avc1]+bestaudio[ext=m4a]/best[ext=mp4][vcodec^=avc1]',
+                '-o', download_file_path,
+                link
+                ]
+        else:
+            download_command = [
+                'yt-dlp',
+                '-o', download_file_path,
+                link
+                ]
         
         subprocess.run(download_command)
 
