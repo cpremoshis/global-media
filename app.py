@@ -975,7 +975,7 @@ elif tool_type == "YouTube Download":
 
         yt_link = st.text_area("Paste YouTube link here:")
 
-        left_column, right_column = st.columns(0.1, 0.9)
+        left_column, right_column = st.columns([1, 9])
         with left_column:
             translate = st.checkbox("Translate")
         with right_column:
