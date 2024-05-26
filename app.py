@@ -981,8 +981,6 @@ elif tool_type == "Social Media Download":
 
         submitted = st.form_submit_button("Download")
 
-    status = st.empty()
-
     if submitted and link is not None:
 
         with st.spinner("Downloading and converting video"):
