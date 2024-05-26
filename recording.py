@@ -540,6 +540,11 @@ def download_from_webpages(link, translate):
                 pass
         elif "facebook.com" in link_lower or "fb.watch" in link_lower:
             source_type = "Facebook"
+            if "fb.watch" in link_lower:
+                response = requests.get(link_lower)
+                link_lower = response.url
+            else:
+                pass
         else:
             source_type = "unknown_source"
 
@@ -560,7 +565,6 @@ def download_from_webpages(link, translate):
             download_command = [
                 'yt-dlp',
                 '--cookies', '/mount/src/global-media/Assets/all_cookies.txt',
-                '--user-agent', '"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"'
                 '-o', download_file_path,
                 link_lower
                 ]
