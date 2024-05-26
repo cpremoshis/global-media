@@ -528,20 +528,43 @@ def download_from_webpages(link, translate):
 
         link_lower = link.lower()
 
-        if "youtube.com" in link_lower or "youtu.be" in link_lower:
-            source_type = "YouTube"
-        elif "instagram.com" in link_lower:
-            source_type = "Instagram"
-        elif "twitter.com" in link_lower or "x.com" in link_lower:
-            source_type = "TwitterX"
-            if "x.com" in link_lower:
-                link_lower = link_lower.replace("x.com", "twitter.com")
+        source_types_dict = {
+            'youtube.com':'YouTube',
+            'youtu.be':'YouTube',
+            'instagram.com':'Instagram',
+            'twitter.com':'TwitterX',
+            'x.com':'TwitterX',
+            'facebook.com':'Facebook',
+            'fb.watch':'Facebook',
+            't.me':'Telegram'
+            }
+        
+        for key, value in source_types_dict:
+            if link_lower == key:
+                source_type = value
+            else:
+                source_type = 'unknown_source'
+
+        if source_type == 'TwitterX':
+            if 'x.com' in link_lower:
+                link_lower = link_lower.replace('x.com', 'twitter.com')
             else:
                 pass
-        elif "facebook.com" in link_lower or "fb.watch" in link_lower:
-            source_type = "Facebook"
-        else:
-            source_type = "unknown_source"
+
+#        if "youtube.com" in link_lower or "youtu.be" in link_lower:
+#            source_type = "YouTube"
+#        elif "instagram.com" in link_lower:
+#            source_type = "Instagram"
+#        elif "twitter.com" in link_lower or "x.com" in link_lower:
+#            source_type = "TwitterX"
+#            if "x.com" in link_lower:
+                link_lower = link_lower.replace("x.com", "twitter.com")
+#            else:
+                pass
+#        elif "facebook.com" in link_lower or "fb.watch" in link_lower:
+#            source_type = "Facebook"
+#        else:
+#            source_type = "unknown_source"
 
         now = datetime.now()
         savetime = now.strftime("%Y_%m_%d_%H%M%S")
