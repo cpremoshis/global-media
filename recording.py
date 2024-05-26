@@ -540,13 +540,13 @@ def download_youtube(yt_link, translate):
         
         subprocess.run(download_command)
 
-        convert_command = [
-            'ffmpeg',
-            '-i', download_file_path,
-            '-c:v', 'libx264',
-            '-c:a', 'aac',
-            converted_file_path
-            ]
+        #convert_command = [
+        #    'ffmpeg',
+        #    '-i', download_file_path,
+        #    '-c:v', 'libx264',
+        #    '-c:a', 'aac',
+        #    converted_file_path
+        #    ]
         
         #subprocess.run(convert_command)
 
