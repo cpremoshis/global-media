@@ -976,6 +976,7 @@ elif tool_type == "YouTube Download":
         yt_link = st.text_area("Paste YouTube link here:")
 
         submitted = st.form_submit_button("Download")
+        translate = st.checkbox("Translate")
 
     status = st.empty()
 
