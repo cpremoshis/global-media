@@ -39,9 +39,10 @@ if st.button("Zip for download"):
     dwnbtn = st.download_button("Download", data=zip_bytes, file_name=file_name, mime="application/zip")
 
 if st.button("Delete files"):
-    confirmation = st.button("Confirm deletion", type='primary')
 
-    if confirmation:
+    confirmation = st.text_input("Type 'delete' to confirm deletion")
+
+    if confirmation == 'delete':
         for file in selections:
             os.remove(f'/mount/src/global-media/Recordings/{file}')
 
