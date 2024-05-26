@@ -983,7 +983,9 @@ elif tool_type == "YouTube Download":
 
     if submitted and yt_link is not None:
 
-        status, converted_file_path = download_youtube(yt_link, translate)
+        with st.spinner("Downloading and converting video"):
 
-        if status == True:
-            st.session_state['recordings'].append(converted_file_path)
+            status, converted_file_path = download_youtube(yt_link, translate)
+
+            if status == True:
+                st.session_state['recordings'].append(converted_file_path)
