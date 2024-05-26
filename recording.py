@@ -526,13 +526,13 @@ def download_from_webpages(link, translate):
     #ADD TRANSLATION OPTION
     try:
 
-        if "youtube.com" or "youtu.be" in link:
+        if "youtube.com" in link or "youtu.be" in link:
             source_type = "YouTube"
         elif "instagram.com" in link:
             source_type = "Instagram"
-        elif "twitter.com" or "x.com" in link:
+        elif "twitter.com" in link or "x.com" in link:
             source_type = "TwitterX"
-        elif "facebook.com" or "fb.watch" in link:
+        elif "facebook.com" in link or "fb.watch" in link:
             source_type = "Facebook"
         else:
             source_type = "unknown_source"
