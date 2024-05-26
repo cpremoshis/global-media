@@ -996,4 +996,3 @@ elif tool_type == "YouTube Download":
                 st.session_state['recordings'].append(downloaded_file)
 
         st.success("Success!")
-        st.video(downloaded_file)
