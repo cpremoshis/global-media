@@ -278,7 +278,7 @@ if 'recordings' not in st.session_state:
 with st.sidebar:
     st.title("GlobalBroadcastHub 📡")
 
-    tool_type = st.selectbox("Tool type:", ['Single view', 'Multiview', 'CCTV 13 Live', 'Upload', 'Social Media Download'])
+    tool_type = st.selectbox("Tool type:", ['Single view', 'Multiview', 'CCTV 13 Live', 'File Translation', 'Social Media Download'])
 
     if tool_type == 'Single view':
 
@@ -849,7 +849,7 @@ elif tool_type == "CCTV 13 Live":
         """
     )
 
-elif tool_type == "Upload":
+elif tool_type == "File Translation":
 
     if 'temp_subtitle_file_path' not in st.session_state:
         st.session_state.temp_subtitle_file_path = None
