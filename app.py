@@ -989,7 +989,7 @@ elif tool_type == "YouTube Download":
 
             status, downloaded_file = download_from_webpages(link, translate)
             
-            if isinstance(status, bool) and status:
+            if status:
                 st.session_state['recordings'].append(downloaded_file)
                 st.success("Success!")
             else:

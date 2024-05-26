@@ -580,4 +580,4 @@ def download_from_webpages(link, translate):
 
     except Exception as e:
         print(e)
-        return e
+        return False, None
