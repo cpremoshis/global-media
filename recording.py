@@ -604,7 +604,7 @@ def download_from_webpages(link, translate):
 
         if translate == True:
             translation_file, audio_file = translate_audio(download_file_path, source_type, savetime)
-            return True, download_file_path, translation_file
+            return True, download_file_path, translation_file, audio_file
         else:
             return True, download_file_path
 

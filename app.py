@@ -985,16 +985,36 @@ elif tool_type == "Social Media Download":
 
         with st.spinner("Downloading and converting video"):
 
-            status, downloaded_file = download_from_webpages(link, translate)
+            social_download_result = download_from_webpages(link, translate)
+            #status, downloaded_file = download_from_webpages(link, translate)
             
+            if len(social_download_result) == 2:
+                status, downloaded_file = social_download_result
+            elif len(social_download_result) == 4:
+                statis, downloaded_file, translation, audio_file = social_download_result
+
             if status:
-                st.session_state['recordings'].append(downloaded_file)
-                st.success("Success!")
-                with open(downloaded_file, 'rb') as f:
-                    st.download_button(
-                        label="Save file to disk",
-                        data=f,
-                        file_name=downloaded_file.split("/")[-1],
-                        mime='video/mp4')
+                if translation in locals():
+                    zipped = zip_single_recording(downloaded_file, translation, audio_file)
+                    st.session_state['recordings'].append(zipped)
+                    with open(zipped, 'rb') as f:
+                        st.download_button(
+                            label="Save file to disk",
+                            data=f,
+                            file_name=zipped.split("/"[-1]),
+                            mime='application/zip'
+                            )
+
+                else:
+                    st.session_state['recordings'].append(downloaded_file)
+                    st.success("Success!")
+                    with open(downloaded_file, 'rb') as f:
+                        st.download_button(
+                            label="Save file to disk",
+                            data=f,
+                            file_name=downloaded_file.split("/")[-1],
+                            mime='video/mp4'
+                            )
+
             else:
                 st.error(f"Failed to download.")
