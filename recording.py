@@ -564,7 +564,7 @@ def download_from_webpages(link, translate):
                 link_lower
                 ]
         
-        subprocess.run(download_command)
+        subprocess.run(download_command, check=True)
 
         #convert_command = [
         #    'ffmpeg',
