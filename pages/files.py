@@ -42,17 +42,20 @@ if st.button("Zip for download"):
     dwnbtn = st.download_button("Download", data=zip_bytes, file_name=file_name, mime="application/zip")
 
 if st.button("Delete files"):
-    st.session_state['confirmed'] = False
+    st.session_state['delete_triggered'] = True
 
+if 'delete_triggered' in st.session_state and st.session_state['delete_triggered']:
     if st.button("Confirm deletion", type='primary'):
-        st.session_state['confirmed'] = True
-
-    if st.session_state['confirmed']:
-        for file in selections:
-            try:
-                os.remove(f'/mount/src/global-media/Recordings/{file}')
-                st.text("Deleted:")
-                st.write(selections)
-            except Exception as e:
-                st.write(e)
-        st.session_state['confirmed'] = False
+        if selections:
+            for file in selections:
+                try:
+                    os.remove(os.path.join(path, file))
+                    st.success(f"Deleted: {file}")
+                except Exception as e:
+                    st.error(f"Error deleting file {file}: {str(e)}")
+            # Reset the delete trigger after processing
+            st.session_state['delete_triggered'] = False
+        else:
+            st.warning("No files selected for deletion.")
+            # Optionally, reset the delete trigger if no selection is made
+            st.session_state['delete_triggered'] = False
