@@ -975,7 +975,7 @@ elif tool_type == "YouTube Download":
 
         yt_link = st.text_input("Paste YouTube link here:")
 
-        name = st.text_input("File name (optional):")
+        name = st.text_input("Create file name (optional):")
 
         translate = st.checkbox("Translate")
 
