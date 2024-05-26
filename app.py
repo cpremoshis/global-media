@@ -278,7 +278,7 @@ if 'recordings' not in st.session_state:
 with st.sidebar:
     st.title("GlobalBroadcastHub 📡")
 
-    tool_type = st.selectbox("Tool type:", ['Single view', 'Multiview', 'CCTV 13 Live', 'Upload', 'YouTube Download'])
+    tool_type = st.selectbox("Tool type:", ['Single view', 'Multiview', 'CCTV 13 Live', 'Upload', 'Social Media Download'])
 
     if tool_type == 'Single view':
 
@@ -537,7 +537,7 @@ with st.sidebar:
                     file_name = download_select.split("/")[-1]
                     dwnbtn = st.download_button("Download", data=f, file_name=file_name, mime="video/mp4")
 
-    if tool_type == 'YouTube Download':
+    if tool_type == 'Social Media Download':
 
         if len(st.session_state['recordings']) != 0:
 
@@ -964,7 +964,7 @@ elif tool_type == "Upload":
             elif translation_format == "text":
                 st.write(content_to_display)
 
-elif tool_type == "YouTube Download":
+elif tool_type == "Social Media Download":
 
     if 'temp_youtube_webm' not in st.session_state:
         st.session_state.temp_youtube_webm = None
