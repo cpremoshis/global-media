@@ -540,11 +540,6 @@ def download_from_webpages(link, translate):
                 pass
         elif "facebook.com" in link_lower or "fb.watch" in link_lower:
             source_type = "Facebook"
-            if "fb.watch" in link_lower:
-                fb_page = requests.get(link_lower)
-                link_lower = fb_page.url
-            else:
-                pass
         else:
             source_type = "unknown_source"
 
