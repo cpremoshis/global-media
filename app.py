@@ -998,6 +998,5 @@ elif tool_type == "Social Media Download":
                         data=f,
                         file_name=downloaded_file.split("/")[-1],
                         mime='video/mp4')
-                st.video(downloaded_file)
             else:
                 st.error(f"Failed to download.")
