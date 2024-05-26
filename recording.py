@@ -543,6 +543,7 @@ def download_from_webpages(link, translate):
             if "fb.watch" in link_lower:
                 response = requests.get(link_lower)
                 link_lower = response.url
+                print(link_lower)
             else:
                 pass
         else:
