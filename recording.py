@@ -539,11 +539,12 @@ def download_from_webpages(link, translate):
             't.me':'Telegram'
             }
         
+        source_type = 'unknown_source'
+
         for key, value in source_types_dict.items():
             if key in link_lower:
                 source_type = value
-            else:
-                source_type = 'unknown_source'
+                break                
 
         if source_type == 'TwitterX' and 'x.com' in link_lower:
             link_lower = link_lower.replace('x.com', 'twitter.com')
