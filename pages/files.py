@@ -6,6 +6,9 @@ import zipfile
 path = "/mount/src/global-media/Recordings"
 files = os.listdir(path)
 
+if 'confirmed' not in st.session_state:
+    st.session_state['confirmed'] = False
+
 #st.write(files)
 
 selections = st.multiselect("Select files:", files)
@@ -39,12 +42,17 @@ if st.button("Zip for download"):
     dwnbtn = st.download_button("Download", data=zip_bytes, file_name=file_name, mime="application/zip")
 
 if st.button("Delete files"):
+    st.session_state['confirmed'] = False
 
-    confirmation = st.text_input("Type 'delete' to confirm deletion")
+    if st.button("Confirm deletion", type='primary'):
+        st.session_state['confirmed'] = True
 
-    if confirmation == 'delete':
+    if st.session_state['confirmed']:
         for file in selections:
-            os.remove(f'/mount/src/global-media/Recordings/{file}')
-
-        st.text("Deleted:")
-        st.write(selections)
+            try:
+                os.remove(f'/mount/src/global-media/Recordings/{file}')
+                st.text("Deleted:")
+                st.write(selections)
+            except Exception as e:
+                st.write(e)
+        st.session_state['confirmed'] = False
