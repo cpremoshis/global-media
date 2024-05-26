@@ -985,10 +985,10 @@ elif tool_type == "YouTube Download":
 
         with st.spinner("Downloading and converting video"):
 
-            status, converted_file_path = download_youtube(yt_link, translate)
+            status, downloaded_file = download_youtube(yt_link, translate)
 
             if status == True:
-                st.session_state['recordings'].append(converted_file_path)
+                st.session_state['recordings'].append(downloaded_file)
 
         st.success("Success!")
-        st.video(converted_file_path)
+        st.video(downloaded_file)
