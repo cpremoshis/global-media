@@ -9,6 +9,7 @@ from io import BytesIO
 import openai
 import threading
 from concurrent.futures import ThreadPoolExecutor, as_completed
+import re
     
 #    m3u8_url = "https://live-hls-web-aje-fa.getaj.net/AJE/02.m3u8"
 #    root_url = "https://live-hls-web-aje-fa.getaj.net/AJE/"
@@ -542,8 +543,13 @@ def download_from_webpages(link, translate):
             source_type = "Facebook"
             if "fb.watch" in link_lower:
                 response = requests.get(link_lower)
-                link_lower = response.url
-                print(link_lower)
+                link_header = response.headers['Link']
+                url_match = re.search(r'<([^>]+)>', link_header)
+                if url_match:
+                    link_lower = url_match.group(1)
+                    print("Extracted URL:", link_lower)
+                else:
+                    print("No URL found in the Link header.")
             else:
                 pass
         else:
