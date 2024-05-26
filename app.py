@@ -987,7 +987,10 @@ elif tool_type == "YouTube Download":
 
         with st.spinner("Downloading and converting video"):
 
-            status, downloaded_file = download_from_webpages(link, name, translate)
+            if name is None:
+                status, downloaded_file = download_from_webpages(link, translate)
+            else:
+                status, downloaded_file = download_from_webpages(link, translate, name)
 
             if status == True:
                 st.session_state['recordings'].append(downloaded_file)
