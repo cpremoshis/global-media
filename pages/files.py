@@ -43,7 +43,7 @@ if st.button("Delete files"):
 
     if confirmation:
         for file in selections:
-            os.remove(file)
+            os.remove(f'/mount/src/global-media/Recordings/{file}')
 
         st.text("Deleted:")
         st.write(selections)
