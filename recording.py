@@ -526,13 +526,15 @@ def download_from_webpages(link, translate):
     #ADD TRANSLATION OPTION
     try:
 
-        if "youtube.com" in link or "youtu.be" in link:
+        link_lower = link.lower()
+
+        if "youtube.com" in link_lower or "youtu.be" in link_lower:
             source_type = "YouTube"
-        elif "instagram.com" in link:
+        elif "instagram.com" in link_lower:
             source_type = "Instagram"
-        elif "twitter.com" in link or "x.com" in link:
+        elif "twitter.com" in link_lower or "x.com" in link_lower:
             source_type = "TwitterX"
-        elif "facebook.com" in link or "fb.watch" in link:
+        elif "facebook.com" in link_lower or "fb.watch" in link_lower:
             source_type = "Facebook"
         else:
             source_type = "unknown_source"
@@ -548,13 +550,13 @@ def download_from_webpages(link, translate):
                 'yt-dlp',
                 '-f', 'bestvideo[ext=mp4][vcodec^=avc1]+bestaudio[ext=m4a]/best[ext=mp4][vcodec^=avc1]',
                 '-o', download_file_path,
-                link
+                link_lower
                 ]
         else:
             download_command = [
                 'yt-dlp',
                 '-o', download_file_path,
-                link
+                link_lower
                 ]
         
         subprocess.run(download_command)
