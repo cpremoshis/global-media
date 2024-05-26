@@ -975,7 +975,7 @@ elif tool_type == "Social Media Download":
 
         link = st.text_input("Paste link here:")
 
-        name = st.text_input("Create file name (optional):")
+        #name = st.text_input("Create file name (optional):")
 
         translate = st.checkbox("Translate")
 
