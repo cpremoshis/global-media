@@ -526,7 +526,7 @@ def download_from_webpages(link, translate):
     #ADD TRANSLATION OPTION
     try:
 
-        link_lower = link.lower()
+        link_lower = link.lower().strip()
 
         source_types_dict = {
             'youtube.com':'YouTube',
