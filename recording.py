@@ -564,6 +564,7 @@ def download_from_webpages(link, translate):
         else:
             download_command = [
                 'yt-dlp',
+                '--cookies', '/mount/src/global-media/Assets/all_cookies.txt',
                 '-o', download_file_path,
                 link_lower
                 ]
