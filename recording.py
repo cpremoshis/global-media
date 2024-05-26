@@ -542,8 +542,8 @@ def download_youtube(yt_link, translate):
         convert_command = [
             'ffmpeg',
             '-i', download_file_path,
-            'c:v', 'libx264',
-            'c:a', 'aac',
+            '-c:v', 'libx264',
+            '-c:a', 'aac',
             converted_file_path
             ]
         
