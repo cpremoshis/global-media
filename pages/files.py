@@ -55,6 +55,7 @@ if 'delete_triggered' in st.session_state and st.session_state['delete_triggered
                     st.error(f"Error deleting file {file}: {str(e)}")
             # Reset the delete trigger after processing
             st.session_state['delete_triggered'] = False
+            st.rerun()
         else:
             st.warning("No files selected for deletion.")
             # Optionally, reset the delete trigger if no selection is made
