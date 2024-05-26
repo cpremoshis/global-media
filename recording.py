@@ -533,7 +533,7 @@ def download_youtube(yt_link, translate):
 
         download_command = [
             'yt-dlp',
-            '-f', 'bestvideo[ext=mp4][vcodec^=avc1]+bestaudio[ext=m4a]/best[ext=mp4][vcodec^=avc1]'
+            '-f', 'bestvideo[ext=mp4][vcodec^=avc1]+bestaudio[ext=m4a]/best[ext=mp4][vcodec^=avc1]',
             '-o', download_file_path,
             yt_link
             ]
