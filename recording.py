@@ -535,7 +535,7 @@ def download_from_webpages(link, translate):
         elif "twitter.com" in link_lower or "x.com" in link_lower:
             source_type = "TwitterX"
             if "x.com" in link_lower:
-                link_lower.replace("x.com", "twitter.com")
+                link_lower = link_lower.replace("x.com", "twitter.com")
             else:
                 pass
         elif "facebook.com" in link_lower or "fb.watch" in link_lower:
