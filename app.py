@@ -992,10 +992,11 @@ elif tool_type == "YouTube Download":
             if status:
                 st.session_state['recordings'].append(downloaded_file)
                 st.success("Success!")
-                st.download_button(
-                    label="Save file to disk",
-                    data=downloaded_file,
-                    file_name=downloaded_file.split("/")[-1],
-                    mime='video/mp4')
+                with open(downloaded_file, 'rb') as f:
+                    st.download_button(
+                        label="Save file to disk",
+                        data=downloaded_file,
+                        file_name=downloaded_file.split("/")[-1],
+                        mime='video/mp4')
             else:
                 st.error(f"Failed to download.")
