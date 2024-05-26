@@ -990,4 +990,5 @@ elif tool_type == "YouTube Download":
             if status == True:
                 st.session_state['recordings'].append(converted_file_path)
 
+        st.write(converted_file_path)
         st.video(converted_file_path)
