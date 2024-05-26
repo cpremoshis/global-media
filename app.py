@@ -264,7 +264,7 @@ def generate_player(format, type, url, muted=""):
 
 #Reformats the full file name into just the ending (ex: "Outlet_time.mp4")
 def format_file_names(option):
-    option = option.split("/")[2]
+    option = option.split("/")[-1]
     return option
 
 #Opens .csv database to load media outlet data
