@@ -973,7 +973,7 @@ elif tool_type == "YouTube Download":
 
     with st.form("youtube"):
 
-        yt_link = st.text_input("Paste YouTube link here:")
+        yt_link = st.text_input("Paste link here:")
 
         name = st.text_input("Create file name (optional):")
 
