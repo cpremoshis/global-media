@@ -539,7 +539,7 @@ def download_from_webpages(link, translate):
             't.me':'Telegram'
             }
         
-        for key, value in source_types_dict:
+        for key, value in source_types_dict.items():
             if link_lower == key:
                 source_type = value
             else:
