@@ -1001,7 +1001,7 @@ elif tool_type == "Social Media Download":
                         st.download_button(
                             label="Save file to disk",
                             data=f,
-                            file_name=zipped.split("/"[-1]),
+                            file_name=zipped.split("/")[-1],
                             mime='application/zip'
                             )
 
