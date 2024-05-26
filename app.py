@@ -69,7 +69,7 @@ def zip_single_recording(recording, translation, audio):
 
     with zipfile.ZipFile(zip_folder_name, 'w') as zipf:
         for file in files_to_zip:
-            file_name = file.split("/")[2]
+            file_name = file.split("/")[-1]
             zipf.write(file, arcname=file_name)
 
     return zip_folder_name
@@ -85,7 +85,7 @@ def zip_multiple_recordings(video_dict, savetime):
     with zipfile.ZipFile(zip_folder_name, 'w') as zipf:
         for file in files_to_zip:
             try:
-                file_name = file.split("/")[2]
+                file_name = file.split("/")[-1]
                 zipf.write(file, arcname=file_name)
             except:
                 pass
@@ -357,18 +357,18 @@ with st.sidebar:
             #Download option for MP3s
             if download_select.endswith(".mp3"):
                 with open(download_select, 'rb') as f:
-                    file_name = download_select.split("/")[2]
+                    file_name = download_select.split("/")[-1]
                     dwnbtn = st.download_button("Download", data=f, file_name=file_name, mime="audio/mpeg")
             
             elif download_select.endswith(".zip"):
                 with open(download_select, 'rb') as f:
-                    file_name = download_select.split("/")[2]
+                    file_name = download_select.split("/")[-1]
                     dwnbtn = st.download_button("Download", data=f, file_name=file_name, mime="application/zip")
 
             #Download option for videos
             else:                        
                 with open(download_select, 'rb') as f:
-                    file_name = download_select.split("/")[2]
+                    file_name = download_select.split("/")[-1]
                     dwnbtn = st.download_button("Download", data=f, file_name=file_name, mime="video/mp4")
 
     if tool_type == "Multiview":
@@ -484,18 +484,18 @@ with st.sidebar:
             #Download option for MP3s
             if download_select.endswith(".mp3"):
                 with open(download_select, 'rb') as f:
-                    file_name = download_select.split("/")[2]
+                    file_name = download_select.split("/")[-1]
                     dwnbtn = st.download_button("Download", data=f, file_name=file_name, mime="audio/mpeg")
             
             elif download_select.endswith(".zip"):
                 with open(download_select, 'rb') as f:
-                    file_name = download_select.split("/")[2]
+                    file_name = download_select.split("/")[-1]
                     dwnbtn = st.download_button("Download", data=f, file_name=file_name, mime="application/zip")
 
             #Download option for videos
             else:                        
                 with open(download_select, 'rb') as f:
-                    file_name = download_select.split("/")[2]
+                    file_name = download_select.split("/")[-1]
                     dwnbtn = st.download_button("Download", data=f, file_name=file_name, mime="video/mp4")
 
     if tool_type == "CCTV 13 Live":
@@ -523,18 +523,18 @@ with st.sidebar:
             #Download option for MP3s
             if download_select.endswith(".mp3"):
                 with open(download_select, 'rb') as f:
-                    file_name = download_select.split("/")[2]
+                    file_name = download_select.split("/")[-1]
                     dwnbtn = st.download_button("Download", data=f, file_name=file_name, mime="audio/mpeg")
             
             elif download_select.endswith(".zip"):
                 with open(download_select, 'rb') as f:
-                    file_name = download_select.split("/")[2]
+                    file_name = download_select.split("/")[-1]
                     dwnbtn = st.download_button("Download", data=f, file_name=file_name, mime="application/zip")
 
             #Download option for videos
             else:                        
                 with open(download_select, 'rb') as f:
-                    file_name = download_select.split("/")[2]
+                    file_name = download_select.split("/")[-1]
                     dwnbtn = st.download_button("Download", data=f, file_name=file_name, mime="video/mp4")
 
     if tool_type == 'YouTube Download':
@@ -546,18 +546,18 @@ with st.sidebar:
             #Download option for MP3s
             if download_select.endswith(".mp3"):
                 with open(download_select, 'rb') as f:
-                    file_name = download_select.split("/")[2]
+                    file_name = download_select.split("/")[-1]
                     dwnbtn = st.download_button("Download", data=f, file_name=file_name, mime="audio/mpeg")
             
             elif download_select.endswith(".zip"):
                 with open(download_select, 'rb') as f:
-                    file_name = download_select.split("/")[2]
+                    file_name = download_select.split("/")[-1]
                     dwnbtn = st.download_button("Download", data=f, file_name=file_name, mime="application/zip")
 
             #Download option for videos
             else:                        
                 with open(download_select, 'rb') as f:
-                    file_name = download_select.split("/")[2]
+                    file_name = download_select.split("/")[-1]
                     dwnbtn = st.download_button("Download", data=f, file_name=file_name, mime="video/mp4")
 
 #Media display
