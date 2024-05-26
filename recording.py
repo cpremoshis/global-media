@@ -552,4 +552,5 @@ def download_youtube(yt_link, translate):
         return True, converted_file_path
 
     except Exception as e:
+        print(e)
         return e
