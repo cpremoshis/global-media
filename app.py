@@ -969,7 +969,7 @@ elif tool_type == "Social Media Download":
     if 'temp_youtube_webm' not in st.session_state:
         st.session_state.temp_youtube_webm = None
 
-    st.header("YouTube Download", divider=True)
+    st.header("Social Media Download", divider=True)
 
     with st.form("download_from_webpages"):
 
