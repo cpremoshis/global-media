@@ -528,7 +528,7 @@ def download_youtube(yt_link, translate):
         now = datetime.now()
         savetime = now.strftime("%Y_%m_%d_%H%M%S")
 
-        download_file_path = f'/mount/src/global-media/Recordings/youtube_{savetime}.webm'
+        download_file_path = f'/mount/src/global-media/Recordings/youtube_{savetime}.mp4'
         converted_file_path = f'/mount/src/global-media/Recordings/youtube_{savetime}.mp4'
 
         download_command = [
