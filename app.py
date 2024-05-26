@@ -971,7 +971,7 @@ elif tool_type == "YouTube Download":
 
     st.header("YouTube Download", divider=True)
 
-    with st.form("youtube"):
+    with st.form("download_from_webpages"):
 
         yt_link = st.text_input("Paste link here:")
 
