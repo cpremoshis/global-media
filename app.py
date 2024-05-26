@@ -546,18 +546,18 @@ with st.sidebar:
             #Download option for MP3s
             if download_select.endswith(".mp3"):
                 with open(download_select, 'rb') as f:
-                    file_name = download_select.split("/")[2]
+                    file_name = download_select.split("/")[-1]
                     dwnbtn = st.download_button("Download", data=f, file_name=file_name, mime="audio/mpeg")
             
             elif download_select.endswith(".zip"):
                 with open(download_select, 'rb') as f:
-                    file_name = download_select.split("/")[2]
+                    file_name = download_select.split("/")[-1]
                     dwnbtn = st.download_button("Download", data=f, file_name=file_name, mime="application/zip")
 
             #Download option for videos
             else:                        
                 with open(download_select, 'rb') as f:
-                    file_name = download_select.split("/")[2]
+                    file_name = download_select.split("/")[-1]
                     dwnbtn = st.download_button("Download", data=f, file_name=file_name, mime="video/mp4")
 
 #Media display
@@ -991,3 +991,4 @@ elif tool_type == "YouTube Download":
                 st.session_state['recordings'].append(converted_file_path)
 
         st.success("Success!")
+        st.video(converted_file_path)
