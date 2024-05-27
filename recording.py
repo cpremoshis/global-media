@@ -81,7 +81,7 @@ def record_m3u8(outlet, seconds, playlist_url, root_url, translate):
                         files_list.append(item)
 
             #This is the .ts file that SHOULD most closely corresponds to the time when user began recording
-            record_start = files_list[-2]
+            record_start = files_list[-3]
 
             #Removes potential duplicates in the 'files_list'
             files_list = remove_duplciates(files_list)
