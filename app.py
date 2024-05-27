@@ -981,7 +981,7 @@ elif tool_type == "Social Media Download":
 
         submitted = st.form_submit_button("Download")
 
-    st.caption("*If downloading from Facebook, do not use the short-code URL (ie: fb.watch/...), use the full-length URL (ie: facebook.com/watch/...)")
+    st.caption("*If downloading from Facebook, use the full-length URL (https://www.facebook.com/watch/...) rather than shortened URL (https://fb.watch/...).")
 
     if submitted and link is not None:
 
