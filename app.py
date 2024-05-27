@@ -994,7 +994,7 @@ elif tool_type == "Social Media Download":
                 status, downloaded_file, translation, audio_file = social_download_result
 
             if status:
-                if translation in locals():
+                if len(social_download_result) == 4:
                     zipped = zip_single_recording(downloaded_file, translation, audio_file)
                     st.session_state['recordings'].append(zipped)
                     with open(zipped, 'rb') as f:
