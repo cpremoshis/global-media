@@ -977,7 +977,7 @@ elif tool_type == "Social Media Download":
 
         #name = st.text_input("Create file name (optional):")
 
-        translate = st.checkbox("Translate (not yet functional)")
+        translate = st.checkbox("Translate")
 
         submitted = st.form_submit_button("Download")
 
