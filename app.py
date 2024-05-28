@@ -1063,7 +1063,7 @@ elif tool_type == "Live Link Recording (TESTING)":
 
         name = st.text_input("Enter name:")
 
-        submitted = st.button("Record", type='primary')
+        submitted = st.form_submit_button("Record", type='primary')
 
     if submitted and link is not None:
 
