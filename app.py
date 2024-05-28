@@ -1070,8 +1070,6 @@ elif tool_type == "Live Link Recording (TESTING)":
 
         submitted = st.form_submit_button("Record", type='primary')
 
-    display_area = st.container()
-
     if submitted and link is not None:
 
         now = datetime.now()
@@ -1084,7 +1082,7 @@ elif tool_type == "Live Link Recording (TESTING)":
         custom_url_player = generate_player('M3U8', 'Video', link)
         player_html, player_size = custom_url_player
 
-        with display_area:
+        with st.container():
             st.spinner(f"Recording to: {download_file_path}")
             components.html(player_html, height=player_size)
 
