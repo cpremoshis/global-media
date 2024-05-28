@@ -1043,10 +1043,6 @@ elif tool_type == "Live Link Recording (TESTING)":
             text=True,
             bufsize=1
             )
-        
-        with display_area:
-            display_area.spinner(f"Recording to: {download_file_path}")
-            components.html(player_html, height=player_size)
 
     def stop_ffmpeg():
 
@@ -1087,6 +1083,10 @@ elif tool_type == "Live Link Recording (TESTING)":
         download_file_path = f'/mount/src/global-media/Recordings/{name}_{savetime}.ts'
 
         start_ffmpeg(link, name)
+
+        with display_area:
+            display_area.spinner(f"Recording to: {download_file_path}")
+            components.html(player_html, height=player_size)
 
         if st.button("Stop recording"):
             stop_ffmpeg()
