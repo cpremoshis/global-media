@@ -1054,6 +1054,8 @@ elif tool_type == "Live Link Recording":
             st.write("Recording stopped.")
             st.session_state.ffmpeg_process = None
 
+    st.header("Custom Link Recorder", divider=True)
+
     with st.form("record_link"):
 
         link_to_record = st.input("Enter link:")
