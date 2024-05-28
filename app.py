@@ -1082,3 +1082,5 @@ elif tool_type == "Live Link Recording (TESTING)":
 
         if st.button("Stop recording"):
             stop_ffmpeg()
+
+            st.video(download_file_path)
