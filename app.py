@@ -1031,7 +1031,8 @@ elif tool_type == "Live Link Recording (TESTING)":
         record_live_link_command = [
             'ffmpeg',
             '-i', link,
-            '-c', 'copy',
+            '-c:v', 'libx264',
+            '-c:a', 'aac',
             download_file_path
             ]
         
@@ -1048,10 +1049,15 @@ elif tool_type == "Live Link Recording (TESTING)":
 
         if st.session_state.ffmpeg_link_record_process:
             st.session_state.ffmpeg_link_record_process.stdin.write('q\n')
-            st.session_state.ffmpeg_link_record_process.stdin.flush()
-            st.session_state.ffmpeg_link_record_process.wait()
+            st.session_state.ffmpeg_link_record_process.close()
+
+            output, errors = st.session_state.ffmpeg_link_record_process.communicate()
 
             st.write("Recording stopped.")
+            if output:
+                st.write(output)
+            if errors:
+                st.write(errors)
             st.session_state.ffmpeg_process = None
 
     st.header("Custom Link Recorder", divider=True)
@@ -1070,7 +1076,7 @@ elif tool_type == "Live Link Recording (TESTING)":
         now = datetime.now()
         savetime = now.strftime("%Y_%m_%d_%H%M%S")
 
-        download_file_path = f'/mount/src/global-media/Recordings/{name}_{savetime}.ts'
+        download_file_path = f'/mount/src/global-media/Recordings/{name}_{savetime}.mp4'
 
         start_ffmpeg(link, name)
 
