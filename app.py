@@ -1108,9 +1108,10 @@ elif tool_type == "Live Link Recording (TESTING)":
         player_html, player_size = custom_url_player
 
         with display_area:
-            st.status(f"Recording to >>>{download_file_path}<<< as of >>>{savetime}<<<")
+            st.status(f"Recording to *{download_file_path}* as of *{savetime}*")
+            stop_recording = st.button("Stop recording")
             components.html(player_html, height=player_size)
 
-        if st.button("Stop recording"):
+        if stop_recording:
             stop_ffmpeg()
             st.success("Recording saved. Check downloads menu in sidebar.")
