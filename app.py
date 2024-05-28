@@ -1058,10 +1058,10 @@ elif tool_type == "Live Link Recording (TESTING)":
 
     with st.form("record_link"):
 
-        link_to_record = st.input("Enter link:")
+        link_to_record = st.text_input("Enter link:")
         link = link_to_record.strip()
 
-        name = st.input("Enter name:")
+        name = st.text_input("Enter name:")
 
         submitted = st.button("Record", type='primary')
 
