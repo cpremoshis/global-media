@@ -1030,6 +1030,7 @@ elif tool_type == "Live Link Recording (TESTING)":
 
         record_live_link_command = [
             'ffmpeg',
+            '-v', 'verbose',
             '-i', link,
             '-c:v', 'libx264',
             '-c:a', 'aac',
