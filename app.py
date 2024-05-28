@@ -1077,7 +1077,6 @@ elif tool_type == "Live Link Recording (TESTING)":
 
             st.write("Recording stopped.")
             if output:
-                st.session_state['recordings'].append(download_file_path)
                 st.write(output)
             if errors:
                 st.write(errors)
