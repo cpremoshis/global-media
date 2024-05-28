@@ -1031,7 +1031,8 @@ elif tool_type == "Live Link Recording (TESTING)":
         record_live_link_command = [
             'ffmpeg',
             '-i', link,
-            '-c', 'copy',
+            '-c:v', 'libx264',
+            '-c:a', 'aac',
             download_file_path
             ]
         
