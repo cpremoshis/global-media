@@ -1113,6 +1113,5 @@ elif tool_type == "Live Link Recording (TESTING)":
             components.html(player_html, height=player_size)
 
         if stop_recording:
-            stop_ffmpeg()
             st.session_state['recordings'].append(download_file_path)
-            st.success("Recording saved. Check downloads menu in sidebar.")
+            stop_ffmpeg()
