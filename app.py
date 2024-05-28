@@ -1044,7 +1044,9 @@ elif tool_type == "Live Link Recording (TESTING)":
             bufsize=1
             )
         
-        display_area.spinner(f"Recording to: {download_file_path}")
+        with display_area:
+            display_area.spinner(f"Recording to: {download_file_path}")
+            components.html(player_html, height=player_size)
 
     def stop_ffmpeg():
 
@@ -1078,8 +1080,6 @@ elif tool_type == "Live Link Recording (TESTING)":
 
         custom_url_player = generate_player('M3U8', 'Video', link)
         player_html, player_size = custom_url_player
-        with display_area:
-            components.html(player_html, height=player_size)
 
         now = datetime.now()
         savetime = now.strftime("%Y_%m_%d_%H%M%S")
