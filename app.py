@@ -1074,9 +1074,6 @@ elif tool_type == "Live Link Recording (TESTING)":
 
     if submitted and link is not None:
 
-        custom_url_player = generate_player('M3U8', 'Video', link)
-        player_html, player_size = custom_url_player
-
         now = datetime.now()
         savetime = now.strftime("%Y_%m_%d_%H%M%S")
 
@@ -1084,8 +1081,11 @@ elif tool_type == "Live Link Recording (TESTING)":
 
         start_ffmpeg(link, name)
 
+        custom_url_player = generate_player('M3U8', 'Video', link)
+        player_html, player_size = custom_url_player
+
         with display_area:
-            display_area.spinner(f"Recording to: {download_file_path}")
+            st.spinner(f"Recording to: {download_file_path}")
             components.html(player_html, height=player_size)
 
         if st.button("Stop recording"):
