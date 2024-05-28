@@ -501,7 +501,7 @@ with st.sidebar:
                     file_name = download_select.split("/")[-1]
                     dwnbtn = st.download_button("Download", data=f, file_name=file_name, mime="video/mp4")
 
-    if tool_type == "CCTV 13 Live":
+    if tool_type == "CCTV 13 Live (Disabled)":
         
         #----->Recording and download functions<-----
 
@@ -541,6 +541,29 @@ with st.sidebar:
                     dwnbtn = st.download_button("Download", data=f, file_name=file_name, mime="video/mp4")
 
     if tool_type == 'Social Media Download':
+
+        if len(st.session_state['recordings']) != 0:
+
+            download_select = st.selectbox("Recordings:", st.session_state['recordings'], format_func=format_file_names ,index=len(st.session_state['recordings'])-1)
+
+            #Download option for MP3s
+            if download_select.endswith(".mp3"):
+                with open(download_select, 'rb') as f:
+                    file_name = download_select.split("/")[-1]
+                    dwnbtn = st.download_button("Download", data=f, file_name=file_name, mime="audio/mpeg")
+            
+            elif download_select.endswith(".zip"):
+                with open(download_select, 'rb') as f:
+                    file_name = download_select.split("/")[-1]
+                    dwnbtn = st.download_button("Download", data=f, file_name=file_name, mime="application/zip")
+
+            #Download option for videos
+            else:                        
+                with open(download_select, 'rb') as f:
+                    file_name = download_select.split("/")[-1]
+                    dwnbtn = st.download_button("Download", data=f, file_name=file_name, mime="video/mp4")
+
+    if tool_type == 'Live Link Recording (TESTING)':
 
         if len(st.session_state['recordings']) != 0:
 
@@ -1090,3 +1113,4 @@ elif tool_type == "Live Link Recording (TESTING)":
 
         if st.button("Stop recording"):
             stop_ffmpeg()
+            st.success("Recording saved. Check downloads menu in sidebar.")
