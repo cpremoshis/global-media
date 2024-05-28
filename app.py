@@ -735,7 +735,7 @@ elif tool_type == "Multiview":
             else:
                 player_html = fourth_result[0]
 
-elif tool_type == "CCTV 13 Live":
+elif tool_type == "CCTV 13 Live (Disabled)":
 
     def get_stream_status():
 
