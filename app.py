@@ -1021,7 +1021,7 @@ elif tool_type == "Social Media Download":
             else:
                 st.error(f"Failed to download.")
 
-elif tool_type == "Live Link Recording":
+elif tool_type == "Live Link Recording (Testing)":
 
     if 'ffmpeg_link_record_process' not in st.session_state:
         st.session_state.ffmpeg_link_record_process = None
@@ -1072,7 +1072,7 @@ elif tool_type == "Live Link Recording":
 
         download_file_path = f'/mount/src/global-media/Recordings/{name}_{savetime}.mp4'
 
-        start_ffmpeg()
+        start_ffmpeg(link, name)
 
         if st.button("Stop recording"):
             stop_ffmpeg()
