@@ -1049,7 +1049,7 @@ elif tool_type == "Live Link Recording (TESTING)":
 
         if st.session_state.ffmpeg_link_record_process:
             st.session_state.ffmpeg_link_record_process.stdin.write('q\n')
-            st.session_state.ffmpeg_link_record_process.close()
+            st.session_state.ffmpeg_link_record_process.stdin.close()
 
             output, errors = st.session_state.ffmpeg_link_record_process.communicate()
 
