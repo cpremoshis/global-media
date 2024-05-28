@@ -1058,7 +1058,7 @@ elif tool_type == "Live Link Recording (TESTING)":
                 st.write(output)
             if errors:
                 st.write(errors)
-            st.session_state.ffmpeg_process = None
+            #st.session_state.ffmpeg_process = None
 
     st.header("Custom Link Recorder", divider=True)
 
@@ -1082,5 +1082,3 @@ elif tool_type == "Live Link Recording (TESTING)":
 
         if st.button("Stop recording"):
             stop_ffmpeg()
-
-            st.video(download_file_path)
