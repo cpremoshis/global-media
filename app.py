@@ -1033,8 +1033,7 @@ elif tool_type == "Live Link Recording (TESTING)":
         record_live_link_command = [
             'ffmpeg',
             '-i', link,
-            '-c:v', 'libx264',
-            '-c:a', 'aac',
+            '-c', 'copy',
             download_file_path
             ]
         
@@ -1045,7 +1044,7 @@ elif tool_type == "Live Link Recording (TESTING)":
             bufsize=1
             )
         
-        st.write(f"Recording to: {download_file_path}")
+        display_area.spinner(f"Recording to: {download_file_path}")
 
     def stop_ffmpeg():
 
@@ -1079,12 +1078,12 @@ elif tool_type == "Live Link Recording (TESTING)":
 
         custom_url_player = generate_player('M3U8', 'Video', link)
         player_html, player_size = custom_url_player
-        components.html(player_html, height=player_size)
+        display_area.components.html(player_html, height=player_size)
 
         now = datetime.now()
         savetime = now.strftime("%Y_%m_%d_%H%M%S")
 
-        download_file_path = f'/mount/src/global-media/Recordings/{name}_{savetime}.mp4'
+        download_file_path = f'/mount/src/global-media/Recordings/{name}_{savetime}.ts'
 
         start_ffmpeg(link, name)
 
