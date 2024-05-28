@@ -1031,8 +1031,7 @@ elif tool_type == "Live Link Recording (TESTING)":
         record_live_link_command = [
             'ffmpeg',
             '-i', link,
-            '-c:v', 'libx264',
-            '-c:a', 'aac',
+            '-c', 'copy',
             download_file_path
             ]
         
@@ -1071,7 +1070,7 @@ elif tool_type == "Live Link Recording (TESTING)":
         now = datetime.now()
         savetime = now.strftime("%Y_%m_%d_%H%M%S")
 
-        download_file_path = f'/mount/src/global-media/Recordings/{name}_{savetime}.mp4'
+        download_file_path = f'/mount/src/global-media/Recordings/{name}_{savetime}.ts'
 
         start_ffmpeg(link, name)
 
