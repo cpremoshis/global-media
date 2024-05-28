@@ -1055,9 +1055,9 @@ elif tool_type == "Live Link Recording (TESTING)":
 
             st.write("Recording stopped.")
             if output:
-                print(output)
+                st.write(output)
             if errors:
-                print(errors)
+                st.write(errors)
             st.session_state.ffmpeg_process = None
 
     st.header("Custom Link Recorder", divider=True)
