@@ -1077,6 +1077,7 @@ elif tool_type == "Live Link Recording (TESTING)":
 
             st.write("Recording stopped.")
             if output:
+                st.session_state['recordings'].append(download_file_path)
                 st.write(output)
             if errors:
                 st.write(errors)
@@ -1113,5 +1114,4 @@ elif tool_type == "Live Link Recording (TESTING)":
             components.html(player_html, height=player_size)
 
         if stop_recording:
-            st.session_state['recordings'].append(download_file_path)
             stop_ffmpeg()
