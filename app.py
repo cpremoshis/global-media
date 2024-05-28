@@ -1085,7 +1085,7 @@ elif tool_type == "Live Link Recording (TESTING)":
         player_html, player_size = custom_url_player
 
         with display_area:
-            st.spinner(text=f"Recording to: {download_file_path}")
+            st.status(f"Recording to: {download_file_path}")
             components.html(player_html, height=player_size)
 
         if st.button("Stop recording"):
