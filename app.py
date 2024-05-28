@@ -1114,4 +1114,5 @@ elif tool_type == "Live Link Recording (TESTING)":
 
         if stop_recording:
             stop_ffmpeg()
+            st.session_state['recordings'].append(download_file_path)
             st.success("Recording saved. Check downloads menu in sidebar.")
