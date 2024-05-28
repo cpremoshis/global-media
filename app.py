@@ -1039,7 +1039,7 @@ elif tool_type == "Live Link Recording (TESTING)":
             record_live_link_command,
             stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             text=True,
-            buffsize=1
+            bufsize=1
             )
         
         st.write(f"Recording to: {download_file_path}")
