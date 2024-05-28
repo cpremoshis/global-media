@@ -143,6 +143,8 @@ def generate_player(format, type, url, muted=""):
             return m3u8_video_player_html, 525
         elif tool_type == "Multiview":
             return m3u8_video_player_html, 475
+        else:
+            return m3u8_video_player_html, 475
     
     if format == "M3U8" and type == "Audio":
         m3u8_audio_player_html = f"""
