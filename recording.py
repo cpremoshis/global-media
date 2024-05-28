@@ -611,3 +611,43 @@ def download_from_webpages(link, translate):
     except Exception as e:
         print(e)
         return False, None
+    
+def record_live_link(link, name):
+
+    now = datetime.now()
+    savetime = now.strftime("%Y_%m_%d_%H%M%S")
+
+    link = link.strip()
+
+    download_file_path = f'/mount/src/global-media/Recordings/{name}_{savetime}.mp4'
+
+    if 'ffmpeg_link_record_process' not in st.session_state:
+        st.session_state.ffmpeg_link_record_process = None
+
+    def start_ffmpeg():
+
+        record_live_link_command = [
+            'ffmpeg',
+            '-i', link,
+            '-c', 'copy',
+            download_file_path
+            ]
+        
+        st.session_state.ffmpeg_link_record_process = subprocess.Popen(
+            record_live_link_command,
+            stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+            text=True,
+            buffsize=1
+            )
+        
+        st.write("Recording...")
+
+    def stop_ffmpeg():
+
+        if st.session_state.ffmpeg_link_record_process:
+            st.session_state.ffmpeg_link_record_process.stdin.write('q\n')
+            st.session_state.ffmpeg_link_record_process.stdin.flush()
+            st.session_state.ffmpeg_link_record_process.wait()
+
+            st.write("Recording stopped.")
+            st.session_state.ffmpeg_process = None

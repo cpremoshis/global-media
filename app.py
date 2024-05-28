@@ -11,6 +11,7 @@ import os
 import ffmpeg
 import openai
 from io import BytesIO, StringIO
+import subprocess
 
 st.set_page_config(
     page_title="GlobalBroadcastHub",
@@ -278,7 +279,7 @@ if 'recordings' not in st.session_state:
 with st.sidebar:
     st.title("GlobalBroadcastHub 📡")
 
-    tool_type = st.selectbox("Tool type:", ['Single view', 'Multiview', 'CCTV 13 Live', 'File Translation', 'Social Media Download'])
+    tool_type = st.selectbox("Tool type:", ['Single view', 'Multiview', 'File Translation', 'Social Media Download', 'Live Link Recording (TESTING)','CCTV 13 Live (Disabled)'])
 
     if tool_type == 'Single view':
 
@@ -975,8 +976,6 @@ elif tool_type == "Social Media Download":
 
         link = st.text_input("Paste link here:")
 
-        #name = st.text_input("Create file name (optional):")
-
         translate = st.checkbox("Translate")
 
         submitted = st.form_submit_button("Download")
@@ -1021,3 +1020,57 @@ elif tool_type == "Social Media Download":
 
             else:
                 st.error(f"Failed to download.")
+
+elif tool_type == "Live Link Recording":
+
+    if 'ffmpeg_link_record_process' not in st.session_state:
+        st.session_state.ffmpeg_link_record_process = None
+
+    def start_ffmpeg(link, name):
+
+        record_live_link_command = [
+            'ffmpeg',
+            '-i', link,
+            '-c', 'copy',
+            download_file_path
+            ]
+        
+        st.session_state.ffmpeg_link_record_process = subprocess.Popen(
+            record_live_link_command,
+            stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+            text=True,
+            buffsize=1
+            )
+        
+        st.write(f"Recording to: {download_file_path}")
+
+    def stop_ffmpeg():
+
+        if st.session_state.ffmpeg_link_record_process:
+            st.session_state.ffmpeg_link_record_process.stdin.write('q\n')
+            st.session_state.ffmpeg_link_record_process.stdin.flush()
+            st.session_state.ffmpeg_link_record_process.wait()
+
+            st.write("Recording stopped.")
+            st.session_state.ffmpeg_process = None
+
+    with st.form("record_link"):
+
+        link_to_record = st.input("Enter link:")
+        link = link_to_record.strip()
+
+        name = st.input("Enter name:")
+
+        submitted = st.button("Record", type='primary')
+
+    if submitted and link is not None:
+
+        now = datetime.now()
+        savetime = now.strftime("%Y_%m_%d_%H%M%S")
+
+        download_file_path = f'/mount/src/global-media/Recordings/{name}_{savetime}.mp4'
+
+        start_ffmpeg()
+
+        if st.button("Stop recording"):
+            stop_ffmpeg()
