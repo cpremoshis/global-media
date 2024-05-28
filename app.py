@@ -1109,7 +1109,7 @@ elif tool_type == "Live Link Recording (TESTING)":
 
         with display_area:
             st.status(f"Recording to *{download_file_path}* as of *{savetime}*")
-            stop_recording = st.button("Stop recording")
+            stop_recording = st.button("Stop recording", type='primary')
             components.html(player_html, height=player_size)
 
         if stop_recording:
