@@ -1078,7 +1078,8 @@ elif tool_type == "Live Link Recording (TESTING)":
 
         custom_url_player = generate_player('M3U8', 'Video', link)
         player_html, player_size = custom_url_player
-        display_area.components.html(player_html, height=player_size)
+        with display_area:
+            components.html(player_html, height=player_size)
 
         now = datetime.now()
         savetime = now.strftime("%Y_%m_%d_%H%M%S")
