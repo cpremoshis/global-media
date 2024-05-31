@@ -1093,7 +1093,7 @@ elif tool_type == "Live Link Recording (TESTING)":
             st.session_state.ffmpeg_link_record_process.stdin.write('q\n')
             st.session_state.ffmpeg_link_record_process.stdin.close()
 
-            output, errors = st.session_state.ffmpeg_link_record_process.communicate(timeout=5)
+            output, errors = st.session_state.ffmpeg_link_record_process.communicate()
 
             st.session_state.ffmpeg_link_record_process = None
 
@@ -1113,6 +1113,11 @@ elif tool_type == "Live Link Recording (TESTING)":
         name = st.text_input("Enter name:")
 
         submitted = st.form_submit_button("Record", type='primary')
+
+    st.write(st.session_state.ffmpeg_link_record_process)
+    st.write(st.session_state.download_file_path)
+    st.write(st.session_state.link)
+    st.write(st.session_state.recording_stopped)
 
     if submitted and st.session_state.link is not None:
 
