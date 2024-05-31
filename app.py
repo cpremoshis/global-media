@@ -1087,6 +1087,8 @@ elif tool_type == "Live Link Recording (TESTING)":
 
             st.session_state.ffmpeg_link_record_process = None
 
+            time.sleep(5)
+
         if os.path.isfile(st.session_state.download_file_path):
             st.session_state['recordings'].append(st.session_state.download_file_path)
             return True, output, errors
