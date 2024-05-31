@@ -1136,25 +1136,15 @@ elif tool_type == "Live Link Recording (TESTING)":
 
         if stop_recording:
             st.session_state.recording_stopped, output, errors = stop_ffmpeg()
-            time.sleep(5)
-            if os.path.isfile(st.session_state.download_file_path):
-                st.session_state.recordings.append(st.session_state.download_file_path)
-                with open(st.session_state.download_file_path, 'rb') as f:
-                    st.download_button(
-                        "Download recording",
-                        data = f,
-                        file_name = st.session_state.download_file_path.split("/")[-1],
-                        mime = "video/MP2T"
-                        )
-
-    #if st.session_state.recording_stopped:
-    #    with open(st.session_state.download_file_path, 'rb') as f:
-    #        st.download_button(
-    #            "Download recording",
-    #            data = f,
-    #            file_name = st.session_state.download_file_path.split("/")[-1],
-    #            mime = "video/MP2T"
-    #            )
+            
+    if st.session_state.recording_stopped:
+        with open(st.session_state.download_file_path, 'rb') as f:
+            st.download_button(
+                "Download recording",
+                data = f,
+                file_name = st.session_state.download_file_path.split("/")[-1],
+                mime = "video/MP2T"
+                )
     #else:
     #    st.error("Failed to stop recording or recording does not exist.")
     #    st.text(errors)
