@@ -1089,20 +1089,30 @@ elif tool_type == "Live Link Recording (TESTING)":
 
     def stop_ffmpeg():
 
-        if st.session_state.ffmpeg_link_record_process:
-            st.session_state.ffmpeg_link_record_process.stdin.write('q\n')
-            st.session_state.ffmpeg_link_record_process.stdin.flush()
-            st.session_state.ffmpeg_link_record_process.stdin.close()
+        process = st.session_state.ffmpeg_link_record_process
+        if process:
+            process.stdin.write("q\n")
+            process.stdin.flush()
 
-            output, errors = st.session_state.ffmpeg_link_record_process.communicate()
+            output = []
+            while True:
+                line = process.stdout.readline()
+                if not line:
+                    break
+                output.append(line)
+            errors = process.stderr.read()
+
+            process.stdin.close()
+            process.terminate()
+            process.wait()
 
             st.session_state.ffmpeg_link_record_process = None
 
             if os.path.isfile(st.session_state.download_file_path):
                 st.session_state['recordings'].append(st.session_state.download_file_path)
-                return True, output, errors
+                return True, ''.join(output), errors
             else:
-                return False, output, errors
+                return False, ''.join(output), errors
 
         else:
             return None, None, None
