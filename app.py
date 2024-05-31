@@ -1054,6 +1054,9 @@ elif tool_type == "Live Link Recording (TESTING)":
     if 'download_file_path' not in st.session_state:
         st.session_state.download_file_path = None
 
+    if 'link' not in st.session_state:
+        st.session_state.link = None
+
     def start_ffmpeg(link, name):
 
         now = datetime.now()
@@ -1087,8 +1090,6 @@ elif tool_type == "Live Link Recording (TESTING)":
 
             st.session_state.ffmpeg_link_record_process = None
 
-            time.sleep(5)
-
         if os.path.isfile(st.session_state.download_file_path):
             st.session_state['recordings'].append(st.session_state.download_file_path)
             return True, output, errors
@@ -1100,17 +1101,17 @@ elif tool_type == "Live Link Recording (TESTING)":
     with st.form("record_link"):
 
         link_to_record = st.text_input("Enter link:")
-        link = link_to_record.strip()
+        st.session_state.link = link_to_record.strip()
 
         name = st.text_input("Enter name:")
 
         submitted = st.form_submit_button("Record", type='primary')
 
-    if submitted and link is not None:
+    if submitted and st.session_state.link is not None:
 
-        download_path = start_ffmpeg(link, name)
+        download_path = start_ffmpeg(st.session_state.link, name)
 
-        custom_url_player = generate_player('M3U8', 'Video', link)
+        custom_url_player = generate_player('M3U8', 'Video', st.session_state.link)
         player_html, player_size = custom_url_player
 
         st.status(f"Recording to *{st.session_state.download_file_path}*")
