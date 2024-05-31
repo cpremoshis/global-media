@@ -1057,6 +1057,9 @@ elif tool_type == "Live Link Recording (TESTING)":
     if 'link' not in st.session_state:
         st.session_state.link = None
 
+    if 'recording_stopped' not in st.session_state:
+        st.session_state.recording_stopped = None
+
     def start_ffmpeg(link, name):
 
         now = datetime.now()
@@ -1121,7 +1124,7 @@ elif tool_type == "Live Link Recording (TESTING)":
         if stop_recording:
             recording_stopped, output, errors = stop_ffmpeg()
             
-    if recording_stopped in globals():
+    if st.session_state.recording_stopped:
         with open(st.session_state.download_file_path, 'rb') as f:
             st.download_button(
                 "Download recording",
