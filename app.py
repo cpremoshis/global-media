@@ -584,7 +584,11 @@ with st.sidebar:
             else:                        
                 with open(download_select, 'rb') as f:
                     file_name = download_select.split("/")[-1]
-                    dwnbtn = st.download_button("Download", data=f, file_name=file_name, mime="video/mp4")
+                    if file_name.endswith(".mp4"):
+                        mime="video/mp4"
+                    if file_name.endswith(".ts"):
+                        mime="video/MP2T"
+                    dwnbtn = st.download_button("Download", data=f, file_name=file_name, mime=mime)
 
 #Media display
 if tool_type == "Single view":
