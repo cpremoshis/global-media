@@ -1097,11 +1097,11 @@ elif tool_type == "Live Link Recording (TESTING)":
 
             st.session_state.ffmpeg_link_record_process = None
 
-        if os.path.isfile(st.session_state.download_file_path):
-            st.session_state['recordings'].append(st.session_state.download_file_path)
-            return True, output, errors
-        else:
-            return False, output, errors
+            if os.path.isfile(st.session_state.download_file_path):
+                st.session_state['recordings'].append(st.session_state.download_file_path)
+                return True, output, errors
+            else:
+                return False, output, errors
 
     st.header("Custom Link Recorder", divider=True)
 
