@@ -1089,30 +1089,35 @@ elif tool_type == "Live Link Recording (TESTING)":
 
     def stop_ffmpeg():
 
-        process = st.session_state.ffmpeg_link_record_process
+        process = st.session_state.get('ffmpeg_link_record_process')
         if process:
-            process.stdin.write("q\n")
-            process.stdin.flush()
+            try:
+                # Attempt to gracefully stop ffmpeg
+                process.stdin.write('q\n')
+                process.stdin.flush()
+                process.stdin.close()
+                # Wait briefly for ffmpeg to terminate
+                try:
+                    output, errors = process.communicate(timeout=10)  # adjust timeout as needed
+                except subprocess.TimeoutExpired:
+                    st.write("FFmpeg did not terminate, forcing it to stop.")
+                    process.kill()
+                    output, errors = process.communicate()
 
-            output = []
-            while True:
-                line = process.stdout.readline()
-                if not line:
-                    break
-                output.append(line)
-            errors = process.stderr.read()
+                st.session_state.ffmpeg_link_record_process = None
 
-            process.stdin.close()
-            process.terminate()
-            process.wait()
+                st.write("FFmpeg output:", output)
+                st.write("FFmpeg errors:", errors)
 
-            st.session_state.ffmpeg_link_record_process = None
-
-            if os.path.isfile(st.session_state.download_file_path):
-                st.session_state['recordings'].append(st.session_state.download_file_path)
-                return True, ''.join(output), errors
-            else:
-                return False, ''.join(output), errors
+                if os.path.isfile(st.session_state.download_file_path):
+                    st.session_state['recordings'].append(st.session_state.download_file_path)
+                    return True, ''.join(output), errors
+                else:
+                    return False, ''.join(output), errors
+                
+            except Exception as e:
+                st.error(f"An error occurred while stopping FFmpeg: {str(e)}")
+                return None, None, None
 
         else:
             return None, None, None
