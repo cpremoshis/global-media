@@ -1104,8 +1104,6 @@ elif tool_type == "Live Link Recording (TESTING)":
 
         submitted = st.form_submit_button("Record", type='primary')
 
-    display_area = st.container()
-
     if submitted and link is not None:
 
         download_path = start_ffmpeg(link, name)
@@ -1113,23 +1111,21 @@ elif tool_type == "Live Link Recording (TESTING)":
         custom_url_player = generate_player('M3U8', 'Video', link)
         player_html, player_size = custom_url_player
 
-        with display_area:
-            st.status(f"Recording to *{st.session_state.download_file_path}*")
-            stop_recording = st.button("Stop recording", type='primary')
-            components.html(player_html, height=player_size)
+        st.status(f"Recording to *{st.session_state.download_file_path}*")
+        stop_recording = st.button("Stop recording", type='primary')
+        components.html(player_html, height=player_size)
 
         if stop_recording:
             recording_stopped, output, errors = stop_ffmpeg()
             
             if recording_stopped:
                 with open(st.session_state.download_file_path, 'rb') as f:
-                    with display_area:
-                        st.download_button(
-                            "Download recording",
-                            data = f,
-                            file_name = st.session_state.download_file_path.split("/")[-1],
-                            mime = "video/MP2T"
-                            )
+                    st.download_button(
+                        "Download recording",
+                        data = f,
+                        file_name = st.session_state.download_file_path.split("/")[-1],
+                        mime = "video/MP2T"
+                        )
             else:
                 st.error("Failed to stop recording or recording does not exist.")
                 st.text(errors)
