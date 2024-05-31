@@ -584,11 +584,7 @@ with st.sidebar:
             else:                        
                 with open(download_select, 'rb') as f:
                     file_name = download_select.split("/")[-1]
-                    if file_name.endswith(".mp4"):
-                        mime="video/mp4"
-                    if file_name.endswith(".ts"):
-                        mime="video/MP2T"
-                    dwnbtn = st.download_button("Download", data=f, file_name=file_name, mime=mime)
+                    dwnbtn = st.download_button("Download", data=f, file_name=file_name, mime="video/mp4")
 
 #Media display
 if tool_type == "Single view":
@@ -1055,27 +1051,13 @@ elif tool_type == "Live Link Recording (TESTING)":
     if 'ffmpeg_link_record_process' not in st.session_state:
         st.session_state.ffmpeg_link_record_process = None
 
-    if 'download_file_path' not in st.session_state:
-        st.session_state.download_file_path = None
-
-    if 'link' not in st.session_state:
-        st.session_state.link = None
-
-    if 'recording_stopped' not in st.session_state:
-        st.session_state.recording_stopped = None
-
     def start_ffmpeg(link, name):
-
-        now = datetime.now()
-        savetime = now.strftime("%Y_%m_%d_%H%M%S")
-
-        st.session_state.download_file_path = f'/mount/src/global-media/Recordings/{name}_{savetime}.ts'
 
         record_live_link_command = [
             'ffmpeg',
             '-i', link,
             '-c', 'copy',
-            st.session_state.download_file_path
+            download_file_path
             ]
         
         st.session_state.ffmpeg_link_record_process = subprocess.Popen(
@@ -1084,82 +1066,52 @@ elif tool_type == "Live Link Recording (TESTING)":
             text=True,
             bufsize=1
             )
-        
-        return st.session_state.download_file_path
 
     def stop_ffmpeg():
 
-        process = st.session_state.get('ffmpeg_link_record_process')
-        if process:
-            try:
-                # Attempt to gracefully stop ffmpeg
-                process.stdin.write('q\n')
-                process.stdin.flush()
-                process.stdin.close()
-                # Wait briefly for ffmpeg to terminate
-                try:
-                    output, errors = process.communicate(timeout=10)  # adjust timeout as needed
-                except subprocess.TimeoutExpired:
-                    st.write("FFmpeg did not terminate, forcing it to stop.")
-                    process.kill()
-                    output, errors = process.communicate()
+        if st.session_state.ffmpeg_link_record_process:
+            st.session_state.ffmpeg_link_record_process.stdin.write('q\n')
+            st.session_state.ffmpeg_link_record_process.stdin.close()
 
-                st.session_state.ffmpeg_link_record_process = None
+            output, errors = st.session_state.ffmpeg_link_record_process.communicate()
 
-                st.write("FFmpeg output:", output)
-                st.write("FFmpeg errors:", errors)
-
-                if os.path.isfile(st.session_state.download_file_path):
-                    st.session_state['recordings'].append(st.session_state.download_file_path)
-                    return True, ''.join(output), errors
-                else:
-                    return False, ''.join(output), errors
-                
-            except Exception as e:
-                st.error(f"An error occurred while stopping FFmpeg: {str(e)}")
-                return None, None, None
-
-        else:
-            return None, None, None
+            st.write("Recording stopped.")
+            if output:
+                st.write(output)
+            if errors:
+                st.write(errors)
+            st.session_state.ffmpeg_process = None
 
     st.header("Custom Link Recorder", divider=True)
 
     with st.form("record_link"):
 
         link_to_record = st.text_input("Enter link:")
-        st.session_state.link = link_to_record.strip()
+        link = link_to_record.strip()
 
         name = st.text_input("Enter name:")
 
         submitted = st.form_submit_button("Record", type='primary')
 
-    st.write(st.session_state.ffmpeg_link_record_process)
-    st.write(st.session_state.download_file_path)
-    st.write(st.session_state.link)
-    st.write(st.session_state.recording_stopped)
+    display_area = st.container()
 
-    if submitted and st.session_state.link is not None:
+    if submitted and link is not None:
 
-        download_path = start_ffmpeg(st.session_state.link, name)
+        now = datetime.now()
+        savetime = now.strftime("%Y_%m_%d_%H%M%S")
 
-        custom_url_player = generate_player('M3U8', 'Video', st.session_state.link)
+        download_file_path = f'/mount/src/global-media/Recordings/{name}_{savetime}.ts'
+
+        start_ffmpeg(link, name)
+
+        custom_url_player = generate_player('M3U8', 'Video', link)
         player_html, player_size = custom_url_player
 
-        st.status(f"Recording to *{st.session_state.download_file_path}*")
-        stop_recording = st.button("Stop recording", type='primary')
-        components.html(player_html, height=player_size)
+        with display_area:
+            st.status(f"Recording to *{download_file_path}* as of *{savetime}*")
+            stop_recording = st.button("Stop recording", type='primary')
+            components.html(player_html, height=player_size)
 
         if stop_recording:
-            st.session_state.recording_stopped, output, errors = stop_ffmpeg()
-            
-    if st.session_state.recording_stopped:
-        with open(st.session_state.download_file_path, 'rb') as f:
-            st.download_button(
-                "Download recording",
-                data = f,
-                file_name = st.session_state.download_file_path.split("/")[-1],
-                mime = "video/MP2T"
-                )
-    #else:
-    #    st.error("Failed to stop recording or recording does not exist.")
-    #    st.text(errors)
+            stop_ffmpeg()
+            st.session_state['recordings'].append(download_file_path)
