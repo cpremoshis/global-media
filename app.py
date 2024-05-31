@@ -1103,6 +1103,9 @@ elif tool_type == "Live Link Recording (TESTING)":
             else:
                 return False, output, errors
 
+        else:
+            return None, None, None
+
     st.header("Custom Link Recorder", divider=True)
 
     with st.form("record_link"):
