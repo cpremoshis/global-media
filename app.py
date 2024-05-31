@@ -1123,12 +1123,13 @@ elif tool_type == "Live Link Recording (TESTING)":
             
             if recording_stopped:
                 with open(st.session_state.download_file_path, 'rb') as f:
-                    st.download_button(
-                        "Download recording",
-                        data = f,
-                        file_name = st.session_state.download_file_path.split("/")[-1],
-                        mime = "video/MP2T"
-                        )
+                    with display_area:
+                        st.download_button(
+                            "Download recording",
+                            data = f,
+                            file_name = st.session_state.download_file_path.split("/")[-1],
+                            mime = "video/MP2T"
+                            )
             else:
                 st.error("Failed to stop recording or recording does not exist.")
                 st.text(errors)
