@@ -1114,3 +1114,13 @@ elif tool_type == "Live Link Recording (TESTING)":
 
         if stop_recording:
             stop_ffmpeg()
+            recording_exists = os.path.isfile(download_file_path)
+            if recording_exists:
+                st.session_state['recordings'].append(download_file_path)
+                with open(download_file_path, 'rb') as f:
+                    st.download_button(
+                        "Download recording",
+                        data = f,
+                        file_name = download_file_path.split("/")[-1],
+                        mime = "video/MP2T"
+                        )
