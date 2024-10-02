@@ -6,19 +6,21 @@ screenshot = 'https://www.aljazeera.com/wp-content/uploads/2024/10/iran-tel-aviv
 client = OpenAI(api_key=st.secrets['openai_key'])
 
 response = client.chat.completions.create(
-    model='gpt-4o-mini',
-    messages={
-        'role':'user',
-        'content':[
-            {'type':'text', 'text':'Summarize the text in this image.'},
-            {
-                'type':'image_url',
-                'image_url':{
-                    'url':screenshot,
-                }
-            }
-        ]
+  model="gpt-4o-mini",
+  messages=[
+    {
+      "role": "user",
+      "content": [
+        {"type": "text", "text": "What’s in this image?"},
+        {
+          "type": "image_url",
+          "image_url": {
+            "url": screenshot,
+          },
+        },
+      ],
     }
+  ]
 )
 
-st.write(response.choices[0].message.content)
+st.write(response.choices[0])
