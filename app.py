@@ -273,7 +273,7 @@ def format_file_names(option):
 
 #Encodes images into base64
 def encode_image(image):
-    return base64.b64encode(image)
+    return base64.b64encode(image).decode('utf-8')
 
 #Opens .csv database to load media outlet data
 broadcasters_df = open_database()
