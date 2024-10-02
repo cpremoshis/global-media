@@ -272,9 +272,8 @@ def format_file_names(option):
     return option
 
 #Encodes images into base64
-def encode_image(image_path):
-    with open(image_path, 'rb') as image_file:
-        return base64.b64encode(image_file.read()).decode('utf-8')
+def encode_image(image):
+    return base64.b64encode(image)
 
 #Opens .csv database to load media outlet data
 broadcasters_df = open_database()
@@ -906,7 +905,9 @@ elif tool_type == "File Translation":
 
         # Image files
         if file_ending == "jpg" or file_ending == "png":
-            base64_image = encode_image(uploaded_file)
+
+            image_bytes = uploaded_file.getvalue()
+            base64_image = encode_image(image_bytes)
 
             openai.api_key = st.secrets['openai_key']
             response = openai.chat.completions.create(
