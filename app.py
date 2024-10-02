@@ -890,7 +890,7 @@ elif tool_type == "File Translation":
         st.session_state.translation = None
 
     st.header("File Translation", divider=True)
-    st.caption("Translations provided by OpenAI's 'Whisper' model")
+    st.caption("Translations provided by OpenAI")
 
     with st.form("translate"):
 
