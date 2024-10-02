@@ -916,7 +916,7 @@ elif tool_type == "File Translation":
                     {
                     "role": "user",
                     "content": [
-                        {"type": "text", "text": "Translate the text in this image to English, or transcribe it it already in English. Only return the translation or transcription."},
+                        {"type": "text", "text": "Translate the text in this image to English, or transcribe it if already in English. Only return the translation/transcription."},
                         {
                         "type": "image_url",
                         "image_url": {
