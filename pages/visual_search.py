@@ -21,5 +21,5 @@ response = openai.chat.completions.create(
     }
 )
 
-st.write(response.choices[0])
-print(response.choices[0])
+st.write(response)
+print(response)
