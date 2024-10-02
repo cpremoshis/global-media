@@ -893,7 +893,7 @@ elif tool_type == "File Translation":
 
     with st.form("translate"):
 
-        uploaded_file = st.file_uploader("Video and audio files accepted. If uploading an audio file, it must be less than 25 MB.")
+        uploaded_file = st.file_uploader("Video, audio, and image files accepted. If uploading an audio file, it must be less than 25 MB.")
 
         submitted = st.form_submit_button("Submit")
 
@@ -904,7 +904,7 @@ elif tool_type == "File Translation":
         file_ending = uploaded_file.name.split(".")[-1]
 
         # Image files
-        if file_ending == "jpeg" or file_ending == "png":
+        if file_ending in ['jpeg', 'jpg', 'png']:
 
             image_bytes = uploaded_file.getvalue()
             base64_image = encode_image(image_bytes)
