@@ -978,7 +978,7 @@ elif tool_type == "File Translation":
             if st.session_state.file_ending not in ['jpg', 'jpeg', 'png']:
                 st.write(st.session_state.translation)
                 file_to_download = st.session_state.translation
-                st.session_state.download_file_name = uploaded_file.name.split(".")[0] + 'txt'
+                st.session_state.download_file_name = uploaded_file.name.split(".")[0] + '.txt'
 
                 st.download_button(
                     label="Download translation",
