@@ -905,8 +905,7 @@ elif tool_type == "File Translation":
         file_ending = uploaded_file.name.split(".")[-1]
 
         # Image files
-        if file_ending == ".jpg" or file_ending == ".png":
-            st.write('encoding image')
+        if file_ending == "jpg" or file_ending == "png":
             base64_image = encode_image(uploaded_file)
 
             openai.api_key = st.secrets['openai_key']
