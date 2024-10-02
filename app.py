@@ -970,6 +970,9 @@ elif tool_type == "File Translation":
         with open(st.session_state.temp_subtitle_file_path, 'w') as file:
             file.write(st.session_state.translation)
 
+    if submitted and uploaded_file is None:
+        st.error("No file selected.")
+
     if st.session_state.translation:
 
         with status.container():
