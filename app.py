@@ -888,6 +888,9 @@ elif tool_type == "File Translation":
     if "translation" not in st.session_state:
         st.session_state.translation = None
 
+    if 'file_ending' not in st.session_state:
+        st.session_state.file_ending = None
+
     st.header("File Translation", divider=True)
     st.caption("Translations provided by OpenAI")
 
@@ -901,10 +904,10 @@ elif tool_type == "File Translation":
 
     if submitted and uploaded_file is not None:
 
-        file_ending = uploaded_file.name.split(".")[-1]
+        st.session_state.file_ending = uploaded_file.name.split(".")[-1]
 
         # Image files
-        if file_ending in ['jpeg', 'jpg', 'png']:
+        if st.session_state.file_ending in ['jpeg', 'jpg', 'png']:
 
             image_bytes = uploaded_file.getvalue()
             base64_image = encode_image(image_bytes)
@@ -972,57 +975,70 @@ elif tool_type == "File Translation":
         with status.container():
             st.warning("Please double-check accuracy with another source before use. Pay extra attention to proper nouns.")
 
-            #Select subtitle or plain text
-            translation_selection = st.radio(
-                "Select translation format",
-                ["Subtitles", "Plain text"],
-                label_visibility="collapsed",
-                index=0,
-                horizontal=True
-                )
-
-            #Converts translation_selection to proper file extension, reformats text if plain text is selected
-            if translation_selection == "Subtitles":
-                translation_format = "srt"
-                translation_file_extension = ".srt"
+            if st.session_state.file_ending not in ['jpg', 'jpeg', 'png']:
+                st.write(st.session_state.translation)
                 file_to_download = st.session_state.translation
-                content_to_display = st.session_state.translation
-            elif translation_selection == "Plain text":
-                translation_file_extension = ".txt"
-                translation_format = "text"
-                if 'temp_text_file' not in st.session_state:
+                st.session_state.download_file_name = uploaded_file.name.split(".")[0] + 'txt'
 
-                    with open(st.session_state.temp_subtitle_file_path, 'r') as file:
-                        lines = file.readlines()
-                        lines_to_exclude = []
-                        for i, line in enumerate(lines):
-                            if "-->" in line:
-                                lines_to_exclude.append(i - 1)
-                                lines_to_exclude.append(i)
+                st.download_button(
+                    label="Download translation",
+                    data=file_to_download,
+                    file_name=st.session_state.download_file_name,
+                    mime='text/plain'
+                    )
+            
+            else:
+                #Select subtitle or plain text
+                translation_selection = st.radio(
+                    "Select translation format",
+                    ["Subtitles", "Plain text"],
+                    label_visibility="collapsed",
+                    index=0,
+                    horizontal=True
+                    )
 
-                        text = ""
-                        for i, line in enumerate(lines):
-                            if i not in lines_to_exclude:
-                                text += line.strip() + " "
-                        text = text.replace("\n", " ")
+                #Converts translation_selection to proper file extension, reformats text if plain text is selected
+                if translation_selection == "Subtitles":
+                    translation_format = "srt"
+                    translation_file_extension = ".srt"
+                    file_to_download = st.session_state.translation
+                    content_to_display = st.session_state.translation
+                elif translation_selection == "Plain text":
+                    translation_file_extension = ".txt"
+                    translation_format = "text"
+                    if 'temp_text_file' not in st.session_state:
 
-                    st.session_state.temp_text_file = text
+                        with open(st.session_state.temp_subtitle_file_path, 'r') as file:
+                            lines = file.readlines()
+                            lines_to_exclude = []
+                            for i, line in enumerate(lines):
+                                if "-->" in line:
+                                    lines_to_exclude.append(i - 1)
+                                    lines_to_exclude.append(i)
 
-                file_to_download = st.session_state.temp_text_file
-                content_to_display = st.session_state.temp_text_file
+                            text = ""
+                            for i, line in enumerate(lines):
+                                if i not in lines_to_exclude:
+                                    text += line.strip() + " "
+                            text = text.replace("\n", " ")
 
-            st.session_state.download_file_name = uploaded_file.name.split(".")[0] + translation_file_extension
+                        st.session_state.temp_text_file = text
 
-            st.download_button(
-                label="Download translation",
-                data=file_to_download,
-                file_name=st.session_state.download_file_name,
-                mime='text/plain'
-                )
-            if translation_format == "srt":
-                st.text(content_to_display)
-            elif translation_format == "text":
-                st.write(content_to_display)
+                    file_to_download = st.session_state.temp_text_file
+                    content_to_display = st.session_state.temp_text_file
+
+                st.session_state.download_file_name = uploaded_file.name.split(".")[0] + translation_file_extension
+
+                st.download_button(
+                    label="Download translation",
+                    data=file_to_download,
+                    file_name=st.session_state.download_file_name,
+                    mime='text/plain'
+                    )
+                if translation_format == "srt":
+                    st.text(content_to_display)
+                elif translation_format == "text":
+                    st.write(content_to_display)
 
 elif tool_type == "Social Media Download":
 
