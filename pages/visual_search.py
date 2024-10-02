@@ -1,6 +1,8 @@
 import streamlit as st
 from openai import OpenAI
 
+#https://platform.openai.com/docs/guides/vision
+
 screenshot = 'https://www.aljazeera.com/wp-content/uploads/2024/10/iran-tel-aviv-israel-missiles-1727802640.jpg?resize=1920%2C1280&quality=80'
 
 client = OpenAI(api_key=st.secrets['openai_key'])
@@ -23,4 +25,4 @@ response = client.chat.completions.create(
   ]
 )
 
-st.write(response.choices[0])
+st.write(response.choices[0].message.content)
