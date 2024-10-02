@@ -13,7 +13,7 @@ response = client.chat.completions.create(
     {
       "role": "user",
       "content": [
-        {"type": "text", "text": "Translate or transcribe the text in this image."},
+        {"type": "text", "text": "Translate or transcribe the text in this image. Only return the translation or transcription."},
         {
           "type": "image_url",
           "image_url": {
