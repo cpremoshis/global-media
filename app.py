@@ -935,7 +935,7 @@ elif tool_type == "File Translation":
 
         # Video and audio files
         else:
-            with tempfile.NamedTemporaryFile(delete=False, suffix = f".{file_ending}") as temp_video_file:
+            with tempfile.NamedTemporaryFile(delete=False, suffix = f".{st.session_state.file_ending}") as temp_video_file:
                 temp_video_file.write(uploaded_file.getvalue())
                 temp_video_file.flush()
                 temp_video_file_path = temp_video_file.name
@@ -978,7 +978,7 @@ elif tool_type == "File Translation":
         with status.container():
             st.warning("Please double-check accuracy with another source before use. Pay extra attention to proper nouns.")
 
-            if st.session_state.file_ending not in ['jpg', 'jpeg', 'png']:
+            if st.session_state.file_ending in ['jpg', 'jpeg', 'png']:
                 st.write(st.session_state.translation)
                 file_to_download = st.session_state.translation
                 st.session_state.download_file_name = uploaded_file.name.split(".")[0] + '.txt'
