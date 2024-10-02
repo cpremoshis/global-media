@@ -904,7 +904,7 @@ elif tool_type == "File Translation":
         file_ending = uploaded_file.name.split(".")[-1]
 
         # Image files
-        if file_ending == "jpg" or file_ending == "png":
+        if file_ending == "jpeg" or file_ending == "png":
 
             image_bytes = uploaded_file.getvalue()
             base64_image = encode_image(image_bytes)
