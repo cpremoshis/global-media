@@ -909,7 +909,7 @@ elif tool_type == "File Translation":
             base64_image = encode_image(uploaded_file)
 
             openai.api_key = st.secrets['openai_key']
-            st.session_state.translation = openai.chat.completions.create(
+            response = openai.chat.completions.create(
                 model="gpt-4o-mini",
                 messages=[
                     {
@@ -926,6 +926,8 @@ elif tool_type == "File Translation":
                     }
                 ]
             )
+
+            st.session_state.translation = response.choices[0].message.content
 
         # Video and audio files
         else:
