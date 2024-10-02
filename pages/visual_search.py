@@ -21,5 +21,4 @@ response = client.chat.completions.create(
     }
 )
 
-st.write(response)
-print(response)
+st.write(response.choices[0].message.content)
