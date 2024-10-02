@@ -12,6 +12,7 @@ import ffmpeg
 import openai
 from io import BytesIO, StringIO
 import subprocess
+import base64
 
 st.set_page_config(
     page_title="GlobalBroadcastHub",
@@ -269,6 +270,11 @@ def generate_player(format, type, url, muted=""):
 def format_file_names(option):
     option = option.split("/")[-1]
     return option
+
+#Encodes images into base64
+def encode_image(image_path):
+    with open(image_path, 'rb') as image_file:
+        return base64.b64encode(image_file.read()).decode('utf-8')
 
 #Opens .csv database to load media outlet data
 broadcasters_df = open_database()
@@ -898,34 +904,59 @@ elif tool_type == "File Translation":
 
         file_ending = uploaded_file.name.split(".")[-1]
 
-        with tempfile.NamedTemporaryFile(delete=False, suffix = f".{file_ending}") as temp_video_file:
-            temp_video_file.write(uploaded_file.getvalue())
-            temp_video_file.flush()
-            temp_video_file_path = temp_video_file.name
+        # Image files
+        if file_ending == ".jpg" or file_ending == ".png":
+            base64_image = encode_image(uploaded_file)
 
-        with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as temp_audio_file:
-            temp_audio_file_path = temp_audio_file.name
-
-        status.status("Extracting audio")
-
-        input_file = ffmpeg.input(temp_video_file_path)
-        output_file = ffmpeg.output(input_file, temp_audio_file_path, acodec="mp3")
-        output_file = output_file.global_args('-y')
-        output_file.run()
-
-        status.status("Translating audio")
-
-        openai.api_key = st.secrets['openai_key']
-
-        with open(temp_audio_file.name, 'rb') as f:
-            audio_bytes = BytesIO(f.read())
-            audio_bytes.name = "audio.mp3"
-
-        st.session_state.translation = openai.audio.translations.create(
-            file = audio_bytes,
-            model='whisper-1',
-            response_format="srt"
+            openai.api_key = st.secrets['openai_key']
+            st.session_state.translation = openai.chat.completions.create(
+                model="gpt-4o-mini",
+                messages=[
+                    {
+                    "role": "user",
+                    "content": [
+                        {"type": "text", "text": "Translate or transcribe the text in this image. Only return the translation or transcription."},
+                        {
+                        "type": "image_url",
+                        "image_url": {
+                            "url": f"data:image/jpeg;base64,{base64_image}",
+                        },
+                        },
+                    ],
+                    }
+                ]
             )
+
+        # Video and audio files
+        else:
+            with tempfile.NamedTemporaryFile(delete=False, suffix = f".{file_ending}") as temp_video_file:
+                temp_video_file.write(uploaded_file.getvalue())
+                temp_video_file.flush()
+                temp_video_file_path = temp_video_file.name
+
+            with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as temp_audio_file:
+                temp_audio_file_path = temp_audio_file.name
+
+            status.status("Extracting audio")
+
+            input_file = ffmpeg.input(temp_video_file_path)
+            output_file = ffmpeg.output(input_file, temp_audio_file_path, acodec="mp3")
+            output_file = output_file.global_args('-y')
+            output_file.run()
+
+            status.status("Translating audio")
+
+            openai.api_key = st.secrets['openai_key']
+
+            with open(temp_audio_file.name, 'rb') as f:
+                audio_bytes = BytesIO(f.read())
+                audio_bytes.name = "audio.mp3"
+
+            st.session_state.translation = openai.audio.translations.create(
+                file = audio_bytes,
+                model='whisper-1',
+                response_format="srt"
+                )
         
         #Saves temporary subtitle file to disk
         with tempfile.NamedTemporaryFile(delete=False, suffix=".srt") as temp_subtitle_file:
