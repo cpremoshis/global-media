@@ -912,7 +912,7 @@ elif tool_type == "File Translation":
             image_bytes = uploaded_file.getvalue()
             base64_image = encode_image(image_bytes)
 
-            openai.api_key = st.secrets['openai_key']
+            openai.api_key = st.secrets['openai_key']['api_key']
             response = openai.chat.completions.create(
                 model="gpt-4o-mini",
                 messages=[
@@ -952,7 +952,7 @@ elif tool_type == "File Translation":
 
             status.status("Translating audio")
 
-            openai.api_key = st.secrets['openai_key']
+            openai.api_key = st.secrets['openai_key']['api_key']
 
             with open(temp_audio_file.name, 'rb') as f:
                 audio_bytes = BytesIO(f.read())
