@@ -585,7 +585,6 @@ def download_from_webpages(link, translate):
         check_codec = [
             'ffprobe',
             '-v', 'error',
-            '-select_streams', 'v:0,a:0',
             '-show_entries', 'stream=codec_type,codec_name',
             '-of', 'json',
             download_file_path
