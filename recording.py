@@ -549,8 +549,9 @@ def download_from_webpages(link, translate):
                 source_type = value
                 break                
 
+        #Gets date and time
         now = datetime.now()
-        savetime = now.strftime("%Y_%m_%d_%H%M%S")
+        savetime = now.strftime("%m_%d__%Y_%H%M%S")
 
         #Gets account name for use in file name
         extract_uploader_name_command = [
@@ -561,6 +562,7 @@ def download_from_webpages(link, translate):
             ]
         uploader_name = subprocess.check_output(extract_uploader_name_command, text=True).strip().replace(" ", "_")
 
+        #Output file name and location
         download_file_path = f'/mount/src/global-media/Recordings/{source_type}_{uploader_name}_{savetime}.mp4'
         converted_file_path = None
 
