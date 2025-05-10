@@ -9,6 +9,7 @@ from io import BytesIO
 import openai
 import threading
 from concurrent.futures import ThreadPoolExecutor, as_completed
+import json
     
 #    m3u8_url = "https://live-hls-web-aje-fa.getaj.net/AJE/02.m3u8"
 #    root_url = "https://live-hls-web-aje-fa.getaj.net/AJE/"
@@ -561,6 +562,7 @@ def download_from_webpages(link, translate):
         uploader_name = subprocess.check_output(extract_uploader_name_command, text=True).strip().replace(" ", "_")
 
         download_file_path = f'/mount/src/global-media/Recordings/{source_type}_{uploader_name}_{savetime}.mp4'
+        converted_file_path = None
 
         if source_type == "YouTube":
             download_command = [
@@ -579,19 +581,43 @@ def download_from_webpages(link, translate):
         
         subprocess.run(download_command, check=True)
 
-        #convert_command = [
-        #    'ffmpeg',
-        #    '-i', download_file_path,
-        #    '-c:v', 'libx264',
-        #    '-c:a', 'aac',
-        #    converted_file_path
-        #    ]
-        
-        #subprocess.run(convert_command)
+        #Checks codecs and converts if necessary
+        check_codec = [
+            'ffprobe',
+            '-v', 'error',
+            '-select_streams', 'v:0,a:0',
+            '-show_entires', 'stream=codec_type,codec_name',
+            '-of', 'json',
+            download_file_path
+            ]
+        codec_output = subprocess.check_output(check_codec, text=True)
+        codec_data = json.loads(codec_output)
 
-        if translate == True:
-            translation_file, audio_file = translate_audio(download_file_path, source_type, savetime)
-            return True, download_file_path, translation_file, audio_file
+        video_codec = None
+        audio_codec = None
+
+        for stream in codec_data.get('streams', []):
+            if stream['codec_type'] == 'video':
+                video_codec = stream['codec_name']
+            elif stream['codec_type'] == 'audio':
+                audio_codec = stream['codec_name']
+
+        accepted_codecs = ['h264', 'h265', 'aac', 'mp3']
+
+        if video_codec or audio_codec not in accepted_codecs:
+
+            convert_command = [
+                'ffmpeg',
+                '-i', download_file_path,
+                '-c:v', 'libx264',
+                '-c:a', 'aac',
+                converted_file_path
+                ]
+        
+            subprocess.run(convert_command)
+
+        if converted_file_path == True:
+            return True, converted_file_path
         else:
             return True, download_file_path
 
