@@ -548,26 +548,18 @@ def download_from_webpages(link, translate):
                 source_type = value
                 break                
 
-#        if "youtube.com" in link_lower or "youtu.be" in link_lower:
-#            source_type = "YouTube"
-#        elif "instagram.com" in link_lower:
-#            source_type = "Instagram"
-#        elif "twitter.com" in link_lower or "x.com" in link_lower:
-#            source_type = "TwitterX"
-#            if "x.com" in link_lower:
-#                link_lower = link_lower.replace("x.com", "twitter.com")
-#            else:
-#                pass
-#        elif "facebook.com" in link_lower or "fb.watch" in link_lower:
-#            source_type = "Facebook"
-#        else:
-#            source_type = "unknown_source"
-
         now = datetime.now()
         savetime = now.strftime("%Y_%m_%d_%H%M%S")
 
-        download_file_path = f'/mount/src/global-media/Recordings/{source_type}_{savetime}.mp4'
-        #converted_file_path = f'/mount/src/global-media/Recordings/youtube_{savetime}.mp4'
+        #Gets account name for use in file name
+        extract_uploader_name_command = [
+            'yt-dlp',
+            '--print',
+            'uploader'
+            ]
+        uploader_name = subprocess.check_output(extract_uploader_name_command, text=True).strip().replace(" ", "_")
+
+        download_file_path = f'/mount/src/global-media/Recordings/{source_type}_{uploader_name}_{savetime}.mp4'
 
         if source_type == "YouTube":
             download_command = [
