@@ -586,7 +586,7 @@ def download_from_webpages(link, translate):
             'ffprobe',
             '-v', 'error',
             '-select_streams', 'v:0,a:0',
-            '-show_entires', 'stream=codec_type,codec_name',
+            '-show_entries', 'stream=codec_type,codec_name',
             '-of', 'json',
             download_file_path
             ]
@@ -604,7 +604,7 @@ def download_from_webpages(link, translate):
 
         accepted_codecs = ['h264', 'h265', 'aac', 'mp3']
 
-        if video_codec or audio_codec not in accepted_codecs:
+        if video_codec not in accepted_codecs or audio_codec not in accepted_codecs:
 
             convert_command = [
                 'ffmpeg',
@@ -616,7 +616,7 @@ def download_from_webpages(link, translate):
         
             subprocess.run(convert_command)
 
-        if converted_file_path == True:
+        if converted_file_path:
             return True, converted_file_path
         else:
             return True, download_file_path
