@@ -555,7 +555,8 @@ def download_from_webpages(link, translate):
         extract_uploader_name_command = [
             'yt-dlp',
             '--print',
-            'uploader'
+            '%(uploader)s',
+            link_lower
             ]
         uploader_name = subprocess.check_output(extract_uploader_name_command, text=True).strip().replace(" ", "_")
 
