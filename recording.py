@@ -605,6 +605,8 @@ def download_from_webpages(link, translate):
 
         if video_codec not in accepted_codecs or audio_codec not in accepted_codecs:
 
+            converted_file_path = download_file_path.replace(".mp4", "_converted.mp4")
+
             convert_command = [
                 'ffmpeg',
                 '-i', download_file_path,
@@ -614,6 +616,7 @@ def download_from_webpages(link, translate):
                 ]
         
             subprocess.run(convert_command)
+            #os.remove(download_file_path)
 
         if converted_file_path:
             return True, converted_file_path
