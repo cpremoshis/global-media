@@ -610,7 +610,7 @@ def download_from_webpages(link, translate):
             convert_command = [
                 'ffmpeg',
                 '-i', download_file_path,
-                '-c:v', 'libx264',
+                '-c:v', 'libx265',
                 '-c:a', 'aac',
                 converted_file_path
                 ]
