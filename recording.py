@@ -535,8 +535,7 @@ def download_from_webpages(link, translate):
             'youtube.com':'YouTube',
             'youtu.be':'YouTube',
             'instagram.com':'Instagram',
-            'twitter.com':'TwitterX',
-            'x.com':'TwitterX',
+            'x.com':'X',
             'facebook.com':'Facebook',
             'fb.watch':'Facebook',
             't.me':'Telegram'
@@ -548,11 +547,6 @@ def download_from_webpages(link, translate):
             if key in link_lower:
                 source_type = value
                 break                
-
-        if source_type == 'TwitterX' and 'x.com' in link_lower:
-            link_lower = link_lower.replace('x.com', 'twitter.com')
-        else:
-            pass
 
 #        if "youtube.com" in link_lower or "youtu.be" in link_lower:
 #            source_type = "YouTube"
