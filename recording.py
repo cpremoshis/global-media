@@ -554,16 +554,16 @@ def download_from_webpages(link, translate):
         savetime = now.strftime("%d_%m__%Y_%H%M%S")
 
         #Gets account name for use in file name
-        extract_uploader_handle_command = [
+        extract_uploader_name_command = [
             'yt-dlp',
             '--print',
-            '%(uploader_handle)s',
+            '%(uploader)s',
             link_lower
             ]
-        uploader_handle = subprocess.check_output(extract_uploader_handle_command, text=True).strip().replace(" ", "_").replace("@","")
+        uploader_name = subprocess.check_output(extract_uploader_name_command, text=True).strip().replace(" ", "_")
 
         #Output file name and location
-        download_file_path = f'/mount/src/global-media/Recordings/{source_type}_{uploader_handle}_{savetime}.mp4'
+        download_file_path = f'/mount/src/global-media/Recordings/{source_type}_{uploader_name}_{savetime}.mp4'
         converted_file_path = None
 
         if source_type == "YouTube":
