@@ -614,9 +614,7 @@ if tool_type == "Single view":
         player_html = result[0]
 
     try:
-        col1, col2, col3 = st.columns(3)
-        with col2:
-            st.write(outlet.recording_url)
+        st.write(outlet.recording_url)
     except:
         pass
     st.subheader("Summary")
