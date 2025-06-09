@@ -613,7 +613,12 @@ if tool_type == "Single view":
         #For YouTube streams
         player_html = result[0]
 
-    st.write(outlet.recording_url)
+    try:
+        col1, col2, col3 = st.columns(3)
+        with col2:
+            st.write(outlet.recording_url)
+    except:
+        pass
     st.subheader("Summary")
     st.write(wiki_summary(outlet.wiki))
     st.write(outlet.page_url)
