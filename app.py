@@ -614,7 +614,8 @@ if tool_type == "Single view":
         player_html = result[0]
 
     try:
-        st.write("🛜 " + outlet.recording_url)
+        with st.expander("Direct URL"):
+            st.write(outlet.recording_url)
     except:
         pass
     st.subheader("Summary")
