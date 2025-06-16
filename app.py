@@ -614,7 +614,7 @@ if tool_type == "Single view":
         player_html = result[0]
 
     try:
-        st.write("🛜" + outlet.recording_url)
+        st.write("🛜 " + outlet.recording_url)
     except:
         pass
     st.subheader("Summary")
