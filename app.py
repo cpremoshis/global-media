@@ -614,8 +614,10 @@ if tool_type == "Single view":
         player_html = result[0]
 
     try:
-        with st.expander("Direct URL"):
-            st.write(outlet.recording_url)
+        with st.expander("URLs"):
+            st.write("Highest quality: " + outlet.recording_url)
+            st.write("Variable quality: " + outlet.playback_url)
+
     except:
         pass
     st.subheader("Summary")
