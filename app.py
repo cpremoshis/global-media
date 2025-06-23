@@ -615,7 +615,7 @@ if tool_type == "Single view":
 
     try:
         with st.expander("URLs"):
-            st.write("Highest quality: " + outlet.recording_url)
+            st.write("Highest quality:  " + outlet.recording_url)
             st.write("Variable quality: " + outlet.playback_url)
 
     except:
