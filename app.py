@@ -871,7 +871,7 @@ elif tool_type == "CCTV 13 Live (Disabled)":
         st.image("Assets/offline_3.png")
         #st.error(f"Stream ended at {stream_status[1]} GMT")
     elif stream_status[0] == True:
-        components.html(hls_js_player_html, width=1080, height=525)
+        components.html(hls_js_player_html, height=525)
         st.success("Stream status: Live")
     else:
         st.image("Assets/offline_3.png")
