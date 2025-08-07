@@ -117,7 +117,7 @@ def generate_player(format, type, url, muted=""):
             </style>
         </head>
         <body>
-        <video id="video" controls autoplay {muted} style="width:100vw; height:100vh; object-fit: contain; margin:auto"></video>
+        <video id="video" controls autoplay {muted} style="height:100vh; object-fit: contain; margin:auto"></video>
         <script>
             var video = document.getElementById('video');
             if (Hls.isSupported()) {{
