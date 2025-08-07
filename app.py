@@ -608,7 +608,7 @@ if tool_type == "Single view":
 
     if result[1] is not None:
         player_html, player_size = result
-        components.html(player_html, height=525)
+        components.html(player_html, height=player_size)
     else:
         #For YouTube streams
         player_html = result[0]
