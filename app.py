@@ -117,7 +117,7 @@ def generate_player(format, type, url, muted=""):
             </style>
         </head>
         <body>
-        <video id="video" controls autoplay {muted} style="height:100vh; object-fit: contain; margin:auto"></video>
+        <video id="video" controls autoplay {muted} style="width:100vw; height:100vh; object-fit: contain; margin:auto"></video>
         <script>
             var video = document.getElementById('video');
             if (Hls.isSupported()) {{
@@ -608,7 +608,7 @@ if tool_type == "Single view":
 
     if result[1] is not None:
         player_html, player_size = result
-        components.html(player_html, height=player_size)
+        components.html(player_html, height=525)
     else:
         #For YouTube streams
         player_html = result[0]
