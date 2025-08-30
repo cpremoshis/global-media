@@ -982,7 +982,7 @@ elif tool_type == "File Translation":
 
     # FINISHING WRITING THIS
     if submitted and uploaded_file is not None and new_model==True:
-        st.error("Feature not yet completed.")
+        st.error("GPT-4o inclusion not yet complete.")
 
     if submitted and uploaded_file is None:
         st.error("No file selected.")
