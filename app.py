@@ -905,11 +905,14 @@ elif tool_type == "File Translation":
 
         uploaded_file = st.file_uploader("Video, audio, and image files accepted. If uploading an audio file, it must be less than 25 MB.")
 
+        new_model = st.checkbox("Use GPT-4o model?")
+        st.caption("Using GPT-4o provides better translation but will NOT provide timestamps and a subtitle file.")
+
         submitted = st.form_submit_button("Submit")
 
     status = st.empty()
 
-    if submitted and uploaded_file is not None:
+    if submitted and uploaded_file is not None and new_model==False:
 
         st.session_state.file_ending = uploaded_file.name.split(".")[-1]
 
@@ -976,6 +979,10 @@ elif tool_type == "File Translation":
             st.session_state.temp_subtitle_file_path = temp_subtitle_file.name
         with open(st.session_state.temp_subtitle_file_path, 'w') as file:
             file.write(st.session_state.translation)
+
+    # FINISHING WRITING THIS
+    if submitted and uploaded_file is not None and new_model==True:
+        st.error("Feature not yet completed.")
 
     if submitted and uploaded_file is None:
         st.error("No file selected.")
