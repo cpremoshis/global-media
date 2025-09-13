@@ -37,13 +37,43 @@ def open_database():
 #Pull Wikipedia summary for selected outlet
 @st.cache_data
 def wiki_summary(outlet_wiki):
-    request_url = f'https://en.wikipedia.org/api/rest_v1/page/summary/{outlet_wiki}?redirect=true'
 
-    wiki_response = requests.get(request_url)
-    wiki_data = wiki_response.json()
-    summary = wiki_data['extract']
-
-    return summary
+    try:
+        request_url = f'https://en.wikipedia.org/api/rest_v1/page/summary/{outlet_wiki}?redirect=true'
+        
+        # Set a proper User-Agent header as required by Wikipedia API
+        headers = {
+            'User-Agent': 'GlobalBroadcastHub/1.0 (cpremoshis@gmail.com)',  # Replace with your actual contact info
+            'Accept': 'application/json'
+        }
+        
+        wiki_response = requests.get(request_url, headers=headers, timeout=10)
+        
+        # Check if the request was successful
+        if wiki_response.status_code == 200:
+            wiki_data = wiki_response.json()
+            
+            # Check if the response contains the expected data
+            if 'extract' in wiki_data:
+                return wiki_data['extract']
+            else:
+                return f"Summary not available for '{outlet_wiki}'"
+                
+        elif wiki_response.status_code == 404:
+            return f"Wikipedia article '{outlet_wiki}' not found"
+        else:
+            return f"Error fetching summary: HTTP {wiki_response.status_code}"
+            
+    except requests.exceptions.Timeout:
+        return "Request timed out - Wikipedia may be temporarily unavailable"
+    except requests.exceptions.ConnectionError:
+        return "Connection error - check your internet connection"
+    except requests.exceptions.RequestException as e:
+        return f"Request error: {str(e)}"
+    except KeyError:
+        return "Unexpected response format from Wikipedia API"
+    except Exception as e:
+        return f"Unexpected error: {str(e)}"
 
 #Pull data for selected outlet
 @st.cache_resource
