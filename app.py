@@ -329,6 +329,9 @@ def openai_stt_translate(input_file):
         audio_bytes = BytesIO(f.read())
         audio_bytes.name = "audio.mp3"
 
+    streaming_text = ""
+    streaming_text_placeholder = st.empty()
+
     transcript = client.audio.transcriptions.create(
         model="gpt-4o-transcribe",
         file=audio_bytes,
@@ -338,7 +341,8 @@ def openai_stt_translate(input_file):
 
     for event in transcript:
         if event.type == "transcript.text.delta":
-            st.write(event.delta, end="", flush=True)
+            streaming_text += event.delta
+            streaming_text_placeholder.text(streaming_text)  # Update display
 
     translation = client.chat.completions.create(
         model='gpt-5-mini',
@@ -349,7 +353,8 @@ def openai_stt_translate(input_file):
 
     for chunk in translation:
         if chunk.choices[0].delta.content is not None:
-            st.write(chunk.choices[0].delta.content, end="", flush=True)
+            streaming_text += chunk.choices[0].delta.content
+            streaming_text_placeholder.text(streaming_text)
 
     #translation_text = translation.choices[0].message.content
 
