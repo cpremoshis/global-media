@@ -10,6 +10,7 @@ import tempfile
 import os
 import ffmpeg
 import openai
+from openai import OpenAI
 from io import BytesIO, StringIO
 import subprocess
 import base64
@@ -308,8 +309,8 @@ def encode_image(image):
 #Upgraded audio translation
 def openai_stt_translate(input_file):
 
-    openai.api_key = st.secrets['openai_key']['api_key']
-    client = openai.OpenAI()
+    key = st.secrets['openai_key']['api_key']
+    client = openai.OpenAI(api_key=key)
 
     with open(input_file, 'rb') as f:
         audio_bytes = BytesIO(f.read())
