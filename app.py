@@ -1056,7 +1056,7 @@ elif tool_type == "File Translation":
         
         with st.status("Translating..."):
             translation = openai_stt_translate(uploaded_file)
-            st.write(translation)
+        st.write(translation)
 
     if submitted and uploaded_file is None:
         st.error("No file selected.")
