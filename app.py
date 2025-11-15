@@ -312,9 +312,22 @@ def openai_stt_translate(input_file):
     key = st.secrets['openai_key']['api_key']
     client = openai.OpenAI(api_key=key)
 
-    with open(input_file, 'rb') as f:
-        audio_bytes = BytesIO(f.read())
-        audio_bytes.name = "audio.mp3"
+    with tempfile.NamedTemporaryFile(delete=False, suffix = f".{st.session_state.file_ending}") as temp_video_file:
+        temp_video_file.write(uploaded_file.getvalue())
+        temp_video_file.flush()
+        temp_video_file_path = temp_video_file.name
+
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as temp_audio_file:
+        temp_audio_file_path = temp_audio_file.name
+
+    status.status("Extracting audio")
+
+    input_file = ffmpeg.input(temp_video_file_path)
+    output_file = ffmpeg.output(input_file, temp_audio_file_path, acodec="mp3")
+    output_file = output_file.global_args('-y')
+    output_file.run()
+
+    status.status("Translating audio")
 
     transcript = client.audio.transcriptions.create(
         model="gpt-4o-transcribe",
