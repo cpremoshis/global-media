@@ -320,14 +320,10 @@ def openai_stt_translate(input_file):
     with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as temp_audio_file:
         temp_audio_file_path = temp_audio_file.name
 
-    status.status("Extracting audio")
-
     input_file = ffmpeg.input(temp_video_file_path)
     output_file = ffmpeg.output(input_file, temp_audio_file_path, acodec="mp3")
     output_file = output_file.global_args('-y')
     output_file.run()
-
-    status.status("Translating audio")
 
     with open(temp_audio_file.name, 'rb') as f:
         audio_bytes = BytesIO(f.read())
@@ -986,6 +982,7 @@ elif tool_type == "File Translation":
 
     status = st.empty()
 
+    #Old model
     if submitted and uploaded_file is not None and new_model==False:
 
         st.session_state.file_ending = uploaded_file.name.split(".")[-1]
@@ -1054,9 +1051,12 @@ elif tool_type == "File Translation":
         with open(st.session_state.temp_subtitle_file_path, 'w') as file:
             file.write(st.session_state.translation)
 
+    #New model
     if submitted and uploaded_file is not None and new_model==True:
-        translation = openai_stt_translate(uploaded_file)
-        st.write(translation)
+        
+        with st.status("Translating..."):
+            translation = openai_stt_translate(uploaded_file)
+            st.write(translation)
 
     if submitted and uploaded_file is None:
         st.error("No file selected.")
