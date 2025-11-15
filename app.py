@@ -1072,7 +1072,7 @@ elif tool_type == "File Translation":
     #New model
     if submitted and uploaded_file is not None and new_model==True:
         
-        with st.status("Translating..."):
+        with st.status("Translating...", expanded=True):
             translation = openai_stt_translate(uploaded_file)
         #st.write(translation)
 
