@@ -330,6 +330,7 @@ def openai_stt_translate(input_file):
         audio_bytes.name = "audio.mp3"
 
     transcript_text = ""
+    streaming_text = ""
     streaming_text_placeholder = st.empty()
 
     transcript = client.audio.transcriptions.create(
