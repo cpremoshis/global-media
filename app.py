@@ -332,18 +332,28 @@ def openai_stt_translate(input_file):
     transcript = client.audio.transcriptions.create(
         model="gpt-4o-transcribe",
         file=audio_bytes,
-        response_format="text"
+        response_format="text",
+        stream=True
     )
+
+    for event in response:
+        if event.type == "transcript.text.delta":
+            print(event.delta, end="", flush=True)
 
     translation = client.chat.completions.create(
         model='gpt-5-mini',
         messages=[{'role':'system', 'content':'Translate the user input to English.'},
-                  {'role':'user', 'content':transcript}]
+                  {'role':'user', 'content':transcript}],
+        stream=True
     )
 
-    translation_text = translation.choices[0].message.content
+    for chunk in translation:
+        if chunk.choices[0].delta.content is not None:
+            print(chunk.choices[0].delta.content, end="", flush=True)
 
-    return translation_text
+    #translation_text = translation.choices[0].message.content
+
+    #return translation_text
 
 #Opens .csv database to load media outlet data
 broadcasters_df = open_database()
@@ -1056,7 +1066,7 @@ elif tool_type == "File Translation":
         
         with st.status("Translating..."):
             translation = openai_stt_translate(uploaded_file)
-        st.write(translation)
+        #st.write(translation)
 
     if submitted and uploaded_file is None:
         st.error("No file selected.")
