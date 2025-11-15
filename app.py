@@ -995,8 +995,8 @@ elif tool_type == "File Translation":
 
         uploaded_file = st.file_uploader("Video, audio, and image files accepted. If uploading an audio file, it must be less than 25 MB.")
 
-        new_model = st.checkbox("Use GPT-4o model?")
-        st.caption("*Using GPT-4o provides better translation but will NOT provide timestamps and a subtitle file.")
+        new_model = st.checkbox("Use GPT-4o model?*")
+        st.caption("*More accurate but slower and without timecodes")
 
         submitted = st.form_submit_button("Submit")
 
