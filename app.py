@@ -329,6 +329,10 @@ def openai_stt_translate(input_file):
 
     status.status("Translating audio")
 
+    with open(temp_audio_file.name, 'rb') as f:
+        audio_bytes = BytesIO(f.read())
+        audio_bytes.name = "audio.mp3"
+
     transcript = client.audio.transcriptions.create(
         model="gpt-4o-transcribe",
         file=audio_bytes,
