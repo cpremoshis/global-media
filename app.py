@@ -1039,10 +1039,6 @@ elif tool_type == "File Translation":
     if submitted and uploaded_file is not None and new_model==True:
         translation = openai_stt_translate(uploaded_file)
         st.write(translation)
-        
-    # FINISHING WRITING THIS
-    if submitted and uploaded_file is not None and new_model==True:
-        st.error("GPT-4o use not yet ready.")
 
     if submitted and uploaded_file is None:
         st.error("No file selected.")
