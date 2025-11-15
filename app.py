@@ -336,7 +336,7 @@ def openai_stt_translate(input_file):
         stream=True
     )
 
-    for event in response:
+    for event in transcript:
         if event.type == "transcript.text.delta":
             st.write(event.delta, end="", flush=True)
 
