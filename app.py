@@ -305,6 +305,32 @@ def format_file_names(option):
 def encode_image(image):
     return base64.b64encode(image).decode('utf-8')
 
+#Upgraded audio translation
+def openai_stt_translate(input_file):
+
+    openai.api_key = st.secrets['openai_key']['api_key']
+    client = openai.OpenAI()
+
+    with open(input_file, 'rb') as f:
+        audio_bytes = BytesIO(f.read())
+        audio_bytes.name = "audio.mp3"
+
+    transcript = client.audio.transcriptions.create(
+        model="gpt-4o-transcribe",
+        file=audio_bytes,
+        response_format="text"
+    )
+
+    translation = client.chat.completions.create(
+        model='gpt-5-mini',
+        messages=[{'role':'system', 'content':'Translate the user input to English.'},
+                  {'role':'user', 'content':transcript}]
+    )
+
+    translation_text = translation.choices[0].message.content
+
+    return translation_text
+
 #Opens .csv database to load media outlet data
 broadcasters_df = open_database()
 
@@ -1010,6 +1036,10 @@ elif tool_type == "File Translation":
         with open(st.session_state.temp_subtitle_file_path, 'w') as file:
             file.write(st.session_state.translation)
 
+    if submitted and uploaded_file is not None and new_model==True:
+        translation = openai_stt_translate(uploaded_file)
+        st.write(translation)
+        
     # FINISHING WRITING THIS
     if submitted and uploaded_file is not None and new_model==True:
         st.error("GPT-4o use not yet ready.")
