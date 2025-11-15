@@ -329,7 +329,7 @@ def openai_stt_translate(input_file):
         audio_bytes = BytesIO(f.read())
         audio_bytes.name = "audio.mp3"
 
-    streaming_text = ""
+    transcript_text = ""
     streaming_text_placeholder = st.empty()
 
     transcript = client.audio.transcriptions.create(
@@ -341,18 +341,19 @@ def openai_stt_translate(input_file):
 
     for event in transcript:
         if event.type == "transcript.text.delta":
+            transcript_text += event.delta
             streaming_text += event.delta
             streaming_text_placeholder.text(streaming_text)  # Update display
 
     translation = client.chat.completions.create(
         model='gpt-5-mini',
         messages=[{'role':'system', 'content':'Translate the user input to English.'},
-                  {'role':'user', 'content':streaming_text}],
+                  {'role':'user', 'content':transcript_text}],
         stream=True
     )
 
     streaming_text = ""
-    streaming_text_placeholder = st.empty()
+    streaming_text_placeholder.empty()
 
     for chunk in translation:
         if chunk.choices[0].delta.content is not None:
