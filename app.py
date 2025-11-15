@@ -338,7 +338,7 @@ def openai_stt_translate(input_file):
 
     for event in response:
         if event.type == "transcript.text.delta":
-            print(event.delta, end="", flush=True)
+            st.write(event.delta, end="", flush=True)
 
     translation = client.chat.completions.create(
         model='gpt-5-mini',
@@ -349,7 +349,7 @@ def openai_stt_translate(input_file):
 
     for chunk in translation:
         if chunk.choices[0].delta.content is not None:
-            print(chunk.choices[0].delta.content, end="", flush=True)
+            st.write(chunk.choices[0].delta.content, end="", flush=True)
 
     #translation_text = translation.choices[0].message.content
 
