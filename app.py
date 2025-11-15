@@ -344,15 +344,15 @@ def openai_stt_translate(input_file):
             streaming_text += event.delta
             streaming_text_placeholder.text(streaming_text)  # Update display
 
-    streaming_text = ""
-    streaming_text_placeholder = st.empty()
-
     translation = client.chat.completions.create(
         model='gpt-5-mini',
         messages=[{'role':'system', 'content':'Translate the user input to English.'},
                   {'role':'user', 'content':streaming_text}],
         stream=True
     )
+
+    streaming_text = ""
+    streaming_text_placeholder = st.empty()
 
     for chunk in translation:
         if chunk.choices[0].delta.content is not None:
